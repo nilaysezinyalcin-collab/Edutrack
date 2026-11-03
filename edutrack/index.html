@@ -1,0 +1,126 @@
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="EduTrack - Etkileşimli Ders Deneyimi Panosu">
+    <title>EduTrack | Öğrenme Panom</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Üst Menü -->
+    <header class="header">
+        <div class="logo">
+            <span class="logo-icon">E</span>
+            <span>EduTrack</span>
+        </div>
+
+        <button id="themeToggle" class="theme-button" type="button">
+             Tema Değiştir
+        </button>
+    </header>
+
+    <main class="container">
+
+        <!-- Hoş Geldin Alanı -->
+        <section class="welcome-section">
+            <h1>Öğrenme Panom</h1>
+            <p>Derslerini, görevlerini ve gelişimini tek bir yerden takip et.</p>
+        </section>
+
+        <!-- İstatistik Kartları -->
+        <section class="stats-grid">
+
+            <article class="stat-card">
+                <span class="stat-icon">📚</span>
+                <div>
+                    <h2 id="totalCourses">0</h2>
+                    <p>Toplam Ders Haftası</p>
+                </div>
+            </article>
+
+            <article class="stat-card">
+                <span class="stat-icon">✅</span>
+                <div>
+                    <h2 id="completedTasks">0</h2>
+                    <p>Tamamlanan Görev</p>
+                </div>
+            </article>
+
+            <article class="stat-card">
+                <span class="stat-icon">📋</span>
+                <div>
+                    <h2 id="totalTasks">0</h2>
+                    <p>Toplam Görev</p>
+                </div>
+            </article>
+
+        </section>
+
+        <!-- Genel İlerleme -->
+        <section class="progress-section">
+            <div class="section-heading">
+                <h2>Genel İlerlemem</h2>
+                <span id="progressPercentage">%0</span>
+            </div>
+
+            <div class="progress-bar">
+                <div id="progressFill" class="progress-fill"></div>
+            </div>
+        </section>
+
+        <!-- Haftalık Dersler -->
+        <section class="courses-section">
+            <div class="section-heading">
+                <h2>Haftalık Dersler</h2>
+            </div>
+
+            <div id="coursesContainer" class="courses-grid">
+                <!-- Ders kartları JavaScript ile eklenecek -->
+            </div>
+        </section>
+
+        <!-- Görevler -->
+        <section class="tasks-section">
+            <div class="section-heading">
+                <h2>Görevlerim</h2>
+            </div>
+
+            <div class="task-controls">
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Görev ara..."
+                    aria-label="Görev ara"
+                >
+
+                <select id="statusFilter" aria-label="Görev durumuna göre filtrele">
+                    <option value="all">Tüm Görevler</option>
+                    <option value="pending">Bekleyen</option>
+                    <option value="in-progress">Devam Eden</option>
+                    <option value="completed">Tamamlanan</option>
+                </select>
+
+                <select id="weekFilter" aria-label="Haftaya göre filtrele">
+                    <option value="all">Tüm Haftalar</option>
+                </select>
+            </div>
+
+            <div id="tasksContainer" class="tasks-list">
+                <!-- Görevler JavaScript ile eklenecek -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- JavaScript Dosyaları -->
+    <script src="js/courses.js"></script>
+    <script src="js/tasks.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/app.js"></script>
+
+</body>
+</html>
