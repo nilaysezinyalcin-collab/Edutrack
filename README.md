@@ -31,10 +31,21 @@ Bu repo, **Yazılım Geliştirme Dersi** kapsamında **Grup 4** tarafından geli
 │   ├── js/                  - ai-assistant.js, ui.js, storage.js, app.js, bundle.js
 │   ├── index.html           - Giriş ekranı, KTÜ AGNO motoru, ders programı & AI Robot
 │   ├── test-runner.html     - Canlı birim ve entegrasyon test koşucusu
-│   └── AkademiX_Tek_Tikla_Calistir.html - Kurulumsuz, tek tıkla çalışan dosya
+│   ├── AkademiX_Tek_Tikla_Calistir.html - Kurulumsuz, tek tıkla çalışan dosya
+│   └── baslat.sh            - Yerel sunucu başlatma scripti
 │
-├── docs/                    📑 Dokümantasyon, test senaryoları ve rapor taslakları
-├── baslat.sh                ⚡ Otomatik sunucu başlatma scripti
+├── docs/                    📑 Dokümantasyon, test senaryoları, sunumlar ve raporlar
+│   ├── test-senaryolari.md
+│   ├── proje-raporu-taslak.md
+│   ├── Proje_1_Etkilesimli_Ders_Deneyimi_Panosu_Teknik_Dokuman.docx
+│   ├── Yazilim_Gelistirme_Dersi_Ogrenci_Bilgilendirme_Rehberi.docx
+│   ├── Yazilim_Gelistirme_Dersi_Ogrenci_Bilgilendirme_Sunumu_v2.pptx
+│   ├── gereksinim_analizi.pptx
+│   ├── er_diyagram_v2.png
+│   ├── ogrenci_paneli_diyagram_mavi.png
+│   ├── GITHUB_PAYLASIM_REHBERI.md
+│   └── ARKADASLAR_ICIN_BILGI_NOTU.txt
+│
 └── README.md                📖 Genel repo tanıtımı
 ```
 
@@ -53,15 +64,16 @@ Bu repo, **Yazılım Geliştirme Dersi** kapsamında **Grup 4** tarafından geli
 
 ## 💻 Nasıl Çalıştırılır?
 
-### Yöntem 1: Başlatma Scripti ile (Önerilen)
+### AkademiX (Gelişmiş Sürüm):
 ```bash
-# Gelişmiş AkademiX sürümünü açmak için:
-./baslat.sh
-
-# Temel EduTrack sürümünü açmak için:
-./baslat.sh edutrack
+cd akademix && ./baslat.sh
+# Veya:
+python3 -m http.server 5173 --directory akademix
 ```
 Tarayıcınızdan **`http://localhost:5173`** adresine gidiniz.
+*(Ya da `akademix/AkademiX_Tek_Tikla_Calistir.html` dosyasına çift tıklayarak kurulumsuz açabilirsiniz).*
 
-### Yöntem 2: Kurulumsuz Doğrudan Açma
-* `akademix/AkademiX_Tek_Tikla_Calistir.html` veya `akademix/index.html` dosyasına çift tıklayarak tarayıcınızda açabilirsiniz.
+### EduTrack (Temel Sürüm):
+```bash
+python3 -m http.server 5173 --directory edutrack
+```
