@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QA Otomatik Test Koşucu | Grup 4</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .qa-container {
+      max-width: 1000px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+    }
+    .qa-card {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      box-shadow: var(--shadow-md);
+      margin-bottom: 2rem;
+    }
+    .qa-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    .btn-run-tests {
+      background: linear-gradient(135deg, var(--primary), #8b5cf6);
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: var(--radius-md);
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: transform var(--transition-fast);
+    }
+    .btn-run-tests:hover {
+      transform: translateY(-2px);
+    }
+    .test-summary-boxes {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .summary-box {
+      background-color: var(--bg-surface-elevated);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      text-align: center;
+    }
+    .summary-box h3 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin-bottom: 0.25rem;
+    }
+    .summary-box p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .box-passed h3 { color: var(--success); }
+    .box-failed h3 { color: var(--danger); }
+    .box-total h3 { color: var(--primary); }
+
+    .test-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .test-table th, .test-table td {
+      padding: 0.85rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .test-table th {
+      background-color: var(--bg-surface-elevated);
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+    .status-badge {
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 0.25rem 0.65rem;
+      border-radius: var(--radius-full);
+      display: inline-block;
+    }
+    .status-pass {
+      background-color: var(--success-light);
+      color: var(--success);
+    }
+    .status-fail {
+      background-color: #fee2e2;
+      color: #b91c1c;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="app-header">
+    <div class="header-container">
+      <div class="logo-area">
+        <div class="logo-icon">QA</div>
+        <div class="logo-text">
+          <h1>Kalite Güvencesi & Test Paneli</h1>
+          <span class="logo-subtitle">İsmail Korkmaz (Test / Kalite Sorumlusu) • Proje 1</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <a href="index.html" class="btn-theme" style="text-decoration:none;">← Panoya Dön</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="qa-container">
+    <div class="qa-card">
+      <div class="qa-header">
+        <div>
+          <h2>Otomatik Doğrulama ve Entegrasyon Testleri</h2>
+          <p class="text-muted">17 FR ve 10 NFR gereksinimlerinin istemci tarafı kod doğrulama sonuçları.</p>
+        </div>
+        <button id="btn-start-tests" class="btn-run-tests">
+          ▶ Testleri Çalıştır
+        </button>
+      </div>
+
+      <div class="test-summary-boxes">
+        <div class="summary-box box-total">
+          <h3 id="stat-total">10</h3>
+          <p>Toplam Test Senaryosu</p>
+        </div>
+        <div class="summary-box box-passed">
+          <h3 id="stat-passed">0</h3>
+          <p>Başarılı (PASS)</p>
+        </div>
+        <div class="summary-box box-failed">
+          <h3 id="stat-failed">0</h3>
+          <p>Başarısız (FAIL)</p>
+        </div>
+      </div>
+
+      <table class="test-table" aria-label="Otomatik test sonuç tablosu">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Test Senaryosu / Kriter</th>
+            <th>Çalışma Süresi</th>
+            <th>Durum</th>
+          </tr>
+        </thead>
+        <tbody id="test-results-tbody">
+          <tr>
+            <td colspan="4" style="text-align:center; color:var(--text-muted); padding:2rem;">
+              Testleri başlatmak için yukarıdaki <strong>"Testleri Çalıştır"</strong> butonuna tıklayın.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <script type="module">
+    import { TestRunner } from "./js/tests.js";
+
+    const btn = document.getElementById("btn-start-tests");
+    const tbody = document.getElementById("test-results-tbody");
+    const passedElem = document.getElementById("stat-passed");
+    const failedElem = document.getElementById("stat-failed");
+    const totalElem = document.getElementById("stat-total");
+
+    btn.addEventListener("click", async () => {
+      btn.disabled = true;
+      btn.textContent = "⏳ Testler Koşuluyor...";
+      tbody.innerHTML = "";
+
+      let passCount = 0;
+      let failCount = 0;
+
+      await TestRunner.runAllTests((result) => {
+        if (result.status === "PASS") passCount++;
+        else failCount++;
+
+        passedElem.textContent = passCount;
+        failedElem.textContent = failCount;
+
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td><strong>${result.id}</strong></td>
+          <td>
+            ${result.name}
+            ${result.error ? `<div style="color:var(--danger); font-size:0.8rem; margin-top:0.25rem;">Hata: ${result.error}</div>` : ""}
+          </td>
+          <td>${result.duration}</td>
+          <td>
+            <span class="status-badge ${result.status === "PASS" ? "status-pass" : "status-fail"}">
+              ${result.status}
+            </span>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      btn.disabled = false;
+      btn.textContent = "✓ Testler Tamamlandı (Yeniden Çalıştır)";
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+===================================================================
+🏔️ AKADEMİX - KTÜ YAZILIM MÜHENDİSLİĞİ PROJE 1 (GRUP 4)
+===================================================================
+
+Merhaba Ekip Arkadaşlarım (Nilay, Oğuzhan, Onur),
+
+Bu arşivde Proje 1 için hazırladığımız tüm kaynak kodlar, dokümantasyonlar, 
+sunumlar ve diyagramlar yer almaktadır.
+
+-------------------------------------------------------------------
+🚀 1. UYGULAMAYI ANINDA ÇALIŞTIRMAK İÇİN:
+-------------------------------------------------------------------
+* "AkademiX_Tek_Tikla_Calistir.html" dosyasına çift tıklamanız yeterlidir.
+  - Hiçbir sunucu, Node.js veya eklenti kurmanıza gerek yoktur.
+  - Chrome, Edge, Safari vb. tüm tarayıcılarda doğrudan açılır.
+  - Giriş ekranı, KTÜ 30 kişi kuralı / BDS not simülatörü, ders programı,
+    görev kartları ve sevimli AkademiX AI Robotu eksiksiz çalışır.
+
+-------------------------------------------------------------------
+📂 2. DOSYA VE KLASÖR YAPISI:
+-------------------------------------------------------------------
+* src/                 : Projenin modüler kaynak kodları (index.html, style.css, js/ modülleri)
+* docs/                : Test senaryoları matrisi ve rapor taslağı
+* *.docx / *.pptx      : Proje teknik şartnamesi, sunumlar ve gereksinim analizi
+* *.png                : ER veri tabanı ve kullanıcı akış diyagramları
+
+-------------------------------------------------------------------
+👥 3. GITHUB COMMIT & İŞ BÖLÜMÜ:
+-------------------------------------------------------------------
+* Kimin hangi dosyaları hangi commit mesajlarıyla GitHub'a yükleyeceği 
+  "GITHUB_PAYLASIM_REHBERI.md" dosyasında adım adım yazılmıştır.
+  Herkes kendi rolüne göre commit atıp %40 bireysel katkı puanını tam alabilir.
+
+Başarılar!
+İsmail Korkmaz (Grup 4)
