@@ -1,311 +1,269 @@
-/**
- * Proje 1 - Etkileşimli Ders Deneyimi Panosu
- * Ana Uygulama Mantığı ve Olay Yöneticisi (3. Hafta Geliştirilmiş Sürüm)
- * Geliştirici: Onur Uzun (Dokümantasyon + Geliştirici) & Ekip
- */
 
-import { INITIAL_WEEKS_DATA, INITIAL_TASKS_DATA, SCHEDULE_DATA, EXAM_DATA } from "./data.js";
-import { StorageService } from "./storage.js";
-import { UIManager } from "./ui.js";
+// ============================================
+// EDUTRACK - ANA UYGULAMA DOSYASI
+// ============================================
 
-class App {
-  constructor() {
-    this.weeks = INITIAL_WEEKS_DATA;
-    this.initialTasks = INITIAL_TASKS_DATA;
-    this.activeWeek = null; // null = tüm haftalar
-    this.activeStatusFilter = "all"; // all, in-progress, completed
-    this.sortBy = "default"; // default, priority, week
-    this.searchQuery = "";
-  }
+// Görevleri kayıtlı verilerden yükle
+let currentTasks = loadTasks(tasks);
 
-  get allTasks() {
-    const customTasks = StorageService.getCustomTasks();
-    return [...customTasks, ...this.initialTasks];
-  }
+// HTML elemanlarını seç
+const coursesContainer = document.getElementById("coursesContainer");
+const tasksContainer = document.getElementById("tasksContainer");
 
-  init() {
-    try {
-      this.initTheme();
-      this.refreshAll();
+const totalCoursesElement = document.getElementById("totalCourses");
+const completedTasksElement = document.getElementById("completedTasks");
+const totalTasksElement = document.getElementById("totalTasks");
 
-      UIManager.renderSchedule(SCHEDULE_DATA);
-      UIManager.renderExams(EXAM_DATA);
-      this.renderNotesSection();
+const progressPercentage = document.getElementById("progressPercentage");
+const progressFill = document.getElementById("progressFill");
 
-      this.bindEvents();
-      window.appInstance = this;
-      console.log("Etkileşimli Ders Panosu v2.0 (3. Hafta) başarıyla yüklendi.");
-    } catch (err) {
-      console.error("Uygulama başlatma hatası:", err);
-    }
-  }
+const searchInput = document.getElementById("searchInput");
+const statusFilter = document.getElementById("statusFilter");
+const weekFilter = document.getElementById("weekFilter");
+const themeToggle = document.getElementById("themeToggle");
 
-  initTheme() {
-    const savedTheme = StorageService.getTheme();
-    document.documentElement.setAttribute("data-theme", savedTheme);
-    this.updateThemeButtonIcon(savedTheme);
-  }
 
-  toggleTheme() {
-    const currentTheme = document.documentElement.getAttribute("data-theme") || "light";
-    const nextTheme = currentTheme === "light" ? "dark" : "light";
-    document.documentElement.setAttribute("data-theme", nextTheme);
-    StorageService.setTheme(nextTheme);
-    this.updateThemeButtonIcon(nextTheme);
-    UIManager.showToast(`Tema değiştirildi: ${nextTheme === "dark" ? "Karanlık" : "Aydınlık"}`);
-  }
+// ============================================
+// 1. DERS KARTLARINI GÖSTER
+// ============================================
 
-  updateThemeButtonIcon(theme) {
-    const btn = document.getElementById("theme-toggle-btn");
-    if (!btn) return;
-    btn.innerHTML = theme === "dark" ? "☀️ Aydınlık Mod" : "🌙 Karanlık Mod";
-  }
+function renderCourses() {
+    coursesContainer.innerHTML = "";
 
-  getFilteredTasks() {
-    const states = StorageService.getTaskStates();
-    let tasks = [...this.allTasks];
+    courses.forEach(course => {
+        const card = document.createElement("article");
+        card.className = "course-card";
 
-    // 1. Hafta filtresi
-    if (this.activeWeek !== null) {
-      tasks = tasks.filter(t => t.weekNo === this.activeWeek);
-    }
+        const title = document.createElement("h3");
+        title.textContent = `${course.week}. Hafta - ${course.title}`;
 
-    // 2. Durum filtresi
-    if (this.activeStatusFilter === "completed") {
-      tasks = tasks.filter(t => states[t.id] !== undefined ? states[t.id] : t.completed);
-    } else if (this.activeStatusFilter === "in-progress") {
-      tasks = tasks.filter(t => !(states[t.id] !== undefined ? states[t.id] : t.completed));
-    }
+        const description = document.createElement("p");
+        description.textContent = course.description;
 
-    // 3. Arama filtresi
-    if (this.searchQuery.trim() !== "") {
-      const q = this.searchQuery.toLowerCase();
-      tasks = tasks.filter(t => 
-        t.title.toLowerCase().includes(q) ||
-        t.description.toLowerCase().includes(q) ||
-        t.category.toLowerCase().includes(q)
-      );
-    }
+        const objectivesTitle = document.createElement("strong");
+        objectivesTitle.textContent = "Öğrenme Hedefleri";
 
-    // 4. Sıralama
-    if (this.sortBy === "priority") {
-      const priorityWeight = { "Yüksek": 3, "Orta": 2, "Düşük": 1 };
-      tasks.sort((a, b) => (priorityWeight[b.priority] || 0) - (priorityWeight[a.priority] || 0));
-    } else if (this.sortBy === "week") {
-      tasks.sort((a, b) => a.weekNo - b.weekNo);
-    }
+        const objectivesList = document.createElement("ul");
 
-    return tasks;
-  }
+        course.objectives.forEach(objective => {
+            const item = document.createElement("li");
+            item.textContent = objective;
+            objectivesList.appendChild(item);
+        });
 
-  refreshAll() {
-    const states = StorageService.getTaskStates();
-    const tasks = this.allTasks;
-
-    // Haftalık kartlar
-    UIManager.renderWeeks(this.weeks, this.activeWeek, (weekNo) => {
-      const week = this.weeks.find(w => w.weekNo === weekNo);
-      if (week) UIManager.openWeekModal(week);
+        card.append(title, description, objectivesTitle, objectivesList);
+        coursesContainer.appendChild(card);
     });
-
-    // Görevler
-    const filteredTasks = this.getFilteredTasks();
-    UIManager.renderTasks(filteredTasks, states, (taskId, isChecked) => {
-      this.handleTaskToggle(taskId, isChecked);
-    });
-
-    // İlerleme çubuğu ve İstatistik Sayaçları
-    UIManager.updateProgress(tasks, states);
-    UIManager.updateStatCounters(tasks, states);
-  }
-
-  handleTaskToggle(taskId, isChecked) {
-    StorageService.setTaskState(taskId, isChecked);
-    const states = StorageService.getTaskStates();
-    const tasks = this.allTasks;
-
-    const filtered = this.getFilteredTasks();
-    UIManager.renderTasks(filtered, states, (id, val) => this.handleTaskToggle(id, val));
-    UIManager.updateProgress(tasks, states);
-    UIManager.updateStatCounters(tasks, states);
-
-    UIManager.showToast(isChecked ? "Görev tamamlandı! 🎉" : "Görev devam ediyor durumuna alındı.");
-  }
-
-  renderNotesSection() {
-    const notes = StorageService.getNotes();
-    UIManager.renderNotes(notes, (noteId) => {
-      StorageService.deleteNote(noteId);
-      this.renderNotesSection();
-      UIManager.showToast("Not silindi.");
-    });
-  }
-
-  bindEvents() {
-    // Tema Butonu
-    const themeBtn = document.getElementById("theme-toggle-btn");
-    if (themeBtn) themeBtn.addEventListener("click", () => this.toggleTheme());
-
-    // Arama Kutusu
-    const searchInput = document.getElementById("task-search-input");
-    if (searchInput) {
-      searchInput.addEventListener("input", (e) => {
-        this.searchQuery = e.target.value;
-        const filtered = this.getFilteredTasks();
-        const states = StorageService.getTaskStates();
-        UIManager.renderTasks(filtered, states, (id, val) => this.handleTaskToggle(id, val));
-      });
-    }
-
-    // Durum Filtre Butonları
-    const filterButtons = document.querySelectorAll(".btn-filter");
-    filterButtons.forEach(btn => {
-      btn.addEventListener("click", (e) => {
-        filterButtons.forEach(b => b.classList.remove("active"));
-        e.target.classList.add("active");
-        this.activeStatusFilter = e.target.dataset.filter;
-        
-        const filtered = this.getFilteredTasks();
-        const states = StorageService.getTaskStates();
-        UIManager.renderTasks(filtered, states, (id, val) => this.handleTaskToggle(id, val));
-      });
-    });
-
-    // Hafta Filtresi
-    const weekSelect = document.getElementById("week-filter-select");
-    if (weekSelect) {
-      weekSelect.addEventListener("change", (e) => {
-        const val = e.target.value;
-        this.activeWeek = val === "all" ? null : parseInt(val, 10);
-        this.refreshAll();
-      });
-    }
-
-    // Sıralama Seçici (3. Hafta)
-    const sortSelect = document.getElementById("sort-tasks-select");
-    if (sortSelect) {
-      sortSelect.addEventListener("change", (e) => {
-        this.sortBy = e.target.value;
-        const filtered = this.getFilteredTasks();
-        const states = StorageService.getTaskStates();
-        UIManager.renderTasks(filtered, states, (id, val) => this.handleTaskToggle(id, val));
-      });
-    }
-
-    // Modal Kapatma
-    const modalCloseBtn = document.getElementById("modal-close-btn");
-    const modalOverlay = document.getElementById("week-modal");
-    if (modalCloseBtn) modalCloseBtn.addEventListener("click", () => UIManager.closeWeekModal());
-    if (modalOverlay) {
-      modalOverlay.addEventListener("click", (e) => {
-        if (e.target === modalOverlay) UIManager.closeWeekModal();
-      });
-    }
-
-    // Yeni Görev Modalı Olayları (3. Hafta)
-    const btnOpenNewTask = document.getElementById("btn-open-new-task-modal");
-    const btnCloseNewTask = document.getElementById("btn-close-new-task-modal");
-    const modalNewTaskOverlay = document.getElementById("new-task-modal");
-    const formNewTask = document.getElementById("form-new-task");
-
-    if (btnOpenNewTask) btnOpenNewTask.addEventListener("click", () => UIManager.openNewTaskModal());
-    if (btnCloseNewTask) btnCloseNewTask.addEventListener("click", () => UIManager.closeNewTaskModal());
-    if (modalNewTaskOverlay) {
-      modalNewTaskOverlay.addEventListener("click", (e) => {
-        if (e.target === modalNewTaskOverlay) UIManager.closeNewTaskModal();
-      });
-    }
-
-    if (formNewTask) {
-      formNewTask.addEventListener("submit", (e) => {
-        e.preventDefault();
-        const title = document.getElementById("new-task-title").value.trim();
-        const desc = document.getElementById("new-task-desc").value.trim();
-        const weekNo = document.getElementById("new-task-week").value;
-        const priority = document.getElementById("new-task-priority").value;
-        const category = document.getElementById("new-task-category").value.trim() || "Genel";
-
-        if (title) {
-          StorageService.addCustomTask({ title, description: desc, weekNo, priority, category });
-          formNewTask.reset();
-          UIManager.closeNewTaskModal();
-          this.refreshAll();
-          UIManager.showToast("Yeni görev başarıyla oluşturuldu! ✨");
-        }
-      });
-    }
-
-    // JSON Veri Yedekleme (Export) Butonu (3. Hafta)
-    const btnExport = document.getElementById("btn-export-json");
-    if (btnExport) {
-      btnExport.addEventListener("click", () => {
-        const json = StorageService.exportAllDataJSON();
-        const blob = new Blob([json], { type: "application/json" });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = `yg-ders-panosu-yedek-${new Date().toISOString().slice(0, 10)}.json`;
-        a.click();
-        URL.revokeObjectURL(url);
-        UIManager.showToast("Veri yedeği JSON olarak indirildi! 💾");
-      });
-    }
-
-    // JSON Veri Geri Yükleme (Import) Butonu (3. Hafta)
-    const btnImport = document.getElementById("btn-import-json");
-    const fileInput = document.getElementById("file-import-json");
-    if (btnImport && fileInput) {
-      btnImport.addEventListener("click", () => fileInput.click());
-      fileInput.addEventListener("change", (e) => {
-        const file = e.target.files[0];
-        if (file) {
-          const reader = new FileReader();
-          reader.onload = (event) => {
-            const success = StorageService.importAllDataJSON(event.target.result);
-            if (success) {
-              this.initTheme();
-              this.refreshAll();
-              this.renderNotesSection();
-              UIManager.showToast("Yedek başarıyla geri yüklendi! 🔄");
-            } else {
-              UIManager.showToast("Geçersiz yedek dosyası!");
-            }
-          };
-          reader.readAsText(file);
-        }
-      });
-    }
-
-    // Kişisel Not Ekleme Formu
-    const noteForm = document.getElementById("new-note-form");
-    if (noteForm) {
-      noteForm.addEventListener("submit", (e) => {
-        e.preventDefault();
-        const titleInput = document.getElementById("note-title-input");
-        const contentInput = document.getElementById("note-content-input");
-
-        const title = titleInput.value.trim();
-        const content = contentInput.value.trim();
-
-        if (title && content) {
-          StorageService.addNote(title, content);
-          titleInput.value = "";
-          contentInput.value = "";
-          this.renderNotesSection();
-          UIManager.showToast("Kişisel not eklendi!");
-        }
-      });
-    }
-  }
 }
 
-function startApp() {
-  const app = new App();
-  app.init();
+
+// ============================================
+// 2. HAFTA FİLTRESİNİ OLUŞTUR
+// ============================================
+
+function renderWeekFilter() {
+    const weeks = [...new Set(currentTasks.map(task => task.week))];
+
+    weeks.sort((a, b) => a - b);
+
+    weekFilter.innerHTML = '<option value="all">Tüm Haftalar</option>';
+
+    weeks.forEach(week => {
+        const option = document.createElement("option");
+        option.value = week;
+        option.textContent = `${week}. Hafta`;
+
+        weekFilter.appendChild(option);
+    });
 }
 
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", startApp);
-} else {
-  startApp();
+
+// ============================================
+// 3. GÖREVLERİ GÖSTER
+// ============================================
+
+function renderTasks() {
+    const keyword = searchInput.value.trim().toLocaleLowerCase("tr-TR");
+    const selectedStatus = statusFilter.value;
+    const selectedWeek = weekFilter.value;
+
+    const filteredTasks = currentTasks.filter(task => {
+
+        const matchesSearch =
+            task.title.toLocaleLowerCase("tr-TR").includes(keyword) ||
+            task.description.toLocaleLowerCase("tr-TR").includes(keyword);
+
+        const matchesStatus =
+            selectedStatus === "all" ||
+            task.status === selectedStatus;
+
+        const matchesWeek =
+            selectedWeek === "all" ||
+            task.week === Number(selectedWeek);
+
+        return matchesSearch && matchesStatus && matchesWeek;
+    });
+
+    tasksContainer.innerHTML = "";
+
+  if (filteredTasks.length === 0) {
+    tasksContainer.textContent = "Aramanızla eşleşen görev bulunamadı.";
+    tasksContainer.className = "tasks-list empty-message";
+    return;
 }
+
+    tasksContainer.className = "tasks-list";
+
+    filteredTasks.forEach(task => {
+
+        const card = document.createElement("article");
+        card.className = "task-card";
+
+        const info = document.createElement("div");
+        info.className = "task-info";
+
+        const title = document.createElement("h3");
+        title.textContent = task.title;
+
+        const description = document.createElement("p");
+        description.textContent = `${task.week}. Hafta - ${task.description}`;
+
+        info.append(title, description);
+
+        const status = document.createElement("span");
+        status.className = `task-status status-${task.status}`;
+
+        const statusNames = {
+            "pending": "Bekliyor",
+            "in-progress": "Devam Ediyor",
+            "completed": "Tamamlandı"
+        };
+
+        status.textContent = statusNames[task.status] || "Bilinmiyor";
+
+        const button = document.createElement("button");
+        button.className = "task-button";
+        button.textContent = task.status === "completed"
+            ? "Geri Al"
+            : "Tamamla";
+
+        button.addEventListener("click", () => {
+            toggleTaskStatus(task.id);
+        });
+
+        card.append(info, status, button);
+        tasksContainer.appendChild(card);
+    });
+}
+
+
+// ============================================
+// 4. GÖREV DURUMUNU DEĞİŞTİR
+// ============================================
+
+function toggleTaskStatus(taskId) {
+    const task = currentTasks.find(item => item.id === taskId);
+    if (!task) return;
+
+    const statusOrder = [
+        "pending",
+        "in-progress",
+        "completed"
+    ];
+
+    if (!statusOrder.includes(task.status)) {
+        console.error("Geçersiz görev durumu:", task.status);
+        return;
+    }
+
+    const currentIndex = statusOrder.indexOf(task.status);
+    const nextIndex = (currentIndex + 1) % statusOrder.length;
+
+    task.status = statusOrder[nextIndex];
+
+    saveTasks(currentTasks);
+    updateDashboard();
+    renderTasks();
+}
+// ============================================
+// 5. İLERLEME GÖSTERGESİ
+// ============================================
+
+function updateDashboard() {
+
+    const total = currentTasks.length;
+
+    const completed = currentTasks.filter(
+        task => task.status === "completed"
+    ).length;
+
+    const percentage = total === 0
+        ? 0
+        : Math.round((completed / total) * 100);
+
+    totalCoursesElement.textContent = courses.length;
+    totalTasksElement.textContent = total;
+    completedTasksElement.textContent = completed;
+
+    progressPercentage.textContent = `%${percentage}`;
+    progressFill.style.width = `${percentage}%`;
+}
+
+
+// ============================================
+// 6. TEMA DEĞİŞTİRME
+// ============================================
+
+function applyTheme(theme) {
+
+    document.body.classList.toggle(
+        "dark-theme",
+        theme === "dark"
+    );
+
+    themeToggle.textContent = theme === "dark"
+        ? "☀️ Aydınlık Tema"
+        : "🌙 Karanlık Tema";
+}
+
+function toggleTheme() {
+
+    const currentTheme = loadTheme();
+
+    const newTheme = currentTheme === "dark"
+        ? "light"
+        : "dark";
+
+    saveTheme(newTheme);
+    applyTheme(newTheme);
+}
+
+
+// ============================================
+// 7. OLAYLARI BAĞLA
+// ============================================
+
+searchInput.addEventListener("input", renderTasks);
+
+statusFilter.addEventListener("change", renderTasks);
+
+weekFilter.addEventListener("change", renderTasks);
+
+themeToggle.addEventListener("click", toggleTheme);
+
+
+// ============================================
+// 8. UYGULAMAYI BAŞLAT
+// ============================================
+
+function initializeApp() {
+
+    applyTheme(loadTheme());
+
+    renderCourses();
+    renderWeekFilter();
+    renderTasks();
+    updateDashboard();
+}
+
+initializeApp();
