@@ -106,11 +106,11 @@ function renderTasks() {
 
     tasksContainer.innerHTML = "";
 
-    if (filteredTasks.length === 0) {
-        tasksContainer.textContent = "Aramanızla eşleşen görev bulunamadı.";
-        tasksContainer.className = "tasks-list empty-message";
-        return;
-    }
+  if (filteredTasks.length === 0) {
+    tasksContainer.textContent = "Aramanızla eşleşen görev bulunamadı.";
+    tasksContainer.className = "tasks-list empty-message";
+    return;
+}
 
     tasksContainer.className = "tasks-list";
 
@@ -162,22 +162,29 @@ function renderTasks() {
 // ============================================
 
 function toggleTaskStatus(taskId) {
-
     const task = currentTasks.find(item => item.id === taskId);
-
     if (!task) return;
 
-    task.status = task.status === "completed"
-        ? "pending"
-        : "completed";
+    const statusOrder = [
+        "pending",
+        "in-progress",
+        "completed"
+    ];
+
+    if (!statusOrder.includes(task.status)) {
+        console.error("Geçersiz görev durumu:", task.status);
+        return;
+    }
+
+    const currentIndex = statusOrder.indexOf(task.status);
+    const nextIndex = (currentIndex + 1) % statusOrder.length;
+
+    task.status = statusOrder[nextIndex];
 
     saveTasks(currentTasks);
-
     updateDashboard();
     renderTasks();
 }
-
-
 // ============================================
 // 5. İLERLEME GÖSTERGESİ
 // ============================================
