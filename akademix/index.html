@@ -2115,7 +2115,328 @@
       handleAiUserSubmit(new Event('submit'));
     }
 
-    function handleAiUserSubmit(e) {
+
+    // =========================================================================
+    // GERÇEK YAPAY ZEKA API ENTEGRASYONU (GOOGLE GEMINI & OPENAI)
+    // =========================================================================
+    var AI_CONFIG_KEY_PROVIDER = "akx_ai_provider";
+    var AI_CONFIG_KEY_KEY = "akx_ai_key";
+    var AI_CONFIG_KEY_MODEL = "akx_ai_model";
+
+    function getAiProvider() {
+      return localStorage.getItem(AI_CONFIG_KEY_PROVIDER) || "gemini";
+    }
+
+    function getAiApiKey() {
+      return (localStorage.getItem(AI_CONFIG_KEY_KEY) || "").trim();
+    }
+
+    function getAiModel() {
+      var p = getAiProvider();
+      var def = p === "openai" ? "gpt-4o-mini" : "gemini-1.5-flash";
+      return localStorage.getItem(AI_CONFIG_KEY_MODEL) || def;
+    }
+
+    function updateAiProviderBadge() {
+      var badge = document.getElementById("ai-provider-badge");
+      if (!badge) return;
+
+      var p = getAiProvider();
+      var key = getAiApiKey();
+
+      if (p !== "local" && key) {
+        badge.className = "ai-provider-badge active-api";
+        var label = p === "openai" ? "🌐 ChatGPT (Canlı)" : "🌐 Gemini AI (Canlı)";
+        badge.innerHTML = `<span style="font-size:0.8rem;">●</span> ${label}`;
+        badge.title = "Canlı Yapay Zeka API bağlı (" + getAiModel() + ") - Değiştirmek için tıkla";
+      } else {
+        badge.className = "ai-provider-badge";
+        badge.innerHTML = `<span>⚡</span> Yerel Motor`;
+        badge.title = "Dahili KTÜ kural motoru devrede - Gerçek API bağlamak için tıkla";
+      }
+    }
+
+    function openAiApiSettingsModal() {
+      var modal = document.getElementById("modal-ai-api-settings");
+      if (!modal) return;
+
+      var selP = document.getElementById("ai-settings-provider");
+      var inpK = document.getElementById("ai-settings-key");
+      var selM = document.getElementById("ai-settings-model");
+      var fb = document.getElementById("ai-test-feedback");
+      if (fb) fb.style.display = "none";
+
+      if (selP) selP.value = getAiProvider();
+      if (inpK) inpK.value = getAiApiKey();
+
+      handleAiProviderChange();
+
+      if (selM) selM.value = getAiModel();
+
+      modal.style.display = "flex";
+    }
+
+    function closeAiApiSettingsModal() {
+      var modal = document.getElementById("modal-ai-api-settings");
+      if (modal) modal.style.display = "none";
+    }
+
+    function handleAiProviderChange() {
+      var selP = document.getElementById("ai-settings-provider");
+      var p = selP ? selP.value : "gemini";
+      var keyGrp = document.getElementById("ai-key-group");
+      var modelGrp = document.getElementById("ai-model-group");
+      var selM = document.getElementById("ai-settings-model");
+      var link = document.getElementById("ai-key-link");
+      var inpK = document.getElementById("ai-settings-key");
+
+      if (p === "local") {
+        if (keyGrp) keyGrp.style.display = "none";
+        if (modelGrp) modelGrp.style.display = "none";
+      } else {
+        if (keyGrp) keyGrp.style.display = "block";
+        if (modelGrp) modelGrp.style.display = "block";
+
+        if (p === "openai") {
+          if (link) {
+            link.href = "https://platform.openai.com/api-keys";
+            link.textContent = "🔑 OpenAI API Key Al ↗";
+          }
+          if (inpK) inpK.placeholder = "sk-...";
+          if (selM) {
+            selM.innerHTML = `
+              <option value="gpt-4o-mini">gpt-4o-mini (Hızlı & Ekonomik)</option>
+              <option value="gpt-4o">gpt-4o (En Yetenekli)</option>
+            `;
+          }
+        } else {
+          // Gemini
+          if (link) {
+            link.href = "https://aistudio.google.com/app/apikey";
+            link.textContent = "🔑 Ücretsiz Gemini API Key Al ↗";
+          }
+          if (inpK) inpK.placeholder = "AIzaSy...";
+          if (selM) {
+            selM.innerHTML = `
+              <option value="gemini-1.5-flash">gemini-1.5-flash (En Hızlı & Dengeli)</option>
+              <option value="gemini-2.0-flash">gemini-2.0-flash (En Yeni & Akıllı)</option>
+              <option value="gemini-1.5-pro">gemini-1.5-pro (Kapsamlı Düşünce)</option>
+            `;
+          }
+        }
+      }
+    }
+
+    function toggleApiKeyVisibility() {
+      var inp = document.getElementById("ai-settings-key");
+      if (!inp) return;
+      inp.type = inp.type === "password" ? "text" : "password";
+    }
+
+    function saveAiApiSettings() {
+      var p = document.getElementById("ai-settings-provider").value;
+      var k = document.getElementById("ai-settings-key").value.trim();
+      var m = document.getElementById("ai-settings-model").value;
+
+      localStorage.setItem(AI_CONFIG_KEY_PROVIDER, p);
+      localStorage.setItem(AI_CONFIG_KEY_KEY, k);
+      localStorage.setItem(AI_CONFIG_KEY_MODEL, m);
+
+      updateAiProviderBadge();
+      closeAiApiSettingsModal();
+
+      if (p !== "local" && k) {
+        showPortalToast("🎉 " + (p === "openai" ? "OpenAI" : "Google Gemini") + " API başarıyla bağlandı!");
+      } else {
+        showPortalToast("Dahili yerel yapay zeka motoru devrede ⚡");
+      }
+    }
+
+    function clearAiApiKey() {
+      localStorage.setItem(AI_CONFIG_KEY_PROVIDER, "local");
+      localStorage.removeItem(AI_CONFIG_KEY_KEY);
+      localStorage.removeItem(AI_CONFIG_KEY_MODEL);
+
+      var inpK = document.getElementById("ai-settings-key");
+      var selP = document.getElementById("ai-settings-provider");
+      if (inpK) inpK.value = "";
+      if (selP) selP.value = "local";
+      handleAiProviderChange();
+
+      updateAiProviderBadge();
+      var fb = document.getElementById("ai-test-feedback");
+      if (fb) {
+        fb.style.display = "block";
+        fb.style.background = "rgba(239,68,68,0.1)";
+        fb.style.color = "var(--danger)";
+        fb.style.border = "1px solid var(--danger)";
+        fb.innerHTML = "🧹 API anahtarı temizlendi. Sistem yerel akıllı motora geçirildi.";
+      }
+      showPortalToast("API anahtarı sıfırlandı. Yerel mod devrede.");
+    }
+
+    async function testAiApiConnection() {
+      var p = document.getElementById("ai-settings-provider").value;
+      var k = document.getElementById("ai-settings-key").value.trim();
+      var m = document.getElementById("ai-settings-model").value;
+      var fb = document.getElementById("ai-test-feedback");
+      if (!fb) return;
+
+      if (p === "local") {
+        fb.style.display = "block";
+        fb.style.background = "rgba(99,102,241,0.1)";
+        fb.style.color = "var(--primary)";
+        fb.style.border = "1px solid var(--primary)";
+        fb.innerHTML = "⚡ Yerel mod seçili: Herhangi bir API anahtarına gerek olmadan doğrudan çalışır!";
+        return;
+      }
+
+      if (!k) {
+        fb.style.display = "block";
+        fb.style.background = "rgba(239,68,68,0.1)";
+        fb.style.color = "var(--danger)";
+        fb.style.border = "1px solid var(--danger)";
+        fb.innerHTML = "❌ Lütfen önce bir API anahtarı giriniz!";
+        return;
+      }
+
+      fb.style.display = "block";
+      fb.style.background = "rgba(245,158,11,0.1)";
+      fb.style.color = "var(--warning)";
+      fb.style.border = "1px solid var(--warning)";
+      fb.innerHTML = "⏳ Bağlantı test ediliyor, lütfen bekleyiniz...";
+
+      try {
+        var reply = "";
+        if (p === "openai") {
+          reply = await callOpenAiApi("Test bağlantısı, lütfen sadece 'OK' yaz.", k, m);
+        } else {
+          reply = await callGeminiApi("Test ping, cevap olarak sadece 'Hazırım' de.", k, m);
+        }
+
+        fb.style.background = "rgba(16,185,129,0.12)";
+        fb.style.color = "#059669";
+        fb.style.border = "1px solid #10b981";
+        fb.innerHTML = `✅ <strong>Bağlantı Başarılı!</strong> (${p.toUpperCase()} - ${m})<br/><small style="opacity:0.85;">Model Yanıtı: "${escapeAiHtml(reply.slice(0, 80))}"</small>`;
+      } catch(err) {
+        fb.style.background = "rgba(239,68,68,0.12)";
+        fb.style.color = "var(--danger)";
+        fb.style.border = "1px solid var(--danger)";
+        fb.innerHTML = `❌ <strong>Bağlantı Hatası:</strong> ${escapeAiHtml(err.message || "Bilinmeyen hata")}<br/><small style="opacity:0.8;">Lütfen API anahtarınızı ve internet bağlantınızı kontrol ediniz.</small>`;
+      }
+    }
+
+    async function callGeminiApi(promptText, apiKey, model) {
+      model = model || "gemini-1.5-flash";
+      var url = "https://generativelanguage.googleapis.com/v1beta/models/" + model + ":generateContent?key=" + apiKey;
+
+      var systemContext = "Sen Karadeniz Teknik Üniversitesi (KTÜ) Yazılım Mühendisliği Öğrenci Başarı ve Ders Paneli 'AkademiX'in sevimli, zeki yapay zeka danışmanısın. İsmail Korkmaz (444082), Nilay Sezin Yalçın, Oğuzhan İnce ve Onur Uzun (Grup 4) tarafından geliştirildin. Görevin öğrencilere ders içerikleri, haftalık görevler, KTÜ 30 kişi kuralı (30'dan azsa MDS mutlak harf notları, 30 ve üzeriyse BDS çan eğrisi; final barajı en az 50), ders programı ve sınav notu hesaplama konularında samimi, motive edici, nazik ve emojili Türkçe rehberlik etmektir. Yanıtlarını kısa, net, samimi ve markdown formatında ver.";
+
+      var payload = {
+        contents: [
+          {
+            role: "user",
+            parts: [{ text: systemContext + "\n\nÖğrenci: " + promptText }]
+          }
+        ],
+        generationConfig: {
+          temperature: 0.7,
+          maxOutputTokens: 800
+        }
+      };
+
+      var resp = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      if (!resp.ok) {
+        var errData = await resp.json().catch(function() { return {}; });
+        var msg = (errData && errData.error && errData.error.message) ? errData.error.message : ("HTTP " + resp.status);
+        throw new Error(msg);
+      }
+
+      var data = await resp.json();
+      var text = data && data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0] ? data.candidates[0].content.parts[0].text : null;
+      if (!text) throw new Error("Gemini API'den geçerli metin yanıtı alınamadı.");
+      return text;
+    }
+
+    async function callOpenAiApi(promptText, apiKey, model) {
+      model = model || "gpt-4o-mini";
+      var url = "https://api.openai.com/v1/chat/completions";
+
+      var systemPrompt = "Sen KTÜ Yazılım Mühendisliği AkademiX panelinin yapay zeka danışmanısın. İsmail Korkmaz ve Grup 4 tarafından geliştirildin. Öğrencilere KTÜ dersleri, 30 kişi kuralı, BDS çan eğrisi, ders programı ve not hesaplama konularında samimi, emojili ve yardımcı Türkçe cevaplar verirsin.";
+
+      var payload = {
+        model: model,
+        messages: [
+          { role: "system", content: systemPrompt },
+          { role: "user", content: promptText }
+        ],
+        temperature: 0.7
+      };
+
+      var resp = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + apiKey
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (!resp.ok) {
+        var errData = await resp.json().catch(function() { return {}; });
+        var msg = (errData && errData.error && errData.error.message) ? errData.error.message : ("HTTP " + resp.status);
+        throw new Error(msg);
+      }
+
+      var data = await resp.json();
+      return (data && data.choices && data.choices[0] && data.choices[0].message) ? data.choices[0].message.content : "Yanıt alınamadı.";
+    }
+
+    function detectExtraActionsForPrompt(query) {
+      var raw = query.toLowerCase().trim();
+      var actions = [];
+      var cards = [];
+
+      var vizeMatch = raw.match(/vize[a-z]*\s*[:=\s]?\s*(\d+)/);
+      var finalMatch = raw.match(/final[a-z]*\s*[:=\s]?\s*(\d+)/);
+      if (vizeMatch && finalMatch) {
+        var vize = parseFloat(vizeMatch[1]);
+        var fin = parseFloat(finalMatch[1]);
+        var avg = Math.round(((vize * 0.4) + (fin * 0.6)) * 10) / 10;
+        var letter = "FF";
+        var point = 0.0;
+        if (fin >= 50) {
+          if (avg >= 90) { letter = "AA"; point = 4.0; }
+          else if (avg >= 80) { letter = "BA"; point = 3.5; }
+          else if (avg >= 75) { letter = "BB"; point = 3.0; }
+          else if (avg >= 70) { letter = "CB"; point = 2.5; }
+          else if (avg >= 60) { letter = "CC"; point = 2.0; }
+          else if (avg >= 50) { letter = "DC"; point = 1.5; }
+          else if (avg >= 40) { letter = "DD"; point = 1.0; }
+        }
+        var paramStr = "Yazılım Mühendisliği|4|" + avg + "|" + letter + "|" + point;
+        actions.push({ label: "➕ Bu Notu AGNO Tabloma Ekle (" + letter + ")", action: "add_agno_course", param: paramStr });
+        actions.push({ label: "📊 Not Panosuna Git", action: "goto_grades" });
+      }
+
+      if (raw.includes("ders program") || raw.includes("program")) {
+        actions.push({ label: "📅 Ders Programına Git", action: "goto_schedule" });
+        actions.push({ label: "🧹 Programı Sıfırla", action: "clear_schedule" });
+      }
+
+      if (raw.includes("görev") || raw.includes("ödev") || raw.includes("hafta")) {
+        actions.push({ label: "📋 Tüm Görevleri Gör", action: "filter_all" });
+      }
+
+      return { actions: actions, cards: cards };
+    }
+
+    async function handleAiUserSubmit(e) {
       if (e) e.preventDefault();
       var input = document.getElementById("ai-user-input");
       var text = input.value.trim();
@@ -2126,11 +2447,51 @@
 
       showAiTypingIndicator();
 
+      var provider = getAiProvider();
+      var apiKey = getAiApiKey();
+
+      // Eğer kullanıcı doğrudan bir ders ekleme / silme / hesap komutu vermediyse ve API key varsa canlı API'ye sor
+      var isDirectScheduleAdd = /pazartesi|salı|sali|çarşamba|carsamba|perşembe|persembe|cuma/i.test(text) && /\d{1,2}[:.]\d{2}/.test(text);
+
+      if (provider !== "local" && apiKey && !isDirectScheduleAdd) {
+        try {
+          var model = getAiModel();
+          var realText = "";
+          if (provider === "openai") {
+            realText = await callOpenAiApi(text, apiKey, model);
+          } else {
+            realText = await callGeminiApi(text, apiKey, model);
+          }
+
+          hideAiTypingIndicator();
+
+          var extras = detectExtraActionsForPrompt(text);
+          extras.actions.push({ label: "⚙️ API Ayarları", action: "open_ai_settings" });
+
+          appendAiBotMessage({
+            text: realText,
+            actions: extras.actions,
+            cards: extras.cards,
+            tag: provider === "openai" ? "🌐 ChatGPT (Canlı)" : "🌐 Gemini AI (Canlı)"
+          });
+          return;
+        } catch(apiErr) {
+          console.warn("Canlı AI API hatası, yerel motora geçiliyor:", apiErr);
+          showPortalToast("⚠️ API yanıt vermedi (" + (apiErr.message || "Hata") + "). Yerel motor yanıtlıyor.");
+        }
+      }
+
+      // Dahili Yerel Akıllı Motor (Fallback)
       setTimeout(function() {
         hideAiTypingIndicator();
         var response = generateAiAssistantResponse(text);
+        if (!response.actions) response.actions = [];
+        if (!apiKey) {
+          response.actions.push({ label: "⚙️ Gerçek AI API Bağla", action: "open_ai_settings" });
+        }
+        response.tag = "⚡ Yerel Motor";
         appendAiBotMessage(response);
-      }, 420);
+      }, 350);
     }
 
     function appendAiUserMessage(text) {
@@ -2148,6 +2509,7 @@
       d.className = "ai-message bot";
 
       var formattedText = formatAiMarkdown(res.text || "");
+      var tagHtml = res.tag ? `<div class="ai-api-tag ${res.tag.includes('Canlı') ? 'real' : ''}">${escapeAiHtml(res.tag)}</div>` : '';
       var cardsHtml = "";
       if (res.cards && res.cards.length > 0) {
         cardsHtml += '<div class="ai-cards-stack">';
@@ -2772,7 +3134,9 @@
     }
 
     function executeAiAction(actionType, param) {
-      if (actionType === "quick_demo_login") {
+      if (actionType === "open_ai_settings") {
+        openAiApiSettingsModal();
+      } else if (actionType === "quick_demo_login") {
         quickDemoLogin();
       } else if (actionType === "filter_week") {
         document.getElementById("filter-week-select").value = param;
@@ -2990,7 +3354,9 @@
           </div>
         </div>
       </div>
-      <div class="ai-header-actions">
+      <div class="ai-header-actions" style="display:flex; align-items:center; gap:0.35rem;">
+        <span id="ai-provider-badge" class="ai-provider-badge" onclick="openAiApiSettingsModal()" title="Yapay Zeka API Ayarlarını Aç">⚡ Yerel Motor</span>
+        <button class="ai-btn-icon" onclick="openAiApiSettingsModal()" title="API Ayarları (Gemini / OpenAI)">⚙️</button>
         <button class="ai-btn-icon" onclick="resetAiChat()" title="Sohbeti Sıfırla">🔄</button>
         <button class="ai-btn-icon" onclick="toggleAiDrawer(false)" title="Pencereyi Kapat">✕</button>
       </div>
@@ -3013,6 +3379,71 @@
       <input type="text" id="ai-user-input" class="ai-input-field" placeholder="Bir şey sor (Örn: KTÜ çan eğrisi, görevlerim)..." autocomplete="off" />
       <button type="submit" class="ai-btn-send" title="Gönder">➤</button>
     </form>
+  </div>
+
+
+  <!-- =========================================================================
+       YAPAY ZEKA (GEMINI / OPENAI) API AYARLARI MODALI
+       ========================================================================= -->
+  <div id="modal-ai-api-settings" class="modal-overlay" style="z-index:10500;">
+    <div class="modal-content" style="max-width:540px; padding:2rem;">
+      <div class="modal-header">
+        <h3 style="display:flex; align-items:center; gap:0.6rem; font-size:1.25rem; font-weight:800; margin:0;">
+          <span>🤖</span>
+          <span>Yapay Zeka API Ayarları</span>
+        </h3>
+        <button class="modal-close-btn" onclick="closeAiApiSettingsModal()">✕</button>
+      </div>
+
+      <div style="margin-top:1rem;">
+        <p style="font-size:0.88rem; color:var(--text-muted); line-height:1.5; margin-bottom:1.1rem;">
+          AkademiX Asistanı'nı <strong>Google Gemini</strong> veya <strong>OpenAI</strong> bulut yapay zeka modeline bağlayabilirsiniz.
+          API anahtarınız yalnızca tarayıcınızda (yerel) saklanır. Boş bırakırsanız dahili yerel KTÜ motoru çalışmaya devam eder.
+        </p>
+
+        <div class="form-group" style="margin-bottom:1rem;">
+          <label class="form-label" style="font-weight:700;">Yapay Zeka Sağlayıcısı</label>
+          <select id="ai-settings-provider" class="form-input" onchange="handleAiProviderChange()">
+            <option value="gemini">Google Gemini AI (Önerilen - Ücretsiz & Hızlı)</option>
+            <option value="openai">OpenAI (ChatGPT - gpt-4o-mini)</option>
+            <option value="local">Yerel Dahili Motor (API Anahtarsız)</option>
+          </select>
+        </div>
+
+        <div id="ai-key-group" class="form-group" style="margin-bottom:1rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.35rem;">
+            <label class="form-label" style="margin:0; font-weight:700;">API Anahtarı (API Key)</label>
+            <a id="ai-key-link" href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener" style="font-size:0.78rem; color:var(--primary); font-weight:700; text-decoration:underline;">
+              🔑 Ücretsiz Gemini API Key Al ↗
+            </a>
+          </div>
+          <div style="display:flex; gap:0.5rem;">
+            <input type="password" id="ai-settings-key" class="form-input" placeholder="AIzaSy... veya sk-..." style="flex:1;" />
+            <button type="button" class="btn-action" onclick="toggleApiKeyVisibility()" style="padding:0.45rem 0.8rem;" title="Anahtarı Göster / Gizle">👁️</button>
+          </div>
+          <div style="color:var(--text-muted); font-size:0.75rem; margin-top:0.35rem;">
+            * Google AI Studio üzerinden hiçbir kart girmeden ücretsiz Gemini API key alabilirsiniz.
+          </div>
+        </div>
+
+        <div id="ai-model-group" class="form-group" style="margin-bottom:1.25rem;">
+          <label class="form-label" style="font-weight:700;">Model Seçimi</label>
+          <select id="ai-settings-model" class="form-input">
+            <option value="gemini-1.5-flash">gemini-1.5-flash (En Hızlı & Dengeli)</option>
+            <option value="gemini-2.0-flash">gemini-2.0-flash (En Yeni & Akıllı)</option>
+            <option value="gemini-1.5-pro">gemini-1.5-pro (Kapsamlı Düşünce)</option>
+          </select>
+        </div>
+
+        <div id="ai-test-feedback" style="display:none; padding:0.65rem 0.85rem; border-radius:10px; font-size:0.84rem; margin-bottom:1rem;"></div>
+
+        <div style="display:flex; gap:0.6rem; justify-content:flex-end; flex-wrap:wrap;">
+          <button type="button" class="btn-action" onclick="testAiApiConnection()" style="border:1px solid var(--border-color); font-weight:600;">🧪 Bağlantıyı Test Et</button>
+          <button type="button" class="btn-action" onclick="clearAiApiKey()" style="color:var(--danger); border:1px solid var(--danger); font-weight:600;">Yerel Moda Sıfırla</button>
+          <button type="button" class="btn-submit" onclick="saveAiApiSettings()" style="padding:0.55rem 1.25rem; font-weight:800;">💾 Kaydet</button>
+        </div>
+      </div>
+    </div>
   </div>
 
 </body>
