@@ -2,7 +2,7 @@
 
 Bu repository, **Karadeniz Teknik Üniversitesi Yazılım Geliştirme Dersi** kapsamında **Grup 4** tarafından geliştirilen iki aşamalı etkileşimli öğrenci takip ve başarı platformunu içermektedir:
 
-1. **`edutrack/`**: İlk aşamada geliştirilen temel ders ve görev takip panosu (Grup liderinin hazırladığı temel iskelet).
+1. **`edutrack/`**: İlk aşamada geliştirilen temel ders ve görev takip panosu (Temel iskelet).
 2. **`akademix/`**: Daha sonradan geliştirilen; öğrenci giriş/kayıt sistemi, KTÜ 30 kişi kuralı BDS/MDS not simülatörü, dinamik haftalık ders programı, görev matrisi ve **gerçek LLM API (Google Gemini) destekli Sevimli Yapay Zeka Danışmanı** içeren **gelişmiş sürüm**.
 
 ---
@@ -22,7 +22,7 @@ cd Edutrack
 ### 2. Adım: Sunucuyu Başlatın (İşletim Sisteminize Göre)
 
 ####  Windows Kullanıcıları İçin (En Kolayı):
-* **Yöntem A (Tek Tıkla):** Proje klasöründeki **`baslat_windows.bat`** dosyasına çift tıklayın! Python veya Node algılanır, sunucu başlatılır ve tarayıcınızda otomatik olarak açılır.
+* **Yöntem A (Tek Tıkla):** Proje klasöründeki **`baslat_windows.bat`** dosyasına çift tıklayınca Python veya Node algılanır, sunucu başlatılır ve tarayıcınızda otomatik olarak açılır.
 * **Yöntem B (Terminal / CMD / PowerShell):**
   ```cmd
   python server.py
@@ -42,7 +42,7 @@ cd Edutrack
 
 #### Sıfır Kurulum / Sunucusuz Çalıştırma (Acil Durum Modu):
 Bilgisayarınızda Python, Node veya VS Code kurulu değilse bile:
-* Proje kök dizinindeki **`akademix.html`** dosyasına çift tıklamanız yeterlidir! İnternet veya sunucuya ihtiyaç duymadan doğrudan tarayıcınızda açılır.
+* Proje kök dizinindeki **`akademix.html`** dosyasına çift tıklamanız yeterlidir. İnternet veya sunucuya ihtiyaç duymadan doğrudan tarayıcınızda açılır.
 
 ---
 
@@ -58,13 +58,13 @@ Tarayıcınızın adres çubuğuna şunu yazın:
 
 AkademiX'in sağ alt köşesinde yer alan robot maskot, öğrencilere 7/24 rehberlik eden üretken bir yapay zeka beynine sahiptir:
 
-*  **Hazır ve Entegre API:** Projeye Google Gemini API anahtarı önceden tanımlanmıştır. Projeyi açan hiçbir öğrencinin veya hocanın ekstra API anahtarı almasına gerek yoktur; doğrudan konuşmaya başlayabilirsiniz!
+*  **Hazır ve Entegre API:** Projeye Google Gemini API anahtarı önceden tanımlanmıştır. Projeyi açan hiçbir öğrencinin veya hocanın ekstra API anahtarı almasına gerek yoktur. Doğrudan konuşmaya başlayabilirsiniz.
 *  **Kendi Anahtarını Kullanmak İsteyenler İçin:**
   1. Sağ alttaki sevimli robota tıklayarak sohbet çekmecesini açın.
   2. Başlıktaki ** (API Ayarları)** butonuna tıklayın.
   3. Google Gemini veya OpenAI seçip kendi API anahtarınızı girin.
   4. **" Bağlantıyı Test Et"** ve **" Ayarları Kaydet"** butonlarına basın.
-*  **Akıllı Hibrit Güvencesi:** API kotası dolsa veya internet bağlantısı olmasa bile sistem asla çökmez; KTÜ mevzuatını ve ders programını bilen yerel kural motoru otomatik devreye girer.
+*  **Akıllı Hibrit Güvencesi:** API kotası dolsa veya internet bağlantısı olmasa bile sistem asla çökmez. KTÜ mevzuatını ve ders programını bilen yerel kural motoru otomatik devreye girer.
 
 ---
 
@@ -127,6 +127,6 @@ KTÜ Yazılım Mühendisliği mevzuatına uygun geliştirilen not motoru:
 
 ---
 
-## 🧪 Canlı Test ve Kalite Güvencesi
+## Canlı Test ve Kalite Güvencesi
 Projeyi başlattıktan sonra birim testlerin çalıştığını görmek için tarayıcınızdan:
-👉 **`http://localhost:5173/test-runner.html`** adresini ziyaret edebilirsiniz.
+ **`http://localhost:5173/test-runner.html`** adresini ziyaret edebilirsiniz.
