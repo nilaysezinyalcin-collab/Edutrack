@@ -797,6 +797,20 @@ body {
   z-index: 120;
 }
 
+/* Klavye odağı görünür olsun (Issue #5 - erişilebilirlik) */
+[role="button"]:focus-visible,
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
+[role="button"] {
+  cursor: pointer;
+}
+
 /* Responsive */
 @media (max-width: 992px) {
   .weeks-grid { grid-template-columns: repeat(2, 1fr); }

@@ -30,11 +30,11 @@
       <!-- Giriş Formu (FR-03 & Akış Şeması) -->
       <form id="form-login" onsubmit="handleLogin(event)">
         <div class="form-group" style="margin-bottom:0.9rem;">
-          <label class="form-label">E-Posta veya Öğrenci No</label>
+          <label for="login-email" class="form-label">E-Posta veya Öğrenci No</label>
           <input type="text" id="login-email" class="form-input" placeholder="ogrenci@ktu.edu.tr veya 444082" required autocomplete="username" />
         </div>
         <div class="form-group" style="margin-bottom:1rem;">
-          <label class="form-label">Şifre</label>
+          <label for="login-password" class="form-label">Şifre</label>
           <input type="password" id="login-password" class="form-input" placeholder="••••••••" required autocomplete="current-password" />
         </div>
         <div id="login-error-msg" style="display:none; color:var(--danger); background:rgba(239,68,68,0.1); border:1px solid var(--danger); border-radius:var(--radius-sm); padding:0.6rem; font-size:0.82rem; margin-bottom:0.85rem;">
@@ -49,29 +49,29 @@
       <!-- Kayıt Formu (FR-01, FR-02 & Akış Şeması) -->
       <form id="form-register" style="display:none;" onsubmit="handleRegister(event)">
         <div class="form-group" style="margin-bottom:0.75rem;">
-          <label class="form-label">Öğrenci Numarası</label>
+          <label for="reg-no" class="form-label">Öğrenci Numarası</label>
           <input type="text" id="reg-no" class="form-input" placeholder="Örn: 444082" required />
         </div>
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:0.5rem; margin-bottom:0.75rem;">
           <div>
-            <label class="form-label">Ad</label>
+            <label for="reg-ad" class="form-label">Ad</label>
             <input type="text" id="reg-ad" class="form-input" placeholder="Adınız" required />
           </div>
           <div>
-            <label class="form-label">Soyad</label>
+            <label for="reg-soyad" class="form-label">Soyad</label>
             <input type="text" id="reg-soyad" class="form-input" placeholder="Soyadınız" required />
           </div>
         </div>
         <div class="form-group" style="margin-bottom:0.75rem;">
-          <label class="form-label">Bölüm</label>
+          <label for="reg-dept" class="form-label">Bölüm</label>
           <input type="text" id="reg-dept" class="form-input" placeholder="Yazılım Mühendisliği" value="Yazılım Mühendisliği" required />
         </div>
         <div class="form-group" style="margin-bottom:0.75rem;">
-          <label class="form-label">KTÜ E-Posta</label>
+          <label for="reg-email" class="form-label">KTÜ E-Posta</label>
           <input type="email" id="reg-email" class="form-input" placeholder="ogrenci@ktu.edu.tr" required />
         </div>
         <div class="form-group" style="margin-bottom:0.9rem;">
-          <label class="form-label">Şifre (En az 6 Karakter)</label>
+          <label for="reg-password" class="form-label">Şifre (En az 6 Karakter)</label>
           <input type="password" id="reg-password" class="form-input" placeholder="••••••••" required minlength="6" />
         </div>
         <div id="reg-error-msg" style="display:none; color:var(--danger); background:rgba(239,68,68,0.1); border:1px solid var(--danger); border-radius:var(--radius-sm); padding:0.6rem; font-size:0.82rem; margin-bottom:0.85rem;">
@@ -142,28 +142,28 @@
 
         <!-- 4 Renkli Canlı Sayaç Kartı (Tıklanabilir Filtre & Kaydırma) -->
         <div class="stat-pills">
-          <div class="stat-pill" onclick="filterByStatCard('all')" title="Tüm görevleri listele ve görüntüle">
+          <div role="button" tabindex="0" class="stat-pill" onclick="filterByStatCard('all')" title="Tüm görevleri listele ve görüntüle">
             <div class="stat-pill-icon icon-blue">📋</div>
             <div>
               <div class="stat-pill-num" id="stat-total-tasks">9</div>
               <div class="stat-pill-label">Toplam Görev</div>
             </div>
           </div>
-          <div class="stat-pill" onclick="filterByStatCard('completed')" title="Tamamlanan görevleri listele ve görüntüle">
+          <div role="button" tabindex="0" class="stat-pill" onclick="filterByStatCard('completed')" title="Tamamlanan görevleri listele ve görüntüle">
             <div class="stat-pill-icon icon-green">✅</div>
             <div>
               <div class="stat-pill-num" id="stat-done-tasks" style="color:var(--success);">3</div>
               <div class="stat-pill-label">Tamamlanan</div>
             </div>
           </div>
-          <div class="stat-pill" onclick="filterByStatCard('in-progress')" title="Devam eden görevleri listele ve görüntüle">
+          <div role="button" tabindex="0" class="stat-pill" onclick="filterByStatCard('in-progress')" title="Devam eden görevleri listele ve görüntüle">
             <div class="stat-pill-icon icon-purple">⏳</div>
             <div>
               <div class="stat-pill-num" id="stat-pending-tasks" style="color:var(--primary);">6</div>
               <div class="stat-pill-label">Devam Eden</div>
             </div>
           </div>
-          <div class="stat-pill" onclick="filterByStatCard('high-priority')" title="Yüksek öncelikli görevleri listele ve görüntüle">
+          <div role="button" tabindex="0" class="stat-pill" onclick="filterByStatCard('high-priority')" title="Yüksek öncelikli görevleri listele ve görüntüle">
             <div class="stat-pill-icon icon-red">🔥</div>
             <div>
               <div class="stat-pill-num" id="stat-high-tasks" style="color:var(--danger);">4</div>
@@ -190,35 +190,35 @@
         <!-- 4 HAFTALIK MÜFREDAT KARTLARI (VARSAYILAN TEMİZ & KOMPAKT GÖRÜNÜM) -->
         <div id="weeks-modules-grid" class="weeks-grid">
           <!-- 1. Hafta -->
-          <div class="week-card" onclick="showWeekModal(1)" title="1. Hafta detaylarını ve hedeflerini incele">
+          <div role="button" tabindex="0" class="week-card" onclick="showWeekModal(1)" title="1. Hafta detaylarını ve hedeflerini incele">
             <span class="badge-status badge-done">1. Hafta • Tamamlandı</span>
             <h4>Yazılım Yaşam Döngüsü & İhtiyaç Analizi</h4>
             <p>17 FR ve 10 NFR gereksinimlerinin çıkarılması, ER diyagramı ve GitHub yönetimi.</p>
-            <div class="week-card-footer">4 Hedef • 4 Görev (Tamamlandı) →</div>
+            <div role="button" tabindex="0" class="week-card-footer">4 Hedef • 4 Görev (Tamamlandı) →</div>
           </div>
 
           <!-- 2. Hafta -->
-          <div class="week-card active" onclick="showWeekModal(2)" title="2. Hafta detaylarını ve hedeflerini incele">
+          <div role="button" tabindex="0" class="week-card active" onclick="showWeekModal(2)" title="2. Hafta detaylarını ve hedeflerini incele">
             <span class="badge-status badge-active">2. Hafta • Aktif Hafta</span>
             <h4>Arayüz Tasarımı & Temel İskelet</h4>
             <p>Akış şeması ve ER diyagramı doğrultusunda öğrenci paneli iskeletinin kodlanması.</p>
-            <div class="week-card-footer">4 Hedef • 5 Görev (Aktif) →</div>
+            <div role="button" tabindex="0" class="week-card-footer">4 Hedef • 5 Görev (Aktif) →</div>
           </div>
 
           <!-- 3. Hafta -->
-          <div class="week-card" onclick="showWeekModal(3)" title="3. Hafta detaylarını ve hedeflerini incele">
+          <div role="button" tabindex="0" class="week-card" onclick="showWeekModal(3)" title="3. Hafta detaylarını ve hedeflerini incele">
             <span class="badge-status badge-active" style="background:rgba(99,102,241,0.12); color:var(--primary);">3. Hafta • Devam Eden</span>
             <h4>İleri Etkileşim & KTÜ Not Entegrasyonu</h4>
             <p>Çok kriterli filtreleme, arama, KTÜ sınav ortalaması ve otomatik testler.</p>
-            <div class="week-card-footer">4 Hedef • 5 Görev (Devam Ediyor) →</div>
+            <div role="button" tabindex="0" class="week-card-footer">4 Hedef • 5 Görev (Devam Ediyor) →</div>
           </div>
 
           <!-- 4. Hafta -->
-          <div class="week-card" onclick="showWeekModal(4)" title="4. Hafta detaylarını ve hedeflerini incele">
+          <div role="button" tabindex="0" class="week-card" onclick="showWeekModal(4)" title="4. Hafta detaylarını ve hedeflerini incele">
             <span class="badge-status badge-future">4. Hafta • Gelecek</span>
             <h4>Kalite Kontrol & Proje 1 Canlı Demo</h4>
             <p>Test matrisinin doğrulanması, proje teknik raporu ve sunum paketi.</p>
-            <div class="week-card-footer">4 Hedef • 4 Görev (Gelecek) →</div>
+            <div role="button" tabindex="0" class="week-card-footer">4 Hedef • 4 Görev (Gelecek) →</div>
           </div>
         </div>
 
@@ -267,13 +267,13 @@
           <div class="tasks-toolbar">
             <input 
               type="text" 
-              id="task-search-input" 
+              aria-label="Görevlerde ara" id="task-search-input" 
               class="form-input search-field" 
               placeholder="Görevlerde ara (başlık, kategori)..." 
               oninput="filterTasks()" 
             />
 
-            <select id="filter-week-select" class="form-input" style="width:130px;" onchange="filterTasks()">
+            <select aria-label="Haftaya göre filtrele" id="filter-week-select" class="form-input" style="width:130px;" onchange="filterTasks()">
               <option value="all">Tüm Haftalar</option>
               <option value="1">1. Hafta</option>
               <option value="2">2. Hafta</option>
@@ -565,7 +565,7 @@
             <form id="course-add-form" style="display:none; background:var(--bg-hover); padding:0.85rem; border-radius:var(--radius-md); margin-bottom:1rem; border:1px solid var(--border-color);" onsubmit="submitNewCourse(event)">
               <div style="display:grid; grid-template-columns: 1fr 1fr; gap:0.5rem; margin-bottom:0.5rem;">
                 <div>
-                  <label class="form-label" style="font-size:0.72rem;">Gün</label>
+                  <label for="course-day" class="form-label" style="font-size:0.72rem;">Gün</label>
                   <select id="course-day" class="form-input" style="padding:0.4rem; font-size:0.82rem;">
                     <option value="Pazartesi">Pazartesi</option>
                     <option value="Salı">Salı</option>
@@ -575,17 +575,17 @@
                   </select>
                 </div>
                 <div>
-                  <label class="form-label" style="font-size:0.72rem;">Saat (Başlangıç - Bitiş)</label>
+                  <label for="course-time" class="form-label" style="font-size:0.72rem;">Saat (Başlangıç - Bitiş)</label>
                   <input type="text" id="course-time" class="form-input" placeholder="10:00 - 12:30" required style="padding:0.4rem; font-size:0.82rem;" />
                 </div>
               </div>
               <div style="display:grid; grid-template-columns: 1.8fr 1fr; gap:0.5rem; margin-bottom:0.6rem;">
                 <div>
-                  <label class="form-label" style="font-size:0.72rem;">Ders Adı</label>
+                  <label for="course-name" class="form-label" style="font-size:0.72rem;">Ders Adı</label>
                   <input type="text" id="course-name" class="form-input" placeholder="Yazılım Geliştirme" required style="padding:0.4rem; font-size:0.82rem;" />
                 </div>
                 <div>
-                  <label class="form-label" style="font-size:0.72rem;">Derslik</label>
+                  <label for="course-room" class="form-label" style="font-size:0.72rem;">Derslik</label>
                   <input type="text" id="course-room" class="form-input" placeholder="D-204" required style="padding:0.4rem; font-size:0.82rem;" />
                 </div>
               </div>
@@ -666,8 +666,8 @@
             </div>
 
             <form onsubmit="submitPersonalNote(event)" style="margin-bottom:0.85rem;">
-              <input type="text" id="p-note-title" class="form-input" placeholder="Not başlığı..." required style="margin-bottom:0.4rem; font-size:0.85rem;" />
-              <textarea id="p-note-content" class="form-input" placeholder="Çalışma notunuzu buraya yazın..." required style="min-height:60px; margin-bottom:0.4rem; font-size:0.85rem;"></textarea>
+              <input type="text" aria-label="Not başlığı" id="p-note-title" class="form-input" placeholder="Not başlığı..." required style="margin-bottom:0.4rem; font-size:0.85rem;" />
+              <textarea aria-label="Not içeriği" id="p-note-content" class="form-input" placeholder="Çalışma notunuzu buraya yazın..." required style="min-height:60px; margin-bottom:0.4rem; font-size:0.85rem;"></textarea>
               <div style="text-align:right;">
                 <button type="submit" class="btn-action btn-action-primary" style="font-size:0.8rem;">Notu Kaydet</button>
               </div>
@@ -677,7 +677,7 @@
               <div class="side-card" style="padding:0.75rem; background:var(--bg-hover);">
                 <div style="display:flex; justify-content:space-between; font-weight:800; font-size:0.88rem;">
                   <span>Grup Toplantısı</span>
-                  <button onclick="this.parentElement.parentElement.remove()" style="background:none; border:none; cursor:pointer; color:var(--danger); font-size:1.1rem; line-height:1;">×</button>
+                  <button aria-label="Notu sil" onclick="this.parentElement.parentElement.remove()" style="background:none; border:none; cursor:pointer; color:var(--danger); font-size:1.1rem; line-height:1;">×</button>
                 </div>
                 <div style="font-size:0.82rem; color:var(--text-muted); margin-top:0.25rem;">Perşembe 14:00 ER diyagramı ve arayüz entegrasyonu kontrol edilecek.</div>
               </div>
@@ -697,18 +697,18 @@
     <div class="modal-content" style="max-width:560px;">
       <div class="modal-header">
         <h3 style="font-size:1.2rem; font-weight:800;">🎓 Ders Notu ve Harf Notu Hesapla</h3>
-        <button class="modal-close-btn" onclick="closeCourseGradeWizard()">×</button>
+        <button aria-label="Kapat" class="modal-close-btn" onclick="closeCourseGradeWizard()">×</button>
       </div>
 
       <form id="form-grade-wizard" onsubmit="submitCourseGradeWizard(event)">
         <!-- 1. Soru: Ders Adı ve Kredi -->
         <div style="display:grid; grid-template-columns: 2fr 1fr; gap:0.5rem;" class="form-group">
           <div>
-            <label class="form-label">Dersin Adı</label>
+            <label for="wiz-course-name" class="form-label">Dersin Adı</label>
             <input type="text" id="wiz-course-name" class="form-input" placeholder="Örn: Yazılım Geliştirme" required />
           </div>
           <div>
-            <label class="form-label">Kredi / AKTS</label>
+            <label for="wiz-course-credit" class="form-label">Kredi / AKTS</label>
             <input type="number" id="wiz-course-credit" class="form-input" value="4" min="1" max="15" required />
           </div>
         </div>
@@ -730,7 +730,7 @@
           <!-- Bağıl sistem için sınıf ortalaması girişi -->
           <div id="wiz-relative-box" style="margin-top:0.6rem; display:flex; align-items:center; gap:0.5rem; font-size:0.8rem;">
             <span style="color:var(--text-muted);">Sınıf Ortalaması (HBN):</span>
-            <input type="number" id="wiz-class-avg" class="form-input" style="width:75px; padding:0.25rem 0.5rem;" value="55" min="10" max="100" />
+            <input type="number" aria-label="Sınıf ortalaması" id="wiz-class-avg" class="form-input" style="width:75px; padding:0.25rem 0.5rem;" value="55" min="10" max="100" />
             <span style="font-size:0.75rem; color:var(--text-muted);">(Çan eğrisi seviyesini belirler)</span>
           </div>
         </div>
@@ -746,9 +746,9 @@
               <input type="checkbox" id="wiz-cb-vize" checked onchange="toggleWizInput('vize')" />
               <label for="wiz-cb-vize" style="width:90px; font-weight:700;">Vize</label>
               <span>Ağırlık (%):</span>
-              <input type="number" id="wiz-w-vize" class="input-num-grade" value="50" style="width:55px;" oninput="calcWizTotalWeight()" />
+              <input type="number" aria-label="Vize ağırlığı (%)" id="wiz-w-vize" class="input-num-grade" value="50" style="width:55px;" oninput="calcWizTotalWeight()" />
               <span>Not:</span>
-              <input type="number" id="wiz-s-vize" class="input-num-grade" placeholder="0-100" min="0" max="100" required />
+              <input type="number" aria-label="Vize puanı (0-100)" id="wiz-s-vize" class="input-num-grade" placeholder="0-100" min="0" max="100" required />
             </div>
 
             <!-- Final -->
@@ -756,9 +756,9 @@
               <input type="checkbox" id="wiz-cb-final" checked onchange="toggleWizInput('final')" />
               <label for="wiz-cb-final" style="width:90px; font-weight:700;">Final / Büt</label>
               <span>Ağırlık (%):</span>
-              <input type="number" id="wiz-w-final" class="input-num-grade" value="50" style="width:55px;" oninput="calcWizTotalWeight()" />
+              <input type="number" aria-label="Final ağırlığı (%)" id="wiz-w-final" class="input-num-grade" value="50" style="width:55px;" oninput="calcWizTotalWeight()" />
               <span>Not:</span>
-              <input type="number" id="wiz-s-final" class="input-num-grade" placeholder="0-100" min="0" max="100" required />
+              <input type="number" aria-label="Final puanı (0-100)" id="wiz-s-final" class="input-num-grade" placeholder="0-100" min="0" max="100" required />
             </div>
 
             <!-- Laboratuvar -->
@@ -766,9 +766,9 @@
               <input type="checkbox" id="wiz-cb-lab" onchange="toggleWizInput('lab')" />
               <label for="wiz-cb-lab" style="width:90px; font-weight:700;">Laboratuvar</label>
               <span>Ağırlık (%):</span>
-              <input type="number" id="wiz-w-lab" class="input-num-grade" value="20" style="width:55px;" disabled oninput="calcWizTotalWeight()" />
+              <input type="number" aria-label="Lab ağırlığı (%)" id="wiz-w-lab" class="input-num-grade" value="20" style="width:55px;" disabled oninput="calcWizTotalWeight()" />
               <span>Not:</span>
-              <input type="number" id="wiz-s-lab" class="input-num-grade" placeholder="0-100" min="0" max="100" disabled />
+              <input type="number" aria-label="Lab puanı (0-100)" id="wiz-s-lab" class="input-num-grade" placeholder="0-100" min="0" max="100" disabled />
             </div>
 
             <!-- Proje -->
@@ -776,9 +776,9 @@
               <input type="checkbox" id="wiz-cb-proje" onchange="toggleWizInput('proje')" />
               <label for="wiz-cb-proje" style="width:90px; font-weight:700;">Proje</label>
               <span>Ağırlık (%):</span>
-              <input type="number" id="wiz-w-proje" class="input-num-grade" value="20" style="width:55px;" disabled oninput="calcWizTotalWeight()" />
+              <input type="number" aria-label="Proje ağırlığı (%)" id="wiz-w-proje" class="input-num-grade" value="20" style="width:55px;" disabled oninput="calcWizTotalWeight()" />
               <span>Not:</span>
-              <input type="number" id="wiz-s-proje" class="input-num-grade" placeholder="0-100" min="0" max="100" disabled />
+              <input type="number" aria-label="Proje puanı (0-100)" id="wiz-s-proje" class="input-num-grade" placeholder="0-100" min="0" max="100" disabled />
             </div>
 
             <!-- Ödev -->
@@ -786,9 +786,9 @@
               <input type="checkbox" id="wiz-cb-odev" onchange="toggleWizInput('odev')" />
               <label for="wiz-cb-odev" style="width:90px; font-weight:700;">Ödev</label>
               <span>Ağırlık (%):</span>
-              <input type="number" id="wiz-w-odev" class="input-num-grade" value="10" style="width:55px;" disabled oninput="calcWizTotalWeight()" />
+              <input type="number" aria-label="Ödev ağırlığı (%)" id="wiz-w-odev" class="input-num-grade" value="10" style="width:55px;" disabled oninput="calcWizTotalWeight()" />
               <span>Not:</span>
-              <input type="number" id="wiz-s-odev" class="input-num-grade" placeholder="0-100" min="0" max="100" disabled />
+              <input type="number" aria-label="Ödev puanı (0-100)" id="wiz-s-odev" class="input-num-grade" placeholder="0-100" min="0" max="100" disabled />
             </div>
 
             <!-- Quiz -->
@@ -796,9 +796,9 @@
               <input type="checkbox" id="wiz-cb-quiz" onchange="toggleWizInput('quiz')" />
               <label for="wiz-cb-quiz" style="width:90px; font-weight:700;">Quiz</label>
               <span>Ağırlık (%):</span>
-              <input type="number" id="wiz-w-quiz" class="input-num-grade" value="10" style="width:55px;" disabled oninput="calcWizTotalWeight()" />
+              <input type="number" aria-label="Quiz ağırlığı (%)" id="wiz-w-quiz" class="input-num-grade" value="10" style="width:55px;" disabled oninput="calcWizTotalWeight()" />
               <span>Not:</span>
-              <input type="number" id="wiz-s-quiz" class="input-num-grade" placeholder="0-100" min="0" max="100" disabled />
+              <input type="number" aria-label="Quiz puanı (0-100)" id="wiz-s-quiz" class="input-num-grade" placeholder="0-100" min="0" max="100" disabled />
             </div>
 
           </div>
@@ -823,7 +823,7 @@
     <div class="modal-content" style="max-width:560px;">
       <div class="modal-header">
         <h3 id="modal-week-title-text" style="font-size:1.2rem; font-weight:800;">Hafta Detayı</h3>
-        <button class="modal-close-btn" onclick="closeWeekModal()">×</button>
+        <button aria-label="Kapat" class="modal-close-btn" onclick="closeWeekModal()">×</button>
       </div>
       <p id="modal-week-desc-text" style="color:var(--text-muted); font-size:0.9rem; margin-bottom:1.25rem;"></p>
       
@@ -844,20 +844,20 @@
     <div class="modal-content">
       <div class="modal-header">
         <h3 style="font-size:1.2rem; font-weight:800;">+ Yeni Görev / Mini Etkinlik Ekle</h3>
-        <button class="modal-close-btn" onclick="closeCreateTaskModal()">×</button>
+        <button aria-label="Kapat" class="modal-close-btn" onclick="closeCreateTaskModal()">×</button>
       </div>
       <form onsubmit="saveNewTask(event)">
         <div class="form-group">
-          <label class="form-label">Görev Başlığı</label>
+          <label for="modal-t-title" class="form-label">Görev Başlığı</label>
           <input type="text" id="modal-t-title" class="form-input" placeholder="Örn: CSS düzenini tamamla" required />
         </div>
         <div class="form-group">
-          <label class="form-label">Açıklama</label>
+          <label for="modal-t-desc" class="form-label">Açıklama</label>
           <textarea id="modal-t-desc" class="form-input" placeholder="Görev detayları..."></textarea>
         </div>
         <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:0.5rem;" class="form-group">
           <div>
-            <label class="form-label">Hafta</label>
+            <label for="modal-t-week" class="form-label">Hafta</label>
             <select id="modal-t-week" class="form-input">
               <option value="1">1. Hafta</option>
               <option value="2" selected>2. Hafta</option>
@@ -866,7 +866,7 @@
             </select>
           </div>
           <div>
-            <label class="form-label">Öncelik</label>
+            <label for="modal-t-priority" class="form-label">Öncelik</label>
             <select id="modal-t-priority" class="form-input">
               <option value="Yüksek">Yüksek</option>
               <option value="Orta" selected>Orta</option>
@@ -874,7 +874,7 @@
             </select>
           </div>
           <div>
-            <label class="form-label">Kategori</label>
+            <label for="modal-t-cat" class="form-label">Kategori</label>
             <input type="text" id="modal-t-cat" class="form-input" placeholder="Frontend" />
           </div>
         </div>
@@ -891,16 +891,17 @@
        KESİNTİSİZ ÇALIŞAN JAVASCRIPT MOTORU
        ========================================================================= -->
   <script src="js/portal.js"></script>
+  <script src="js/a11y.js"></script>
 
   <!-- =========================================================================
        ZENITH AI - AKILLI DERS & BAŞARI DANIŞMANI (FLOATING WIDGET)
        ========================================================================= -->
   <div class="ai-widget-wrapper">
     <!-- Konuşma Balonu İpucu -->
-    <div id="ai-speech-bubble" class="ai-speech-bubble" onclick="toggleAiDrawer(true)">
+    <div id="ai-speech-bubble" class="ai-speech-bubble" role="button" tabindex="0" onclick="toggleAiDrawer(true)">
       <span>🤖</span>
       <span>👋 Sana nasıl yardımcı olabilirim?</span>
-      <span onclick="event.stopPropagation(); dismissAiBubble();" style="opacity:0.6; margin-left:0.3rem;">✕</span>
+      <span role="button" tabindex="0" aria-label="Balonu kapat" onclick="event.stopPropagation(); dismissAiBubble();" style="opacity:0.6; margin-left:0.3rem;">✕</span>
     </div>
 
     <!-- Robot Şeklinde Yüzen AI Maskotu -->
@@ -1026,7 +1027,7 @@
         </div>
       </div>
       <div class="ai-header-actions" style="display:flex; align-items:center; gap:0.35rem;">
-        <span id="ai-provider-badge" class="ai-provider-badge" onclick="openAiApiSettingsModal()" title="Yapay Zeka API Ayarlarını Aç">⚡ Yerel Motor</span>
+        <span id="ai-provider-badge" class="ai-provider-badge" role="button" tabindex="0" onclick="openAiApiSettingsModal()" title="Yapay Zeka API Ayarlarını Aç">⚡ Yerel Motor</span>
         <button class="ai-btn-icon" onclick="openAiApiSettingsModal()" title="API Ayarları (Gemini / OpenAI)">⚙️</button>
         <button class="ai-btn-icon" onclick="resetAiChat()" title="Sohbeti Sıfırla">🔄</button>
         <button class="ai-btn-icon" onclick="toggleAiDrawer(false)" title="Pencereyi Kapat">✕</button>
@@ -1047,7 +1048,7 @@
 
     <!-- Mesaj Gönderme Formu -->
     <form class="ai-input-form" onsubmit="handleAiUserSubmit(event)">
-      <input type="text" id="ai-user-input" class="ai-input-field" placeholder="Bir şey sor (Örn: KTÜ çan eğrisi, görevlerim)..." autocomplete="off" />
+      <input type="text" aria-label="Yapay zekâ asistanına soru yaz" id="ai-user-input" class="ai-input-field" placeholder="Bir şey sor (Örn: KTÜ çan eğrisi, görevlerim)..." autocomplete="off" />
       <button type="submit" class="ai-btn-send" title="Gönder">➤</button>
     </form>
   </div>
@@ -1063,7 +1064,7 @@
           <span>🤖</span>
           <span>Yapay Zeka API Ayarları</span>
         </h3>
-        <button class="modal-close-btn" onclick="closeAiApiSettingsModal()">✕</button>
+        <button aria-label="Kapat" class="modal-close-btn" onclick="closeAiApiSettingsModal()">✕</button>
       </div>
 
       <div style="margin-top:1rem;">
@@ -1073,7 +1074,7 @@
         </p>
 
         <div class="form-group" style="margin-bottom:1rem;">
-          <label class="form-label" style="font-weight:700;">Yapay Zeka Sağlayıcısı</label>
+          <label for="ai-settings-provider" class="form-label" style="font-weight:700;">Yapay Zeka Sağlayıcısı</label>
           <select id="ai-settings-provider" class="form-input" onchange="handleAiProviderChange()">
             <option value="gemini">Google Gemini AI (Önerilen - Ücretsiz & Hızlı)</option>
             <option value="openai">OpenAI (ChatGPT - gpt-4o-mini)</option>
@@ -1089,7 +1090,7 @@
             </a>
           </div>
           <div style="display:flex; gap:0.5rem;">
-            <input type="password" id="ai-settings-key" class="form-input" placeholder="AIzaSy... veya sk-..." style="flex:1;" />
+            <input type="password" aria-label="API anahtarı" id="ai-settings-key" class="form-input" placeholder="AIzaSy... veya sk-..." style="flex:1;" />
             <button type="button" class="btn-action" onclick="toggleApiKeyVisibility()" style="padding:0.45rem 0.8rem;" title="Anahtarı Göster / Gizle">👁️</button>
           </div>
           <div style="color:var(--text-muted); font-size:0.75rem; margin-top:0.35rem;">
@@ -1098,7 +1099,7 @@
         </div>
 
         <div id="ai-model-group" class="form-group" style="margin-bottom:1.25rem;">
-          <label class="form-label" style="font-weight:700;">Model Seçimi</label>
+          <label for="ai-settings-model" class="form-label" style="font-weight:700;">Model Seçimi</label>
           <select id="ai-settings-model" class="form-input">
             <option value="gemini-1.5-flash">gemini-1.5-flash (En Hızlı & Dengeli)</option>
             <option value="gemini-2.0-flash">gemini-2.0-flash (En Yeni & Akıllı)</option>
