@@ -1,4 +1,4 @@
-# KTÜ Yazılım Mühendisliği - Proje 1 (Grup 4)
+# KTÜ Yazılım Geliştirme - Proje 1 (Grup 4)
 
 Bu repository, **Karadeniz Teknik Üniversitesi Yazılım Geliştirme Dersi** kapsamında **Grup 4** tarafından geliştirilen iki aşamalı etkileşimli öğrenci takip ve başarı platformunu içermektedir:
 
