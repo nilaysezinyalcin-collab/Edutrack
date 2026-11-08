@@ -2,7 +2,7 @@
 
 Bu repository, **Karadeniz Teknik Üniversitesi Yazılım Geliştirme Dersi** kapsamında **Grup 4** tarafından geliştirilen iki aşamalı etkileşimli öğrenci takip ve başarı platformunu içermektedir:
 
-1. **`edutrack/`**: İlk aşamada geliştirilen temel ders ve görev takip panosu (Nilay'ın hazırladığı temel iskelet).
+1. **`edutrack/`**: İlk aşamada geliştirilen temel ders ve görev takip panosu (Grup liderinin hazırladığı temel iskelet).
 2. **`akademix/`**: Daha sonradan geliştirilen; öğrenci giriş/kayıt sistemi, KTÜ 30 kişi kuralı BDS/MDS not simülatörü, dinamik haftalık ders programı, görev matrisi ve **gerçek LLM API (Google Gemini) destekli Sevimli Yapay Zeka Danışmanı** içeren **gelişmiş sürüm**.
 
 ---
