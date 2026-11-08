@@ -1593,3 +1593,76 @@ body {
   background: rgba(16, 185, 129, 0.14);
   color: #059669;
 }
+
+/* =========================================================================
+   MOBİL UYUM DÜZELTMELERİ (Issue #4)
+   375px genişlikte yatay taşmayı önler
+   ========================================================================= */
+html, body {
+  overflow-x: hidden;
+}
+
+/* Grid sütunları içeriğe göre genişleyip taşmasın */
+.main-two-col > * {
+  min-width: 0;
+}
+
+@media (max-width: 600px) {
+  /* Üst menü: logo ve kullanıcı butonları alt alta sarılır */
+  .header-inner {
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+  .header-user-controls {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    width: 100%;
+  }
+  .header-user-controls .btn-action,
+  .student-tag {
+    padding: 0.4rem 0.65rem;
+    font-size: 0.8rem;
+  }
+
+  /* Görev paneli: daha dar iç boşluk */
+  .tasks-panel {
+    padding: 1rem;
+  }
+  .tasks-panel > div:first-child {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  /* Arama, hafta seçici ve filtre butonları tam genişlikte sarılır */
+  .tasks-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .search-field,
+  #filter-week-select {
+    min-width: 0;
+    width: 100% !important;
+  }
+  .filter-btn-group {
+    flex-wrap: wrap;
+  }
+
+  /* Görev satırı: rozetler sarılır, uzun metin kırılır, silme butonu içeride kalır */
+  .task-row {
+    gap: 0.6rem;
+    padding: 0.8rem;
+  }
+  .task-body {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .task-badges {
+    flex-wrap: wrap;
+  }
+  .btn-task-delete {
+    flex-shrink: 0;
+  }
+  .btn-filter-tag {
+    flex: 1 1 auto;
+  }
+}
