@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AkademiX | KTÜ Öğrenci Başarı & Ders Portalı</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- =========================================================================
+       1. ADIM: GİRİŞ VE KAYIT AKIŞI (ogrenci_paneli_diyagram_mavi.png)
+       ========================================================================= -->
+  <section id="auth-section" class="auth-wrapper">
+    <div class="auth-card">
+      <div class="auth-header" style="text-align:center; margin-bottom:1.5rem;">
+        <div style="display:flex; justify-content:center; align-items:center; flex-direction:column; margin-bottom:0.75rem;">
+          <div class="portal-badge" style="background:linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899); font-weight:900; font-size:1.6rem; color:#fff; border-radius:18px; width:64px; height:64px; display:flex; align-items:center; justify-content:center; box-shadow:0 8px 20px rgba(99,102,241,0.4);">AX</div>
+        </div>
+        <h2 style="font-size:1.85rem; font-weight:900; background:linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin:0;">AkademiX</h2>
+        <p style="color:var(--text-muted); font-size:0.88rem; margin-top:0.35rem;">KTÜ Etkileşimli Ders & Öğrenme Portalı</p>
+      </div>
+
+      <!-- Giriş / Kayıt Sekmeleri -->
+      <div class="auth-tabs" style="margin-bottom:1.25rem;">
+        <button id="tab-login" class="auth-tab active" onclick="switchAuthTab('login')">Giriş Yap</button>
+        <button id="tab-register" class="auth-tab" onclick="switchAuthTab('register')">Kayıt Ol</button>
+      </div>
+
+      <!-- Giriş Formu (FR-03 & Akış Şeması) -->
+      <form id="form-login" onsubmit="handleLogin(event)">
+        <div class="form-group" style="margin-bottom:0.9rem;">
+          <label class="form-label">E-Posta veya Öğrenci No</label>
+          <input type="text" id="login-email" class="form-input" placeholder="ogrenci@ktu.edu.tr veya 444082" required autocomplete="username" />
+        </div>
+        <div class="form-group" style="margin-bottom:1rem;">
+          <label class="form-label">Şifre</label>
+          <input type="password" id="login-password" class="form-input" placeholder="••••••••" required autocomplete="current-password" />
+        </div>
+        <div id="login-error-msg" style="display:none; color:var(--danger); background:rgba(239,68,68,0.1); border:1px solid var(--danger); border-radius:var(--radius-sm); padding:0.6rem; font-size:0.82rem; margin-bottom:0.85rem;">
+          ❌ Girilen e-posta/öğrenci no veya şifre hatalı! Lütfen bilgilerinizi kontrol ediniz.
+        </div>
+        <button type="submit" class="btn-submit" style="width:100%; font-size:0.95rem; font-weight:800; padding:0.75rem;">Sisteme Giriş Yap →</button>
+        <button type="button" class="btn-action" onclick="quickDemoLogin()" style="width:100%; margin-top:0.65rem; font-size:0.86rem; padding:0.65rem; border-radius:var(--radius-md); background:var(--bg-hover); color:var(--text-main); font-weight:700; border:1px dashed var(--primary); display:flex; align-items:center; justify-content:center; gap:0.5rem; cursor:pointer;">
+          ⚡ Hızlı Demo Girişi (İsmail Korkmaz - 444082)
+        </button>
+      </form>
+
+      <!-- Kayıt Formu (FR-01, FR-02 & Akış Şeması) -->
+      <form id="form-register" style="display:none;" onsubmit="handleRegister(event)">
+        <div class="form-group" style="margin-bottom:0.75rem;">
+          <label class="form-label">Öğrenci Numarası</label>
+          <input type="text" id="reg-no" class="form-input" placeholder="Örn: 444082" required />
+        </div>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:0.5rem; margin-bottom:0.75rem;">
+          <div>
+            <label class="form-label">Ad</label>
+            <input type="text" id="reg-ad" class="form-input" placeholder="Adınız" required />
+          </div>
+          <div>
+            <label class="form-label">Soyad</label>
+            <input type="text" id="reg-soyad" class="form-input" placeholder="Soyadınız" required />
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom:0.75rem;">
+          <label class="form-label">Bölüm</label>
+          <input type="text" id="reg-dept" class="form-input" placeholder="Yazılım Mühendisliği" value="Yazılım Mühendisliği" required />
+        </div>
+        <div class="form-group" style="margin-bottom:0.75rem;">
+          <label class="form-label">KTÜ E-Posta</label>
+          <input type="email" id="reg-email" class="form-input" placeholder="ogrenci@ktu.edu.tr" required />
+        </div>
+        <div class="form-group" style="margin-bottom:0.9rem;">
+          <label class="form-label">Şifre (En az 6 Karakter)</label>
+          <input type="password" id="reg-password" class="form-input" placeholder="••••••••" required minlength="6" />
+        </div>
+        <div id="reg-error-msg" style="display:none; color:var(--danger); background:rgba(239,68,68,0.1); border:1px solid var(--danger); border-radius:var(--radius-sm); padding:0.6rem; font-size:0.82rem; margin-bottom:0.85rem;">
+          ❌ Lütfen tüm alanları eksiksiz doldurunuz!
+        </div>
+        <div id="reg-success-msg" style="display:none; color:var(--secondary); background:rgba(16,185,129,0.1); border:1px solid var(--secondary); border-radius:var(--radius-sm); padding:0.6rem; font-size:0.82rem; margin-bottom:0.85rem;">
+          ✅ Hesabınız başarıyla oluşturuldu! Giriş yapılıyor...
+        </div>
+        <button type="submit" class="btn-submit" style="width:100%; font-size:0.95rem; font-weight:800; padding:0.75rem;">Hesap Oluştur ve Başla ✨</button>
+      </form>
+
+      <div style="margin-top:1.25rem; text-align:center; font-size:0.78rem; color:var(--text-muted); border-top:1px dashed var(--border-color); padding-top:0.75rem;">
+        🤖 Yardıma mı ihtiyacın var? Sağ alttaki <strong>AkademiX Asistanı</strong>'na sorabilirsin!
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       2. ADIM: KAMPÜSAKIŞ ÖĞRENCİ PANELİ
+       ========================================================================= -->
+  <div id="student-portal-app" style="display:none;">
+    
+    <!-- Portal Navbar -->
+    <header class="app-header">
+      <div class="header-inner">
+        <div class="portal-brand">
+          <div class="portal-badge" style="background:linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899); font-weight:900; font-size:1.15rem; color:#fff; border-radius:12px; width:40px; height:40px; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 14px rgba(99,102,241,0.4);">AX</div>
+          <div class="portal-titles">
+            <h1 style="letter-spacing:-0.5px;">AkademiX</h1>
+          </div>
+        </div>
+
+        <div class="header-user-controls">
+
+
+          <!-- Tema Seçici (FR-17, AYARLAR Tablosu) -->
+          <button id="theme-btn" class="btn-action" onclick="togglePortalTheme()">
+            🌙 Karanlık Mod
+          </button>
+
+          <!-- Öğrenci Profil Bilgisi (OGRENCI Tablosu) -->
+          <div class="student-tag">
+            <span style="font-weight:700;" id="user-display-name">İsmail Korkmaz</span>
+          </div>
+
+          <button class="btn-action" onclick="logoutStudent()" title="Oturumu Kapat">Çıkış ⎋</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="dashboard-container">
+      
+      <!-- 1. GENEL İLERLEME VE CANLI RENKLİ SAYAÇLAR (ILERLEME Tablosu & FR-12) -->
+      <section class="overview-panel">
+        <div class="overview-top">
+          <div>
+            <h2 style="font-size:1.4rem; font-weight:800;">Dönem İlerlemesi & Görev Takip Panosu</h2>
+            <p style="color:var(--text-muted); font-size:0.88rem;" id="progress-update-time">Son Güncelleme: 02.11.2026</p>
+          </div>
+          <div style="text-align:right;">
+            <span id="progress-val-text" style="font-size:2.2rem; font-weight:900; background:var(--primary-gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">%33</span>
+          </div>
+        </div>
+
+        <div class="progress-bar-container">
+          <div id="portal-progress-fill" class="progress-bar-fill" style="width: 33%;"></div>
+        </div>
+
+        <!-- 4 Renkli Canlı Sayaç Kartı (Tıklanabilir Filtre & Kaydırma) -->
+        <div class="stat-pills">
+          <div class="stat-pill" onclick="filterByStatCard('all')" title="Tüm görevleri listele ve görüntüle">
+            <div class="stat-pill-icon icon-blue">📋</div>
+            <div>
+              <div class="stat-pill-num" id="stat-total-tasks">9</div>
+              <div class="stat-pill-label">Toplam Görev</div>
+            </div>
+          </div>
+          <div class="stat-pill" onclick="filterByStatCard('completed')" title="Tamamlanan görevleri listele ve görüntüle">
+            <div class="stat-pill-icon icon-green">✅</div>
+            <div>
+              <div class="stat-pill-num" id="stat-done-tasks" style="color:var(--success);">3</div>
+              <div class="stat-pill-label">Tamamlanan</div>
+            </div>
+          </div>
+          <div class="stat-pill" onclick="filterByStatCard('in-progress')" title="Devam eden görevleri listele ve görüntüle">
+            <div class="stat-pill-icon icon-purple">⏳</div>
+            <div>
+              <div class="stat-pill-num" id="stat-pending-tasks" style="color:var(--primary);">6</div>
+              <div class="stat-pill-label">Devam Eden</div>
+            </div>
+          </div>
+          <div class="stat-pill" onclick="filterByStatCard('high-priority')" title="Yüksek öncelikli görevleri listele ve görüntüle">
+            <div class="stat-pill-icon icon-red">🔥</div>
+            <div>
+              <div class="stat-pill-num" id="stat-high-tasks" style="color:var(--danger);">4</div>
+              <div class="stat-pill-label">Yüksek Öncelik</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. HAFTALIK DERS VE ÖĞRENME KARTLARI (Kompakt Varsayılan + Açılır Görev Kartları) -->
+      <section style="margin-bottom:2.25rem;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; flex-wrap:wrap; gap:0.75rem;">
+          <div>
+            <h3 style="font-size:1.2rem; font-weight:800;">Haftalık Ders ve Öğrenme Kartları</h3>
+            <p style="font-size:0.82rem; color:var(--text-muted); margin-top:0.2rem;">4 haftalık yazılım müfredatı ve öğrenme hedefleri</p>
+          </div>
+
+          <!-- Görev Kartlarını Aç / Kapat Butonu -->
+          <button id="btn-toggle-task-cards" class="btn-action btn-action-primary" onclick="toggleTaskCardsPanel()" title="Tüm görevlerin canlı kartlarını aç/kapat">
+            📋 Görev Kartlarını Aç (<span id="cards-count-badge">18</span>) ▼
+          </button>
+        </div>
+
+        <!-- 4 HAFTALIK MÜFREDAT KARTLARI (VARSAYILAN TEMİZ & KOMPAKT GÖRÜNÜM) -->
+        <div id="weeks-modules-grid" class="weeks-grid">
+          <!-- 1. Hafta -->
+          <div class="week-card" onclick="showWeekModal(1)" title="1. Hafta detaylarını ve hedeflerini incele">
+            <span class="badge-status badge-done">1. Hafta • Tamamlandı</span>
+            <h4>Yazılım Yaşam Döngüsü & İhtiyaç Analizi</h4>
+            <p>17 FR ve 10 NFR gereksinimlerinin çıkarılması, ER diyagramı ve GitHub yönetimi.</p>
+            <div class="week-card-footer">4 Hedef • 4 Görev (Tamamlandı) →</div>
+          </div>
+
+          <!-- 2. Hafta -->
+          <div class="week-card active" onclick="showWeekModal(2)" title="2. Hafta detaylarını ve hedeflerini incele">
+            <span class="badge-status badge-active">2. Hafta • Aktif Hafta</span>
+            <h4>Arayüz Tasarımı & Temel İskelet</h4>
+            <p>Akış şeması ve ER diyagramı doğrultusunda öğrenci paneli iskeletinin kodlanması.</p>
+            <div class="week-card-footer">4 Hedef • 5 Görev (Aktif) →</div>
+          </div>
+
+          <!-- 3. Hafta -->
+          <div class="week-card" onclick="showWeekModal(3)" title="3. Hafta detaylarını ve hedeflerini incele">
+            <span class="badge-status badge-active" style="background:rgba(99,102,241,0.12); color:var(--primary);">3. Hafta • Devam Eden</span>
+            <h4>İleri Etkileşim & KTÜ Not Entegrasyonu</h4>
+            <p>Çok kriterli filtreleme, arama, KTÜ sınav ortalaması ve otomatik testler.</p>
+            <div class="week-card-footer">4 Hedef • 5 Görev (Devam Ediyor) →</div>
+          </div>
+
+          <!-- 4. Hafta -->
+          <div class="week-card" onclick="showWeekModal(4)" title="4. Hafta detaylarını ve hedeflerini incele">
+            <span class="badge-status badge-future">4. Hafta • Gelecek</span>
+            <h4>Kalite Kontrol & Proje 1 Canlı Demo</h4>
+            <p>Test matrisinin doğrulanması, proje teknik raporu ve sunum paketi.</p>
+            <div class="week-card-footer">4 Hedef • 4 Görev (Gelecek) →</div>
+          </div>
+        </div>
+
+        <!-- AÇILIR / KAPANIR GÖREV KARTLARI ÇEKMECESİ (İSTEĞE BAĞLI AÇILIR - YER KAPLAMAZ) -->
+        <div id="task-cards-collapsible" style="display:none; margin-top:1.25rem; background:var(--bg-hover); padding:1.25rem; border-radius:var(--radius-lg); border:1px solid var(--border-color);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; flex-wrap:wrap; gap:0.5rem;">
+            <div style="display:flex; align-items:center; gap:0.6rem;">
+              <h4 style="font-size:1rem; font-weight:800;">📋 Tüm Görevlerin Canlı Kartları</h4>
+              <span style="font-size:0.75rem; color:var(--text-muted);">Görev onaylama ve tek tıkla silme (🗑️) destekli</span>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <!-- Kartlar Hafta Filtre Butonları -->
+              <div id="cards-filter-bar" style="display:flex; gap:0.35rem; overflow-x:auto;">
+                <button id="cards-filter-btn-all" class="btn-filter-tag active" onclick="filterTaskCards('all', this)">Tümü (<span id="badge-all-cards">18</span>)</button>
+                <button id="cards-filter-btn-1" class="btn-filter-tag" onclick="filterTaskCards('1', this)">1. Hafta (4)</button>
+                <button id="cards-filter-btn-2" class="btn-filter-tag" onclick="filterTaskCards('2', this)">2. Hafta (5)</button>
+                <button id="cards-filter-btn-3" class="btn-filter-tag" onclick="filterTaskCards('3', this)">3. Hafta (5)</button>
+                <button id="cards-filter-btn-4" class="btn-filter-tag" onclick="filterTaskCards('4', this)">4. Hafta (4)</button>
+              </div>
+
+              <button class="btn-action" style="font-size:0.78rem; padding:0.3rem 0.6rem;" onclick="toggleTaskCardsPanel(false)">
+                ✕ Kapat
+              </button>
+            </div>
+          </div>
+
+          <!-- Görev Kartları Izgarası -->
+          <div id="task-cards-grid" class="task-cards-grid" style="min-height:160px; max-height:520px;"></div>
+        </div>
+      </section>
+
+      <!-- 3. GÖREVLER VE YAN PANEL MODÜLLERİ -->
+      <div class="main-two-col">
+        
+        <!-- Sol Sütun: Görev ve Mini Etkinlikler (GOREVLER & OGRENCI_GOREV) -->
+        <section id="tasks-section" class="tasks-panel">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.25rem;">
+            <h3 style="font-size:1.15rem; font-weight:800;">Görev ve Mini Etkinlikler</h3>
+            <button class="btn-action btn-action-primary" onclick="openCreateTaskModal()">
+              + Görev Ekle
+            </button>
+          </div>
+
+          <!-- Arama ve Filtreleme Çubuğu -->
+          <div class="tasks-toolbar">
+            <input 
+              type="text" 
+              id="task-search-input" 
+              class="form-input search-field" 
+              placeholder="Görevlerde ara (başlık, kategori)..." 
+              oninput="filterTasks()" 
+            />
+
+            <select id="filter-week-select" class="form-input" style="width:130px;" onchange="filterTasks()">
+              <option value="all">Tüm Haftalar</option>
+              <option value="1">1. Hafta</option>
+              <option value="2">2. Hafta</option>
+              <option value="3">3. Hafta</option>
+              <option value="4">4. Hafta</option>
+            </select>
+
+            <div class="filter-btn-group">
+              <button id="btn-filter-all" class="btn-filter-tag active" onclick="setTaskStatusFilter('all', this)">Tümü</button>
+              <button id="btn-filter-in-progress" class="btn-filter-tag" onclick="setTaskStatusFilter('in-progress', this)">Devam Eden</button>
+              <button id="btn-filter-completed" class="btn-filter-tag" onclick="setTaskStatusFilter('completed', this)">Tamamlanan</button>
+              <button id="btn-filter-high" class="btn-filter-tag" onclick="setTaskStatusFilter('high-priority', this)">🔥 Yüksek Öncelik</button>
+            </div>
+          </div>
+
+          <!-- Görev Listesi -->
+          <div id="tasks-list-container" class="tasks-list-box">
+            
+            <!-- 1. HAFTA GÖREVLERİ (4 GÖREV) -->
+            <div class="task-row completed" data-week="1" data-status="completed" data-priority="Yüksek">
+              <input type="checkbox" class="task-checkbox-input" checked onchange="toggleTaskStatus(this)" />
+              <div class="task-body">
+                <div class="task-badges">
+                  <span class="mini-badge">1. Hafta</span>
+                  <span class="mini-badge">Analiz</span>
+                  <span class="mini-badge badge-p-high">Yüksek Öncelik</span>
+                </div>
+                <div class="task-title">Kullanıcı İhtiyaç Analizi Tablosunu Çıkar</div>
+                <div class="task-desc">Öğrenci ve ders sorumlusu paydaşları için ihtiyaçları belirle.</div>
+              </div>
+              <button class="btn-task-delete" onclick="deleteTaskRow(this)" title="Görevi Sil">🗑️</button>
+            </div>
+
+            <div class="task-row completed" data-week="1" data-status="completed" data-priority="Yüksek">
+              <input type="checkbox" class="task-checkbox-input" checked onchange="toggleTaskStatus(this)" />
+              <div class="task-body">
+                <div class="task-badges">
+                  <span class="mini-badge">1. Hafta</span>
+                  <span class="mini-badge">Yönetim</span>
+                  <span class="mini-badge badge-p-high">Yüksek Öncelik</span>
+                </div>
+                <div class="task-title">GitHub Repository Aç ve Rolleri Tanımla</div>
+                <div class="task-desc">YG-Proje1-Grup4 reposunu aç, branch kurallarını ve rollerini tanımla.</div>
+              </div>
+              <button class="btn-task-delete" onclick="deleteTaskRow(this)" title="Görevi Sil">🗑️</button>
+            </div>
+
+            <div class="task-row completed" data-week="1" data-status="completed" data-priority="Yüksek">
+              <input type="checkbox" class="task-checkbox-input" checked onchange="toggleTaskStatus(this)" />
+              <div class="task-body">
+                <div class="task-badges">
+                  <span class="mini-badge">1. Hafta</span>
+                  <span class="mini-badge">Analiz</span>
+                  <span class="mini-badge badge-p-high">Yüksek Öncelik</span>
+                </div>
+                <div class="task-title">17 FR ve 10 NFR Gereksinim Listesini Hazırla</div>
+                <div class="task-desc">Öğrenci paneli için işlevsel ve fonksiyonel olmayan gereksinimleri listele.</div>
+              </div>
+              <button class="btn-task-delete" onclick="deleteTaskRow(this)" title="Görevi Sil">🗑️</button>
+            </div>
+
+            <div class="task-row completed" data-week="1" data-status="completed" data-priority="Yüksek">
+              <input type="checkbox" class="task-checkbox-input" checked onchange="toggleTaskStatus(this)" />
+              <div class="task-body">
+                <div class="task-badges">
+                  <span class="mini-badge">1. Hafta</span>
+                  <span class="mini-badge">Veritabanı</span>
+                  <span class="mini-badge badge-p-high">Yüksek Öncelik</span>
+                </div>
+                <div class="task-title">Veritabanı ER Diyagramı ve İlişkisel Şemayı Çiz</div>
+                <div class="task-desc">11 tablodan oluşan ilişkisel veri modelini (er_diyagram_v2.png) oluştur.</div>
+              </div>
+              <button class="btn-task-delete" onclick="deleteTaskRow(this)" title="Görevi Sil">🗑️</button>
+            </div>
+
+            <!-- 2. HAFTA GÖREVLERİ (5 GÖREV) -->
+            <div class="task-row completed" data-week="2" data-status="completed" data-priority="Yüksek">
+              <input type="checkbox" class="task-checkbox-input" checked onchange="toggleTaskStatus(this)" />
+              <div class="task-body">
+                <div class="task-badges">
+                  <span class="mini-badge">2. Hafta</span>
+                  <span class="mini-badge">Frontend</span>
+                  <span class="mini-badge badge-p-high">Yüksek Öncelik</span>
+                </div>
+                <div class="task-title">Akış Şemasına Uygun Öğrenci Paneli İskeletini Kur</div>
+                <div class="task-desc">Giriş/kayıt ve panel ayrımını diyagrama tam uygun kodla.</div>
+              </div>
+              <button class="btn-task-delete" onclick="deleteTaskRow(this)" title="Görevi Sil">🗑️</button>
+            </div>
+
+            <div class="task-row completed" data-week="2" data-status="completed" data-priority="Yüksek">
+              <input type="checkbox" class="task-checkbox-input" checked onchange="toggleTaskStatus(this)" />
+              <div class="task-body">
+                <div class="task-badges">
+                  <span class="mini-badge">2. Hafta</span>
+                  <span class="mini-badge">Frontend</span>
+                  <span class="mini-badge badge-p-high">Yüksek Öncelik</span>
+                </div>
+                <div class="task-title">Haftalık Ders Kartları Bileşenini Oluştur</div>
+                <div class="task-desc">Ders haftalarını kart olarak listele ve modal detay görünümünü bağla.</div>
+              </div>
+              <button class="btn-task-delete" onclick="deleteTaskRow(this)" title="Görevi Sil">🗑️</button>
+            </div>
+
+            <div class="task-row" data-week="2" data-status="in-progress" data-priority="Yüksek">
+              <input type="checkbox" class="task-checkbox-input" onchange="toggleTaskStatus(this)" />
+              <div class="task-body">
+                <div class="task-badges">
+                  <span class="mini-badge">2. Hafta</span>
+                  <span class="mini-badge">JavaScript</span>
+                  <span class="mini-badge badge-p-high">Yüksek Öncelik</span>
+                </div>
+                <div class="task-title">Görev Durumu Güncelleme ve İlerleme Çubuğunu Bağla</div>
+                <div class="task-desc">Göreve tıklandığında durumu güncelle ve genel ilerleme yüzdesini hesapla.</div>
+              </div>
+              <button class="btn-task-delete" onclick="deleteTaskRow(this)" title="Görevi Sil">🗑️</button>
+            </div>
+
+            <div class="task-row" data-week="2" data-status="in-progress" data-priority="Orta">
+              <input type="checkbox" class="task-checkbox-input" onchange="toggleTaskStatus(this)" />
+              <div class="task-body">
+                <div class="task-badges">
+                  <span class="mini-badge">2. Hafta</span>
+                  <span class="mini-badge">Tasarım</span>
+                  <span class="mini-badge badge-p-mid">Orta Öncelik</span>
+                </div>
+                <div class="task-title">Karanlık / Aydınlık Tema Geçişini Uygula</div>
+                <div class="task-desc">CSS değişkenleri ve localStorage ile tema kalıcılığını sağla.</div>
+              </div>
+              <button class="btn-task-delete" onclick="deleteTaskRow(this)" title="Görevi Sil">🗑️</button>
+            </div>
+
+            <div class="task-row" data-week="2" data-status="in-progress" data-priority="Yüksek">
+              <input type="checkbox" class="task-checkbox-input" onchange="toggleTaskStatus(this)" />
+              <div class="task-body">
+                <div class="task-badges">
+                  <span class="mini-badge">2. Hafta</span>
+                  <span class="mini-badge">Test/QA</span>
+                  <span class="mini-badge badge-p-high">Yüksek Öncelik</span>
+                </div>
+                <div class="task-title">FR ve NFR Test Senaryoları Matrisini Hazırla</div>
+                <div class="task-desc">İsmail Korkmaz tarafından yürütülecek 27 maddelik kalite kontrol dokümanı.</div>
+              </div>
+              <button class="btn-task-delete" onclick="deleteTaskRow(this)" title="Görevi Sil">🗑️</button>
+            </div>
+
+            <!-- 3. HAFTA GÖREVLERİ (5 GÖREV) -->
+            <div class="task-row" data-week="3" data-status="in-progress" data-priority="Yüksek">
+              <input type="checkbox" class="task-checkbox-input" onchange="toggleTaskStatus(this)" />
+              <div class="task-body">
+                <div class="task-badges">
+                  <span class="mini-badge">3. Hafta</span>
+                  <span class="mini-badge">JavaScript</span>
+                  <span class="mini-badge badge-p-high">Yüksek Öncelik</span>
+                </div>
+                <div class="task-title">Anlık Arama ve Çoklu Filtreleme Motorunu Yaz</div>
+                <div class="task-desc">Görevleri durum, hafta, öncelik ve metin aramasına göre dinamik süz.</div>
+              </div>
+              <button class="btn-task-delete" onclick="deleteTaskRow(this)" title="Görevi Sil">🗑️</button>
+            </div>
+
+            <div class="task-row" data-week="3" data-status="in-progress" data-priority="Yüksek">
+              <input type="checkbox" class="task-checkbox-input" onchange="toggleTaskStatus(this)" />
+              <div class="task-body">
+                <div class="task-badges">
+                  <span class="mini-badge">3. Hafta</span>
+                  <span class="mini-badge">Hesaplama</span>
+                  <span class="mini-badge badge-p-high">Yüksek Öncelik</span>
+                </div>
+                <div class="task-title">KTÜ 30 Kişi Kuralı ve AGNO Simülatörünü Kodla</div>
+                <div class="task-desc">MDS ve BDS (Çan eğrisi) ile çoklu ders katsayı/kredi ağırlıklı AGNO hesabı.</div>
+              </div>
+              <button class="btn-task-delete" onclick="deleteTaskRow(this)" title="Görevi Sil">🗑️</button>
+            </div>
+
+            <div class="task-row" data-week="3" data-status="in-progress" data-priority="Orta">
+              <input type="checkbox" class="task-checkbox-input" onchange="toggleTaskStatus(this)" />
+              <div class="task-body">
+                <div class="task-badges">
+                  <span class="mini-badge">3. Hafta</span>
+                  <span class="mini-badge">Frontend</span>
+                  <span class="mini-badge badge-p-mid">Orta Öncelik</span>
+                </div>
+                <div class="task-title">İnteraktif Haftalık Ders Programı Modülünü Geliştir</div>
+                <div class="task-desc">Öğrencinin gün, saat ve derslik bazlı kendi ders programını yönetebilmesi.</div>
+              </div>
+              <button class="btn-task-delete" onclick="deleteTaskRow(this)" title="Görevi Sil">🗑️</button>
+            </div>
+
+            <div class="task-row" data-week="3" data-status="in-progress" data-priority="Orta">
+              <input type="checkbox" class="task-checkbox-input" onchange="toggleTaskStatus(this)" />
+              <div class="task-body">
+                <div class="task-badges">
+                  <span class="mini-badge">3. Hafta</span>
+                  <span class="mini-badge">Frontend</span>
+                  <span class="mini-badge badge-p-mid">Orta Öncelik</span>
+                </div>
+                <div class="task-title">Kişisel Not Ekleme ve Silme Modülünü Tamamla</div>
+                <div class="task-desc">Öğrencinin haftalık özel notlar almasını sağlayan arayüz.</div>
+              </div>
+              <button class="btn-task-delete" onclick="deleteTaskRow(this)" title="Görevi Sil">🗑️</button>
+            </div>
+
+            <div class="task-row" data-week="3" data-status="in-progress" data-priority="Yüksek">
+              <input type="checkbox" class="task-checkbox-input" onchange="toggleTaskStatus(this)" />
+              <div class="task-body">
+                <div class="task-badges">
+                  <span class="mini-badge">3. Hafta</span>
+                  <span class="mini-badge">Test/QA</span>
+                  <span class="mini-badge badge-p-high">Yüksek Öncelik</span>
+                </div>
+                <div class="task-title">Otomatik Birim Test Koşucusunu Geliştir</div>
+                <div class="task-desc">10 adet kritik sistem testini çalıştıran bağımsız test runner arayüzü.</div>
+              </div>
+              <button class="btn-task-delete" onclick="deleteTaskRow(this)" title="Görevi Sil">🗑️</button>
+            </div>
+
+            <!-- 4. HAFTA GÖREVLERİ (4 GÖREV) -->
+            <div class="task-row" data-week="4" data-status="in-progress" data-priority="Yüksek">
+              <input type="checkbox" class="task-checkbox-input" onchange="toggleTaskStatus(this)" />
+              <div class="task-body">
+                <div class="task-badges">
+                  <span class="mini-badge">4. Hafta</span>
+                  <span class="mini-badge">Test/QA</span>
+                  <span class="mini-badge badge-p-high">Yüksek Öncelik</span>
+                </div>
+                <div class="task-title">Çapraz Cihaz ve Mobil Responsive Testlerini Gerçekleştir</div>
+                <div class="task-desc">Farklı ekran boyutlarında arayüz taşmalarını denetle ve gider.</div>
+              </div>
+              <button class="btn-task-delete" onclick="deleteTaskRow(this)" title="Görevi Sil">🗑️</button>
+            </div>
+
+            <div class="task-row" data-week="4" data-status="in-progress" data-priority="Yüksek">
+              <input type="checkbox" class="task-checkbox-input" onchange="toggleTaskStatus(this)" />
+              <div class="task-body">
+                <div class="task-badges">
+                  <span class="mini-badge">4. Hafta</span>
+                  <span class="mini-badge">Dokümantasyon</span>
+                  <span class="mini-badge badge-p-high">Yüksek Öncelik</span>
+                </div>
+                <div class="task-title">Proje 1 Teknik Raporunu ve Kullanıcı Dokümanını Yaz</div>
+                <div class="task-desc">Proje mimarisi, gereksinim analizi ve ekran görüntülerini kapsayan teknik rapor.</div>
+              </div>
+              <button class="btn-task-delete" onclick="deleteTaskRow(this)" title="Görevi Sil">🗑️</button>
+            </div>
+
+            <div class="task-row" data-week="4" data-status="in-progress" data-priority="Yüksek">
+              <input type="checkbox" class="task-checkbox-input" onchange="toggleTaskStatus(this)" />
+              <div class="task-body">
+                <div class="task-badges">
+                  <span class="mini-badge">4. Hafta</span>
+                  <span class="mini-badge">Yönetim</span>
+                  <span class="mini-badge badge-p-high">Yüksek Öncelik</span>
+                </div>
+                <div class="task-title">Canlı Demo Senaryosu ve Grup Sunumunu Hazırla</div>
+                <div class="task-desc">Canlı demo adımları, rol anlatımları ve sunum slayt paketinin tamamlanması.</div>
+              </div>
+              <button class="btn-task-delete" onclick="deleteTaskRow(this)" title="Görevi Sil">🗑️</button>
+            </div>
+
+            <div class="task-row" data-week="4" data-status="in-progress" data-priority="Orta">
+              <input type="checkbox" class="task-checkbox-input" onchange="toggleTaskStatus(this)" />
+              <div class="task-body">
+                <div class="task-badges">
+                  <span class="mini-badge">4. Hafta</span>
+                  <span class="mini-badge">Kalite</span>
+                  <span class="mini-badge badge-p-mid">Orta Öncelik</span>
+                </div>
+                <div class="task-title">Akran Değerlendirmesi ve Bireysel Katkı Kanıtlarını Derle</div>
+                <div class="task-desc">GitHub commit geçmişi, issue kayıtları ve rol sorumluluklarının raporlanması.</div>
+              </div>
+              <button class="btn-task-delete" onclick="deleteTaskRow(this)" title="Görevi Sil">🗑️</button>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- Sağ Sütun: DERS PROGRAMI, KTÜ SINAV HESAPLAMA, KİŞİSEL NOTLAR -->
+        <aside class="side-stack">
+          
+          <!-- 4. HAFTALIK DERS PROGRAMI (DERS_PROGRAMI Tablosu - Öğrenci Doldurur) -->
+          <div class="side-card">
+            <div class="side-card-title">
+              <span>📅 Ders Programım</span>
+              <button class="btn-action" style="font-size:0.75rem; padding:0.3rem 0.6rem;" onclick="toggleAddCourseForm()">+ Ders Ekle</button>
+            </div>
+
+            <!-- Ders Ekleme Formu -->
+            <form id="course-add-form" style="display:none; background:var(--bg-hover); padding:0.85rem; border-radius:var(--radius-md); margin-bottom:1rem; border:1px solid var(--border-color);" onsubmit="submitNewCourse(event)">
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:0.5rem; margin-bottom:0.5rem;">
+                <div>
+                  <label class="form-label" style="font-size:0.72rem;">Gün</label>
+                  <select id="course-day" class="form-input" style="padding:0.4rem; font-size:0.82rem;">
+                    <option value="Pazartesi">Pazartesi</option>
+                    <option value="Salı">Salı</option>
+                    <option value="Çarşamba">Çarşamba</option>
+                    <option value="Perşembe">Perşembe</option>
+                    <option value="Cuma">Cuma</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="form-label" style="font-size:0.72rem;">Saat (Başlangıç - Bitiş)</label>
+                  <input type="text" id="course-time" class="form-input" placeholder="10:00 - 12:30" required style="padding:0.4rem; font-size:0.82rem;" />
+                </div>
+              </div>
+              <div style="display:grid; grid-template-columns: 1.8fr 1fr; gap:0.5rem; margin-bottom:0.6rem;">
+                <div>
+                  <label class="form-label" style="font-size:0.72rem;">Ders Adı</label>
+                  <input type="text" id="course-name" class="form-input" placeholder="Yazılım Geliştirme" required style="padding:0.4rem; font-size:0.82rem;" />
+                </div>
+                <div>
+                  <label class="form-label" style="font-size:0.72rem;">Derslik</label>
+                  <input type="text" id="course-room" class="form-input" placeholder="D-204" required style="padding:0.4rem; font-size:0.82rem;" />
+                </div>
+              </div>
+              <div style="display:flex; justify-content:flex-end; gap:0.4rem;">
+                <button type="button" class="btn-action" style="font-size:0.78rem;" onclick="toggleAddCourseForm()">İptal</button>
+                <button type="submit" class="btn-action btn-action-primary" style="font-size:0.78rem;">Kaydet</button>
+              </div>
+            </form>
+
+            <table class="portal-table">
+              <thead>
+                <tr>
+                  <th>Gün</th>
+                  <th>Saat</th>
+                  <th>Ders</th>
+                  <th>Derslik</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="schedule-table-body">
+                <!-- Kullanıcı ekledikçe buraya dolar -->
+              </tbody>
+            </table>
+            <div id="schedule-empty-alert" style="text-align:center; padding:1.25rem 0.5rem; font-size:0.82rem; color:var(--text-muted);">
+              Programınız henüz boş. Yukarıdaki <strong>"+ Ders Ekle"</strong> butonunu kullanarak derslerinizi ekleyin.
+            </div>
+          </div>
+
+          <!-- 5. KTÜ ÇOKLU DERS VE AGNO (DÖNEM ORTALAMASI) HESAPLAYICI (FR-13, FR-14) -->
+          <div class="side-card">
+            <div class="side-card-title">
+              <span>🎓 KTÜ AGNO & Not Simülatörü</span>
+              <button class="btn-action btn-action-primary" style="font-size:0.75rem; padding:0.3rem 0.65rem;" onclick="openCourseGradeWizard()">+ Yeni Ders Ekle</button>
+            </div>
+            
+            <!-- Canlı AGNO ve Dönem Başarı Özeti -->
+            <div style="background:var(--bg-hover); padding:1rem; border-radius:var(--radius-md); border:1px solid var(--border-color); margin-bottom:1rem;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                  <span style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; font-weight:700;">Dönem AGNO:</span>
+                  <div id="agno-display-val" style="font-size:1.8rem; font-weight:900; background:var(--primary-gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">0.00</div>
+                </div>
+                <div style="text-align:right;">
+                  <span style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; font-weight:700;">Toplam Kredi:</span>
+                  <div id="agno-total-credits" style="font-size:1.4rem; font-weight:800; color:var(--text-main);">0</div>
+                </div>
+              </div>
+              <div style="border-top:1px dashed var(--border-color); margin-top:0.6rem; padding-top:0.4rem; font-size:0.8rem; display:flex; justify-content:space-between;">
+                <span style="color:var(--text-muted);">Akademik Durum:</span>
+                <strong id="agno-honor-status" style="color:var(--text-muted);">Ders ekleyin</strong>
+              </div>
+            </div>
+
+            <!-- Eklenen Derslerin Listesi -->
+            <table class="portal-table">
+              <thead>
+                <tr>
+                  <th>Ders</th>
+                  <th>Kredi</th>
+                  <th>Not</th>
+                  <th>Harf</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="agno-courses-tbody">
+                <!-- Hesaplanan dersler buraya eklenecek -->
+              </tbody>
+            </table>
+            <div id="agno-empty-alert" style="text-align:center; padding:1rem; font-size:0.8rem; color:var(--text-muted);">
+              Henüz ders eklenmedi. <strong>"+ Yeni Ders Ekle"</strong> butonuna basarak derslerinizi hesaplayın ve AGNO çıkarın.
+            </div>
+          </div>
+
+          <!-- 6. KİŞİSEL ÇALIŞMA NOTLARI (KISISEL_NOTLAR Tablosu) -->
+          <div class="side-card">
+            <div class="side-card-title">
+              <span>📝 Kişisel Çalışma Notlarım</span>
+            </div>
+
+            <form onsubmit="submitPersonalNote(event)" style="margin-bottom:0.85rem;">
+              <input type="text" id="p-note-title" class="form-input" placeholder="Not başlığı..." required style="margin-bottom:0.4rem; font-size:0.85rem;" />
+              <textarea id="p-note-content" class="form-input" placeholder="Çalışma notunuzu buraya yazın..." required style="min-height:60px; margin-bottom:0.4rem; font-size:0.85rem;"></textarea>
+              <div style="text-align:right;">
+                <button type="submit" class="btn-action btn-action-primary" style="font-size:0.8rem;">Notu Kaydet</button>
+              </div>
+            </form>
+
+            <div id="personal-notes-container" style="display:flex; flex-direction:column; gap:0.6rem; max-height:220px; overflow-y:auto;">
+              <div class="side-card" style="padding:0.75rem; background:var(--bg-hover);">
+                <div style="display:flex; justify-content:space-between; font-weight:800; font-size:0.88rem;">
+                  <span>Grup Toplantısı</span>
+                  <button onclick="this.parentElement.parentElement.remove()" style="background:none; border:none; cursor:pointer; color:var(--danger); font-size:1.1rem; line-height:1;">×</button>
+                </div>
+                <div style="font-size:0.82rem; color:var(--text-muted); margin-top:0.25rem;">Perşembe 14:00 ER diyagramı ve arayüz entegrasyonu kontrol edilecek.</div>
+              </div>
+            </div>
+          </div>
+
+        </aside>
+
+      </div>
+    </main>
+
+  </div>
+
+  
+  <!-- KTÜ AKILLI DERS & NOT SİHİRBAZI MODALI (30 Kişi Kuralı & Değerlendirme Seçimi) -->
+  <div id="modal-grade-wizard" class="modal-overlay">
+    <div class="modal-content" style="max-width:560px;">
+      <div class="modal-header">
+        <h3 style="font-size:1.2rem; font-weight:800;">🎓 Ders Notu ve Harf Notu Hesapla</h3>
+        <button class="modal-close-btn" onclick="closeCourseGradeWizard()">×</button>
+      </div>
+
+      <form id="form-grade-wizard" onsubmit="submitCourseGradeWizard(event)">
+        <!-- 1. Soru: Ders Adı ve Kredi -->
+        <div style="display:grid; grid-template-columns: 2fr 1fr; gap:0.5rem;" class="form-group">
+          <div>
+            <label class="form-label">Dersin Adı</label>
+            <input type="text" id="wiz-course-name" class="form-input" placeholder="Örn: Yazılım Geliştirme" required />
+          </div>
+          <div>
+            <label class="form-label">Kredi / AKTS</label>
+            <input type="number" id="wiz-course-credit" class="form-input" value="4" min="1" max="15" required />
+          </div>
+        </div>
+
+        <!-- 2. Soru: Sınıf Mevcudu (KTÜ 30 Kişi Kuralı) -->
+        <div class="form-group" style="background:var(--bg-hover); padding:0.75rem; border-radius:var(--radius-md); border:1px solid var(--border-color);">
+          <label class="form-label" style="margin-bottom:0.4rem;">Sınıf mevcudu 30 kişi veya üzeri mi?</label>
+          <div style="display:flex; gap:1.25rem; font-size:0.85rem;">
+            <label style="cursor:pointer; display:flex; align-items:center; gap:0.35rem;">
+              <input type="radio" name="wiz-class-size" value="ge30" checked onchange="toggleRelativeInputs()" />
+              <strong>≥ 30 Kişi</strong> (Bağıl Değerlendirme / Çan Eğrisi)
+            </label>
+            <label style="cursor:pointer; display:flex; align-items:center; gap:0.35rem;">
+              <input type="radio" name="wiz-class-size" value="lt30" onchange="toggleRelativeInputs()" />
+              <strong>&lt; 30 Kişi</strong> (Mutlak Değerlendirme Sistemi)
+            </label>
+          </div>
+
+          <!-- Bağıl sistem için sınıf ortalaması girişi -->
+          <div id="wiz-relative-box" style="margin-top:0.6rem; display:flex; align-items:center; gap:0.5rem; font-size:0.8rem;">
+            <span style="color:var(--text-muted);">Sınıf Ortalaması (HBN):</span>
+            <input type="number" id="wiz-class-avg" class="form-input" style="width:75px; padding:0.25rem 0.5rem;" value="55" min="10" max="100" />
+            <span style="font-size:0.75rem; color:var(--text-muted);">(Çan eğrisi seviyesini belirler)</span>
+          </div>
+        </div>
+
+        <!-- 3. Soru: Ders Hangi Değerlendirmelerden Oluşuyor? -->
+        <div class="form-group">
+          <label class="form-label">Bu dersin notu hangi bileşenlerden oluşuyor? (Seçin ve Ağırlık/Not girin)</label>
+          
+          <div style="display:flex; flex-direction:column; gap:0.5rem; font-size:0.85rem;">
+            
+            <!-- Vize -->
+            <div style="display:flex; align-items:center; gap:0.5rem; background:var(--bg-card); padding:0.4rem 0.6rem; border-radius:var(--radius-sm); border:1px solid var(--border-color);">
+              <input type="checkbox" id="wiz-cb-vize" checked onchange="toggleWizInput('vize')" />
+              <label for="wiz-cb-vize" style="width:90px; font-weight:700;">Vize</label>
+              <span>Ağırlık (%):</span>
+              <input type="number" id="wiz-w-vize" class="input-num-grade" value="50" style="width:55px;" oninput="calcWizTotalWeight()" />
+              <span>Not:</span>
+              <input type="number" id="wiz-s-vize" class="input-num-grade" placeholder="0-100" min="0" max="100" required />
+            </div>
+
+            <!-- Final -->
+            <div style="display:flex; align-items:center; gap:0.5rem; background:var(--bg-card); padding:0.4rem 0.6rem; border-radius:var(--radius-sm); border:1px solid var(--border-color);">
+              <input type="checkbox" id="wiz-cb-final" checked onchange="toggleWizInput('final')" />
+              <label for="wiz-cb-final" style="width:90px; font-weight:700;">Final / Büt</label>
+              <span>Ağırlık (%):</span>
+              <input type="number" id="wiz-w-final" class="input-num-grade" value="50" style="width:55px;" oninput="calcWizTotalWeight()" />
+              <span>Not:</span>
+              <input type="number" id="wiz-s-final" class="input-num-grade" placeholder="0-100" min="0" max="100" required />
+            </div>
+
+            <!-- Laboratuvar -->
+            <div style="display:flex; align-items:center; gap:0.5rem; background:var(--bg-card); padding:0.4rem 0.6rem; border-radius:var(--radius-sm); border:1px solid var(--border-color);">
+              <input type="checkbox" id="wiz-cb-lab" onchange="toggleWizInput('lab')" />
+              <label for="wiz-cb-lab" style="width:90px; font-weight:700;">Laboratuvar</label>
+              <span>Ağırlık (%):</span>
+              <input type="number" id="wiz-w-lab" class="input-num-grade" value="20" style="width:55px;" disabled oninput="calcWizTotalWeight()" />
+              <span>Not:</span>
+              <input type="number" id="wiz-s-lab" class="input-num-grade" placeholder="0-100" min="0" max="100" disabled />
+            </div>
+
+            <!-- Proje -->
+            <div style="display:flex; align-items:center; gap:0.5rem; background:var(--bg-card); padding:0.4rem 0.6rem; border-radius:var(--radius-sm); border:1px solid var(--border-color);">
+              <input type="checkbox" id="wiz-cb-proje" onchange="toggleWizInput('proje')" />
+              <label for="wiz-cb-proje" style="width:90px; font-weight:700;">Proje</label>
+              <span>Ağırlık (%):</span>
+              <input type="number" id="wiz-w-proje" class="input-num-grade" value="20" style="width:55px;" disabled oninput="calcWizTotalWeight()" />
+              <span>Not:</span>
+              <input type="number" id="wiz-s-proje" class="input-num-grade" placeholder="0-100" min="0" max="100" disabled />
+            </div>
+
+            <!-- Ödev -->
+            <div style="display:flex; align-items:center; gap:0.5rem; background:var(--bg-card); padding:0.4rem 0.6rem; border-radius:var(--radius-sm); border:1px solid var(--border-color);">
+              <input type="checkbox" id="wiz-cb-odev" onchange="toggleWizInput('odev')" />
+              <label for="wiz-cb-odev" style="width:90px; font-weight:700;">Ödev</label>
+              <span>Ağırlık (%):</span>
+              <input type="number" id="wiz-w-odev" class="input-num-grade" value="10" style="width:55px;" disabled oninput="calcWizTotalWeight()" />
+              <span>Not:</span>
+              <input type="number" id="wiz-s-odev" class="input-num-grade" placeholder="0-100" min="0" max="100" disabled />
+            </div>
+
+            <!-- Quiz -->
+            <div style="display:flex; align-items:center; gap:0.5rem; background:var(--bg-card); padding:0.4rem 0.6rem; border-radius:var(--radius-sm); border:1px solid var(--border-color);">
+              <input type="checkbox" id="wiz-cb-quiz" onchange="toggleWizInput('quiz')" />
+              <label for="wiz-cb-quiz" style="width:90px; font-weight:700;">Quiz</label>
+              <span>Ağırlık (%):</span>
+              <input type="number" id="wiz-w-quiz" class="input-num-grade" value="10" style="width:55px;" disabled oninput="calcWizTotalWeight()" />
+              <span>Not:</span>
+              <input type="number" id="wiz-s-quiz" class="input-num-grade" placeholder="0-100" min="0" max="100" disabled />
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Ağırlık Toplamı Kontrolü -->
+        <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.8rem; margin-bottom:1rem;">
+          <span>Seçilen Ağırlıkların Toplamı:</span>
+          <strong id="wiz-total-weight-text" style="color:var(--success);">%100 (Tam)</strong>
+        </div>
+
+        <div style="display:flex; justify-content:flex-end; gap:0.5rem;">
+          <button type="button" class="btn-action" onclick="closeCourseGradeWizard()">İptal</button>
+          <button type="submit" class="btn-submit" style="width:auto; padding:0.65rem 1.4rem;">Hesapla ve Listeye Ekle →</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- HAFTA DETAY MODALI (FR-06 & Haftalık Görev Entegrasyonu) -->
+  <div id="modal-week-view" class="modal-overlay">
+    <div class="modal-content" style="max-width:560px;">
+      <div class="modal-header">
+        <h3 id="modal-week-title-text" style="font-size:1.2rem; font-weight:800;">Hafta Detayı</h3>
+        <button class="modal-close-btn" onclick="closeWeekModal()">×</button>
+      </div>
+      <p id="modal-week-desc-text" style="color:var(--text-muted); font-size:0.9rem; margin-bottom:1.25rem;"></p>
+      
+      <h4 style="font-size:0.95rem; font-weight:700; margin-bottom:0.5rem;">🎯 Kazanılacak Öğrenme Hedefleri:</h4>
+      <ul id="modal-week-topics-list" style="padding-left:1.25rem; font-size:0.88rem; line-height:1.7; margin-bottom:1.25rem;"></ul>
+
+      <h4 style="font-size:0.95rem; font-weight:700; margin-bottom:0.5rem;">📋 Bu Haftanın Görevleri:</h4>
+      <div id="modal-week-tasks-list" style="display:flex; flex-direction:column; gap:0.5rem; margin-bottom:1.25rem; max-height:180px; overflow-y:auto;"></div>
+
+      <button id="modal-week-filter-btn" class="btn-action btn-action-primary" style="width:100%; justify-content:center; padding:0.75rem;" onclick="filterWeekAndGo()">
+        🔍 Bu Haftanın Görevlerini Filtrele ve Gör
+      </button>
+    </div>
+  </div>
+
+  <!-- YENİ GÖREV EKLEME MODALI (FR-08) -->
+  <div id="modal-create-task" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 style="font-size:1.2rem; font-weight:800;">+ Yeni Görev / Mini Etkinlik Ekle</h3>
+        <button class="modal-close-btn" onclick="closeCreateTaskModal()">×</button>
+      </div>
+      <form onsubmit="saveNewTask(event)">
+        <div class="form-group">
+          <label class="form-label">Görev Başlığı</label>
+          <input type="text" id="modal-t-title" class="form-input" placeholder="Örn: CSS düzenini tamamla" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Açıklama</label>
+          <textarea id="modal-t-desc" class="form-input" placeholder="Görev detayları..."></textarea>
+        </div>
+        <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:0.5rem;" class="form-group">
+          <div>
+            <label class="form-label">Hafta</label>
+            <select id="modal-t-week" class="form-input">
+              <option value="1">1. Hafta</option>
+              <option value="2" selected>2. Hafta</option>
+              <option value="3">3. Hafta</option>
+              <option value="4">4. Hafta</option>
+            </select>
+          </div>
+          <div>
+            <label class="form-label">Öncelik</label>
+            <select id="modal-t-priority" class="form-input">
+              <option value="Yüksek">Yüksek</option>
+              <option value="Orta" selected>Orta</option>
+              <option value="Düşük">Düşük</option>
+            </select>
+          </div>
+          <div>
+            <label class="form-label">Kategori</label>
+            <input type="text" id="modal-t-cat" class="form-input" placeholder="Frontend" />
+          </div>
+        </div>
+        <div style="text-align:right; margin-top:1.25rem;">
+          <button type="submit" class="btn-submit" style="width:auto; padding:0.7rem 1.5rem;">Görevi Kaydet</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="portal-toast" class="toast-bar"></div>
+
+  <!-- =========================================================================
+       KESİNTİSİZ ÇALIŞAN JAVASCRIPT MOTORU
+       ========================================================================= -->
+  <script src="js/portal.js"></script>
+
+  <!-- =========================================================================
+       ZENITH AI - AKILLI DERS & BAŞARI DANIŞMANI (FLOATING WIDGET)
+       ========================================================================= -->
+  <div class="ai-widget-wrapper">
+    <!-- Konuşma Balonu İpucu -->
+    <div id="ai-speech-bubble" class="ai-speech-bubble" onclick="toggleAiDrawer(true)">
+      <span>🤖</span>
+      <span>👋 Sana nasıl yardımcı olabilirim?</span>
+      <span onclick="event.stopPropagation(); dismissAiBubble();" style="opacity:0.6; margin-left:0.3rem;">✕</span>
+    </div>
+
+    <!-- Robot Şeklinde Yüzen AI Maskotu -->
+    <button id="ai-floating-btn" class="ai-floating-btn" onclick="toggleAiDrawer()" title="AkademiX AI Robot Danışmanı ile Konuş">
+      <svg class="ai-robot-mascot" viewBox="0 0 100 115" width="72" height="82" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Vücut ve Baş Gradyanları (Soft Ceramic Pearl) -->
+    <linearGradient id="akxHeadGrad" x1="20" y1="15" x2="80" y2="65" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ffffff"/>
+      <stop offset="0.6" stop-color="#f1f5f9"/>
+      <stop offset="1" stop-color="#e0e7ff"/>
+    </linearGradient>
+    <linearGradient id="akxBodyGrad" x1="25" y1="65" x2="75" y2="108" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ffffff"/>
+      <stop offset="0.7" stop-color="#ede9fe"/>
+      <stop offset="1" stop-color="#c7d2fe"/>
+    </linearGradient>
+    <!-- Logo ve Vurgu Gradyanı (AkademiX Brand Gradient) -->
+    <linearGradient id="akxLogoGrad" x1="38" y1="76" x2="62" y2="96" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6366f1"/>
+      <stop offset="0.5" stop-color="#8b5cf6"/>
+      <stop offset="1" stop-color="#ec4899"/>
+    </linearGradient>
+    <!-- Kulaklık Gradyanı -->
+    <linearGradient id="akxEarGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#4f46e5"/>
+      <stop offset="1" stop-color="#7c3aed"/>
+    </linearGradient>
+    <!-- Glow Filtresi -->
+    <filter id="akxGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Anten & Enerji Küresi -->
+  <path d="M50 20 L50 8" stroke="#818cf8" stroke-width="3.5" stroke-linecap="round"/>
+  <circle cx="50" cy="7" r="5.5" fill="#00f2fe" filter="url(#akxGlow)">
+    <animate attributeName="fill" values="#00f2fe;#ec4899;#a855f7;#00f2fe" dur="2.5s" repeatCount="indefinite"/>
+    <animate attributeName="r" values="5;6.5;5" dur="1.8s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- Sevimli Yuvarlak Kulaklıklar (Ears with neon glow rings) -->
+  <rect x="11" y="29" width="9" height="22" rx="4.5" fill="url(#akxEarGrad)"/>
+  <circle cx="15.5" cy="40" r="3" fill="#00f2fe"/>
+  <rect x="80" y="29" width="9" height="22" rx="4.5" fill="url(#akxEarGrad)"/>
+  <circle cx="84.5" cy="40" r="3" fill="#00f2fe"/>
+
+  <!-- Sevimli Tombul Kafa (Cute Round Head) -->
+  <rect x="18" y="16" width="64" height="48" rx="22" fill="url(#akxHeadGrad)" stroke="#a5b4fc" stroke-width="2.5"/>
+
+  <!-- Parlak Kavisli Vizör / Yüz Ekranı -->
+  <rect x="25" y="24" width="50" height="32" rx="14" fill="#0a0f1d" stroke="#312e81" stroke-width="1.8"/>
+
+  <!-- Sevimli Işıltılı Gözler (Kawaii Anime Eyes with Sparkle) -->
+  <!-- Sol Göz -->
+  <ellipse cx="38" cy="38" rx="5.5" ry="6.5" fill="#00f5d4">
+    <animate attributeName="ry" values="6.5;6.5;1;6.5" keyTimes="0;0.92;0.96;1" dur="3.8s" repeatCount="indefinite"/>
+  </ellipse>
+  <circle cx="39.8" cy="35.5" r="2.2" fill="#ffffff"/>
+  <circle cx="36.5" cy="40.5" r="1.1" fill="#ffffff"/>
+
+  <!-- Sağ Göz -->
+  <ellipse cx="62" cy="38" rx="5.5" ry="6.5" fill="#00f5d4">
+    <animate attributeName="ry" values="6.5;6.5;1;6.5" keyTimes="0;0.92;0.96;1" dur="3.8s" repeatCount="indefinite"/>
+  </ellipse>
+  <circle cx="63.8" cy="35.5" r="2.2" fill="#ffffff"/>
+  <circle cx="60.5" cy="40.5" r="1.1" fill="#ffffff"/>
+
+  <!-- Sevimli Pembe Yanaklar (Kawaii Blush) -->
+  <ellipse cx="31" cy="45" rx="3.5" ry="2" fill="#ff6b8b" opacity="0.8"/>
+  <ellipse cx="69" cy="45" rx="3.5" ry="2" fill="#ff6b8b" opacity="0.8"/>
+
+  <!-- Gülen Ağız -->
+  <path d="M45 46 Q50 50.5 55 46" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" fill="none"/>
+
+  <!-- Sallanan Sol Kol (Friendly Waving Arm) -->
+  <g>
+    <path d="M18 73 C12 68, 7 57, 10 52 C12 48, 17 50, 20 58 Z" fill="#c7d2fe" stroke="#818cf8" stroke-width="1.8">
+      <animateTransform attributeName="transform" type="rotate" values="0 18 73; -16 18 73; 0 18 73" dur="1.8s" repeatCount="indefinite"/>
+    </path>
+  </g>
+
+  <!-- Sağ Kol -->
+  <path d="M82 73 C87 75, 92 84, 88 89 C85 92, 80 87, 79 80 Z" fill="#c7d2fe" stroke="#818cf8" stroke-width="1.8"/>
+
+  <!-- Sevimli Gövde (Rounded Chubby Body) -->
+  <path d="M28 66 C28 62, 72 62, 72 66 L68 102 C68 107, 32 107, 32 102 Z" fill="url(#akxBodyGrad)" stroke="#a5b4fc" stroke-width="2.5"/>
+
+  <!-- GÖĞSÜNDE UYGULAMANIN LOGOSU (AkademiX Logo Badge & Crest) -->
+  <!-- Dış Rozet Kalkanı / Çerçevesi -->
+  <rect x="37" y="73" width="26" height="23" rx="8" fill="#1e1b4b" stroke="#818cf8" stroke-width="1.6"/>
+  <!-- Logo Glow Halkası -->
+  <rect x="39" y="75" width="22" height="19" rx="6" fill="url(#akxLogoGrad)">
+    <animate attributeName="opacity" values="0.85;1;0.85" dur="2s" repeatCount="indefinite"/>
+  </rect>
+  <!-- AkademiX "AX" Monogram Logo Harfleri -->
+  <path d="M43 90 L46.5 80 L50 90 M44.5 87 L48.5 87" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M52 80 L58 90 M58 80 L52 90" stroke="#00f5d4" stroke-width="1.6" stroke-linecap="round"/>
+  <!-- Üzerinde Minik Başarı / Mezuniyet Şapkası Pırıltısı -->
+  <circle cx="50" cy="74" r="2" fill="#ffd166"/>
+
+  <!-- Sevimli Minik Ayaklar -->
+  <rect x="36" y="103" width="10" height="6" rx="3" fill="#6366f1"/>
+  <rect x="54" y="103" width="10" height="6" rx="3" fill="#6366f1"/>
+</svg>
+      <div class="ai-badge-pulse" style="top:4px; right:8px;"></div>
+    </button>
+  </div>
+
+  <!-- Chat Drawer / Modal -->
+  <div id="ai-chat-drawer" class="ai-chat-drawer">
+    <!-- Drawer Header -->
+    <div class="ai-drawer-header">
+      <div class="ai-header-left">
+        <div class="ai-avatar">🤖</div>
+        <div>
+          <div class="ai-header-title">AkademiX AI Danışmanı</div>
+          <div class="ai-header-status">
+            <span class="ai-status-dot"></span>
+            <span>Çevrimiçi • KTÜ Başarı Asistanı</span>
+          </div>
+        </div>
+      </div>
+      <div class="ai-header-actions" style="display:flex; align-items:center; gap:0.35rem;">
+        <span id="ai-provider-badge" class="ai-provider-badge" onclick="openAiApiSettingsModal()" title="Yapay Zeka API Ayarlarını Aç">⚡ Yerel Motor</span>
+        <button class="ai-btn-icon" onclick="openAiApiSettingsModal()" title="API Ayarları (Gemini / OpenAI)">⚙️</button>
+        <button class="ai-btn-icon" onclick="resetAiChat()" title="Sohbeti Sıfırla">🔄</button>
+        <button class="ai-btn-icon" onclick="toggleAiDrawer(false)" title="Pencereyi Kapat">✕</button>
+      </div>
+    </div>
+
+    <!-- Mesaj Listesi -->
+    <div id="ai-messages-container" class="ai-messages-container"></div>
+
+    <!-- Hızlı Soru Şeritleri (Quick Prompts) -->
+    <div class="ai-quick-prompts-bar">
+      <button class="ai-quick-pill" onclick="sendAiQuickPrompt('🎯 2. Hafta görevlerim neler?')">🎯 2. Hafta Görevleri</button>
+      <button class="ai-quick-pill" onclick="sendAiQuickPrompt('📊 KTÜ 30 kişi kuralı nedir?')">📊 30 Kişi Kuralı</button>
+      <button class="ai-quick-pill" onclick="sendAiQuickPrompt('🔥 Yüksek öncelikli görevlerim neler?')">🔥 Acil Görevler</button>
+      <button class="ai-quick-pill" onclick="sendAiQuickPrompt('📅 Ders programıma nasıl ders eklerim?')">📅 Ders Programı</button>
+      <button class="ai-quick-pill" onclick="sendAiQuickPrompt('🎓 Başarılı olmak için tavsiye ver')">🎓 Çalışma Tavsiyesi</button>
+    </div>
+
+    <!-- Mesaj Gönderme Formu -->
+    <form class="ai-input-form" onsubmit="handleAiUserSubmit(event)">
+      <input type="text" id="ai-user-input" class="ai-input-field" placeholder="Bir şey sor (Örn: KTÜ çan eğrisi, görevlerim)..." autocomplete="off" />
+      <button type="submit" class="ai-btn-send" title="Gönder">➤</button>
+    </form>
+  </div>
+
+
+  <!-- =========================================================================
+       YAPAY ZEKA (GEMINI / OPENAI) API AYARLARI MODALI
+       ========================================================================= -->
+  <div id="modal-ai-api-settings" class="modal-overlay" style="z-index:10500;">
+    <div class="modal-content" style="max-width:540px; padding:2rem;">
+      <div class="modal-header">
+        <h3 style="display:flex; align-items:center; gap:0.6rem; font-size:1.25rem; font-weight:800; margin:0;">
+          <span>🤖</span>
+          <span>Yapay Zeka API Ayarları</span>
+        </h3>
+        <button class="modal-close-btn" onclick="closeAiApiSettingsModal()">✕</button>
+      </div>
+
+      <div style="margin-top:1rem;">
+        <p style="font-size:0.88rem; color:var(--text-muted); line-height:1.5; margin-bottom:1.1rem;">
+          AkademiX Asistanı'nı <strong>Google Gemini</strong> veya <strong>OpenAI</strong> bulut yapay zeka modeline bağlayabilirsiniz.
+          API anahtarınız yalnızca tarayıcınızda (yerel) saklanır. Boş bırakırsanız dahili yerel KTÜ motoru çalışmaya devam eder.
+        </p>
+
+        <div class="form-group" style="margin-bottom:1rem;">
+          <label class="form-label" style="font-weight:700;">Yapay Zeka Sağlayıcısı</label>
+          <select id="ai-settings-provider" class="form-input" onchange="handleAiProviderChange()">
+            <option value="gemini">Google Gemini AI (Önerilen - Ücretsiz & Hızlı)</option>
+            <option value="openai">OpenAI (ChatGPT - gpt-4o-mini)</option>
+            <option value="local">Yerel Dahili Motor (API Anahtarsız)</option>
+          </select>
+        </div>
+
+        <div id="ai-key-group" class="form-group" style="margin-bottom:1rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.35rem;">
+            <label class="form-label" style="margin:0; font-weight:700;">API Anahtarı (API Key)</label>
+            <a id="ai-key-link" href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener" style="font-size:0.78rem; color:var(--primary); font-weight:700; text-decoration:underline;">
+              🔑 Ücretsiz Gemini API Key Al ↗
+            </a>
+          </div>
+          <div style="display:flex; gap:0.5rem;">
+            <input type="password" id="ai-settings-key" class="form-input" placeholder="AIzaSy... veya sk-..." style="flex:1;" />
+            <button type="button" class="btn-action" onclick="toggleApiKeyVisibility()" style="padding:0.45rem 0.8rem;" title="Anahtarı Göster / Gizle">👁️</button>
+          </div>
+          <div style="color:var(--text-muted); font-size:0.75rem; margin-top:0.35rem;">
+            * Google AI Studio üzerinden hiçbir kart girmeden ücretsiz Gemini API key alabilirsiniz.
+          </div>
+        </div>
+
+        <div id="ai-model-group" class="form-group" style="margin-bottom:1.25rem;">
+          <label class="form-label" style="font-weight:700;">Model Seçimi</label>
+          <select id="ai-settings-model" class="form-input">
+            <option value="gemini-1.5-flash">gemini-1.5-flash (En Hızlı & Dengeli)</option>
+            <option value="gemini-2.0-flash">gemini-2.0-flash (En Yeni & Akıllı)</option>
+            <option value="gemini-1.5-pro">gemini-1.5-pro (Kapsamlı Düşünce)</option>
+          </select>
+        </div>
+
+        <div id="ai-test-feedback" style="display:none; padding:0.65rem 0.85rem; border-radius:10px; font-size:0.84rem; margin-bottom:1rem;"></div>
+
+        <div style="display:flex; gap:0.6rem; justify-content:flex-end; flex-wrap:wrap;">
+          <button type="button" class="btn-action" onclick="testAiApiConnection()" style="border:1px solid var(--border-color); font-weight:600;">🧪 Bağlantıyı Test Et</button>
+          <button type="button" class="btn-action" onclick="clearAiApiKey()" style="color:var(--danger); border:1px solid var(--danger); font-weight:600;">Yerel Moda Sıfırla</button>
+          <button type="button" class="btn-submit" onclick="saveAiApiSettings()" style="padding:0.55rem 1.25rem; font-weight:800;">💾 Kaydet</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
