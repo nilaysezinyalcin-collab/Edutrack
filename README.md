@@ -1,4 +1,4 @@
-# 🏔️ KTÜ Yazılım Mühendisliği - Proje 1 (Grup 4)
+# KTÜ Yazılım Mühendisliği - Proje 1 (Grup 4)
 
 Bu repository, **Karadeniz Teknik Üniversitesi Yazılım Geliştirme Dersi** kapsamında **Grup 4** tarafından geliştirilen iki aşamalı etkileşimli öğrenci takip ve başarı platformunu içermektedir:
 
@@ -7,7 +7,7 @@ Bu repository, **Karadeniz Teknik Üniversitesi Yazılım Geliştirme Dersi** ka
 
 ---
 
-## 🚀 3 Adımda Hızlı Kurulum ve Çalıştırma Rehberi
+## 3 Adımda Hızlı Kurulum ve Çalıştırma Rehberi
 
 Projeyi kendi bilgisayarınızda (Windows, Mac veya Linux) çalıştırmak için aşağıdaki adımları izlemeniz yeterlidir:
 
@@ -29,7 +29,7 @@ cd Edutrack
   ```
   *(Python `py` olarak kayıtlıysa: `py server.py`)*
 
-#### 🍎 Mac ve 🐧 Linux Kullanıcıları İçin:
+####  Mac ve Linux Kullanıcıları İçin:
 * **Yöntem A (Otomatik Script):**
   Terminalde proje klasöründeyken:
   ```bash
@@ -40,7 +40,7 @@ cd Edutrack
   python3 server.py
   ```
 
-#### 🌐 Sıfır Kurulum / Sunucusuz Çalıştırma (Acil Durum Modu):
+#### Sıfır Kurulum / Sunucusuz Çalıştırma (Acil Durum Modu):
 Bilgisayarınızda Python, Node veya VS Code kurulu değilse bile:
 * Proje kök dizinindeki **`akademix.html`** dosyasına çift tıklamanız yeterlidir! İnternet veya sunucuya ihtiyaç duymadan doğrudan tarayıcınızda açılır.
 
@@ -48,27 +48,27 @@ Bilgisayarınızda Python, Node veya VS Code kurulu değilse bile:
 
 ### 3. Adım: Tarayıcıdan Giriş Yapın
 Tarayıcınızın adres çubuğuna şunu yazın:
-👉 **`http://localhost:5173`**
+ **`http://localhost:5173`**
 
 * **Demo Girişi:** Giriş ekranında **"Öğrenci No: 444082"** ve **"Şifre: 123456"** bilgilerini girebilir veya doğrudan **"Hızlı Demo Girişi"** butonuna basarak tüm panoyu keşfedebilirsiniz.
 
 ---
 
-## 🤖 Sevimli Yapay Zeka Danışmanı & Hazır API Entegrasyonu
+##  Sevimli Yapay Zeka Danışmanı & Hazır API Entegrasyonu
 
 AkademiX'in sağ alt köşesinde yer alan robot maskot, öğrencilere 7/24 rehberlik eden üretken bir yapay zeka beynine sahiptir:
 
-* 🔑 **Hazır ve Entegre API:** Projeye Google Gemini API anahtarı önceden tanımlanmıştır. Projeyi açan hiçbir öğrencinin veya hocanın ekstra API anahtarı almasına gerek yoktur; doğrudan konuşmaya başlayabilirsiniz!
-* ⚙️ **Kendi Anahtarını Kullanmak İsteyenler İçin:**
+*  **Hazır ve Entegre API:** Projeye Google Gemini API anahtarı önceden tanımlanmıştır. Projeyi açan hiçbir öğrencinin veya hocanın ekstra API anahtarı almasına gerek yoktur; doğrudan konuşmaya başlayabilirsiniz!
+*  **Kendi Anahtarını Kullanmak İsteyenler İçin:**
   1. Sağ alttaki sevimli robota tıklayarak sohbet çekmecesini açın.
   2. Başlıktaki **⚙️ (API Ayarları)** butonuna tıklayın.
   3. Google Gemini veya OpenAI seçip kendi API anahtarınızı girin.
-  4. **"🔌 Bağlantıyı Test Et"** ve **"💾 Ayarları Kaydet"** butonlarına basın.
-* 🛡️ **Akıllı Hibrit Güvencesi:** API kotası dolsa veya internet bağlantısı olmasa bile sistem asla çökmez; KTÜ mevzuatını ve ders programını bilen yerel kural motoru otomatik devreye girer.
+  4. **" Bağlantıyı Test Et"** ve **" Ayarları Kaydet"** butonlarına basın.
+*  **Akıllı Hibrit Güvencesi:** API kotası dolsa veya internet bağlantısı olmasa bile sistem asla çökmez; KTÜ mevzuatını ve ders programını bilen yerel kural motoru otomatik devreye girer.
 
 ---
 
-## 🧮 KTÜ 30 Kişi Kuralı ve Not Sistemi (MDS / BDS)
+##  KTÜ 30 Kişi Kuralı ve Not Sistemi (MDS / BDS)
 
 KTÜ Yazılım Mühendisliği mevzuatına uygun geliştirilen not motoru:
 * **Sınıf Mevcudu < 30:** **Mutlak Değerlendirme Sistemi (MDS)** uygulanır (AA: 90-100, BA: 85-89, BB: 80-84, CB: 75-79, CC: 70-74, DC: 60-69, DD: 50-59, FD: 40-49, FF: 0-39).
@@ -77,7 +77,7 @@ KTÜ Yazılım Mühendisliği mevzuatına uygun geliştirilen not motoru:
 
 ---
 
-## 👥 Grup Üyeleri ve Görev Dağılımı (Grup 4)
+##  Grup Üyeleri ve Görev Dağılımı (Grup 4)
 
 | Öğrenci No | Adı Soyadı | Projedeki Rolü | Üstlendiği Modüller ve Sorumluluklar |
 | :--- | :--- | :--- | :--- |
@@ -88,16 +88,16 @@ KTÜ Yazılım Mühendisliği mevzuatına uygun geliştirilen not motoru:
 
 ---
 
-## 📂 Repository Klasör Yapısı
+##  Repository Klasör Yapısı
 
 ```
-├── edutrack/                📁 1. AŞAMA: Temel Öğrenme Panosu (Nilay'ın İlk Sürümü)
+├── edutrack/                 1. AŞAMA: Temel Öğrenme Panosu (Nilay'ın İlk Sürümü)
 │   ├── css/style.css        - Temel stiller ve grid tasarımı
 │   ├── js/                  - courses.js, tasks.js, data.js, storage.js, app.js
 │   ├── index.html           - Temel arayüz
 │   └── README.md            - EduTrack modül açıklaması
 │
-├── akademix/                🚀 2. AŞAMA: Gelişmiş AkademiX Portalı (Gelişmiş Sürüm)
+├── akademix/                 2. AŞAMA: Gelişmiş AkademiX Portalı (Gelişmiş Sürüm)
 │   ├── css/style.css        - Modern tasarım, sevimli maskot ve cam efektleri
 │   ├── js/                  - ai-assistant.js, ui.js, storage.js, app.js, bundle.js
 │   ├── index.html           - Giriş ekranı, KTÜ AGNO motoru, ders programı & AI Robot
@@ -107,7 +107,7 @@ KTÜ Yazılım Mühendisliği mevzuatına uygun geliştirilen not motoru:
 │   ├── baslat.sh            - Mac & Linux başlatıcı
 │   └── README.md            - AkademiX detaylı teknik rehberi
 │
-├── docs/                    📑 Tüm Dokümanlar, Test Senaryoları, Sunumlar ve Raporlar
+├── docs/                     Tüm Dokümanlar, Test Senaryoları, Sunumlar ve Raporlar
 │   ├── test-senaryolari.md
 │   ├── proje-raporu-taslak.md
 │   ├── Proje_1_Etkilesimli_Ders_Deneyimi_Panosu_Teknik_Dokuman.docx
@@ -117,12 +117,12 @@ KTÜ Yazılım Mühendisliği mevzuatına uygun geliştirilen not motoru:
 │   ├── er_diyagram_v2.png
 │   └── ogrenci_paneli_diyagram_mavi.png
 │
-├── server.py                🖥️ Tek komutla port 5173 sunucusu açan Python motoru
-├── baslat.sh                🚀 Mac & Linux için tek tıkla sunucu başlatıcı
-├── baslat_windows.bat       🪟 Windows için tek tıkla sunucu başlatıcı
-├── akademix.html            📄 Tek tıkla kurulumsuz çalışan tam sürüm
-├── index.html               🔄 Localhost'a girildiğinde doğrudan yönlendiren giriş dosyası
-└── README.md                📖 Bu tanıtım ve kurulum kılavuzu
+├── server.py                 Tek komutla port 5173 sunucusu açan Python motoru
+├── baslat.sh                 Mac & Linux için tek tıkla sunucu başlatıcı
+├── baslat_windows.bat        Windows için tek tıkla sunucu başlatıcı
+├── akademix.html             Tek tıkla kurulumsuz çalışan tam sürüm
+├── index.html                Localhost'a girildiğinde doğrudan yönlendiren giriş dosyası
+└── README.md                 Bu tanıtım ve kurulum kılavuzu
 ```
 
 ---
