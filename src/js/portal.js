@@ -672,36 +672,114 @@ function deleteTaskByTitle(taskTitle) {
   return false;
 }
 
-// YENİ GÖREV DOĞRUDAN EKLEME (UI & AI ÇAĞRISI)
-function addNewTaskDirectly(title, desc, week, priority, category) {
-  if (!title) return false;
-  desc = desc || "Öğrenci tarafından tanımlanan mini etkinlik.";
-  week = String(week || "2");
-  priority = priority || "Yüksek";
-  category = category || "Geliştirme";
+// =========================================================================
+// GÖREV KALICILIĞI (localStorage) - Issue #2
+// Görev listesi her değişiklikte kaydedilir, sayfa açılışında geri yüklenir.
+// =========================================================================
+var TASKS_STORAGE_KEY = "akademix_tasks_v1";
+var tasksRestored = false; // Geri yükleme bitmeden kayıt yapılıp veri ezilmesin
 
-  var container = document.getElementById("tasks-list-container");
-  var newRow = document.createElement("div");
-  newRow.className = "task-row";
-  newRow.setAttribute("data-week", week);
-  newRow.setAttribute("data-status", "in-progress");
-  newRow.setAttribute("data-priority", priority);
+// Ekrandaki görev satırlarını düz veri nesnelerine çevirir
+function readTasksFromDom() {
+  var list = [];
+  document.querySelectorAll("#tasks-list-container .task-row").forEach(function(r) {
+    var badges = r.querySelectorAll(".task-badges .mini-badge");
+    var titleEl = r.querySelector(".task-title");
+    var descEl = r.querySelector(".task-desc");
+    list.push({
+      title: titleEl ? titleEl.textContent.trim() : "",
+      desc: descEl ? descEl.textContent.trim() : "",
+      week: r.getAttribute("data-week") || "1",
+      priority: r.getAttribute("data-priority") || "Orta",
+      category: badges[1] ? badges[1].textContent.trim() : "Genel",
+      status: r.getAttribute("data-status") === "completed" ? "completed" : "in-progress"
+    });
+  });
+  return list;
+}
+
+function saveTasksToStorage() {
+  if (!tasksRestored) return;
+  try {
+    localStorage.setItem(TASKS_STORAGE_KEY, JSON.stringify(readTasksFromDom()));
+  } catch (e) {
+    // Kota dolu veya gizli pencere: uygulama çalışmaya devam eder, kullanıcı uyarılır
+    console.error("Görevler kaydedilemedi:", e);
+    // Diğer bildirimlerin ardından görünmesi için kısa gecikme
+    setTimeout(function() {
+      showPortalToast("⚠️ Görevler tarayıcıya kaydedilemedi. Değişiklikler yenilemede kaybolabilir.");
+    }, 50);
+  }
+}
+
+function loadTasksFromStorage() {
+  try {
+    var raw = localStorage.getItem(TASKS_STORAGE_KEY);
+    if (!raw) return null;
+    var data = JSON.parse(raw);
+    if (!Array.isArray(data)) return null;
+    // Geçersiz kayıtları ayıkla
+    return data.filter(function(t) { return t && typeof t.title === "string" && t.title.trim() !== ""; });
+  } catch (e) {
+    console.error("Kayıtlı görevler okunamadı, varsayılan görevler kullanılacak:", e);
+    return null;
+  }
+}
+
+// Tek bir görev satırı (DOM öğesi) oluşturur
+function buildTaskRow(task) {
+  var week = String(task.week || "2");
+  var priority = task.priority || "Orta";
+  var category = task.category || "Genel";
+  var isDone = task.status === "completed";
+
+  var row = document.createElement("div");
+  row.className = "task-row" + (isDone ? " completed" : "");
+  row.setAttribute("data-week", week);
+  row.setAttribute("data-status", isDone ? "completed" : "in-progress");
+  row.setAttribute("data-priority", priority);
 
   var pBadgeClass = priority === "Yüksek" ? "badge-p-high" : (priority === "Orta" ? "badge-p-mid" : "");
 
-  newRow.innerHTML = `
-    <input type="checkbox" class="task-checkbox-input" onchange="toggleTaskStatus(this)" />
+  row.innerHTML = `
+    <input type="checkbox" class="task-checkbox-input" ${isDone ? "checked" : ""} onchange="toggleTaskStatus(this)" />
     <div class="task-body">
       <div class="task-badges">
         <span class="mini-badge">${escapeAiHtml(week)}. Hafta</span>
         <span class="mini-badge">${escapeAiHtml(category)}</span>
         <span class="mini-badge ${pBadgeClass}">${escapeAiHtml(priority)} Öncelik</span>
       </div>
-      <div class="task-title">${escapeAiHtml(title)}</div>
-      <div class="task-desc">${escapeAiHtml(desc)}</div>
+      <div class="task-title">${escapeAiHtml(task.title)}</div>
+      <div class="task-desc">${escapeAiHtml(task.desc || "")}</div>
     </div>
     <button class="btn-task-delete" onclick="deleteTaskRow(this)" title="Görevi Sil">🗑️</button>
   `;
+  return row;
+}
+
+// Kayıtlı görev varsa listeyi onlarla yeniden kurar; yoksa HTML'deki varsayılan görevler kalır
+function restoreTasksFromStorage() {
+  var saved = loadTasksFromStorage();
+  var container = document.getElementById("tasks-list-container");
+  if (saved && container) {
+    container.innerHTML = "";
+    saved.forEach(function(t) { container.appendChild(buildTaskRow(t)); });
+  }
+  tasksRestored = true;
+}
+
+// YENİ GÖREV DOĞRUDAN EKLEME (UI & AI ÇAĞRISI)
+function addNewTaskDirectly(title, desc, week, priority, category) {
+  if (!title) return false;
+  var container = document.getElementById("tasks-list-container");
+  var newRow = buildTaskRow({
+    title: title,
+    desc: desc || "Öğrenci tarafından tanımlanan mini etkinlik.",
+    week: week || "2",
+    priority: priority || "Yüksek",
+    category: category || "Geliştirme",
+    status: "in-progress"
+  });
 
   container.prepend(newRow);
   updateAllStats();
@@ -747,6 +825,7 @@ function updateAllStats() {
   if (elHigh) elHigh.textContent = high;
 
   updateTaskCardsCounter();
+  saveTasksToStorage();
 }
 
 var taskStatusFilter = "all";
@@ -832,27 +911,7 @@ function saveNewTask(e) {
 
   if (title) {
     var container = document.getElementById("tasks-list-container");
-    var newRow = document.createElement("div");
-    newRow.className = "task-row";
-    newRow.setAttribute("data-week", week);
-    newRow.setAttribute("data-status", "in-progress");
-    newRow.setAttribute("data-priority", priority);
-
-    var pBadgeClass = priority === "Yüksek" ? "badge-p-high" : (priority === "Orta" ? "badge-p-mid" : "");
-
-    newRow.innerHTML = `
-      <input type="checkbox" class="task-checkbox-input" onchange="toggleTaskStatus(this)" />
-      <div class="task-body">
-        <div class="task-badges">
-          <span class="mini-badge">${escapeAiHtml(week)}. Hafta</span>
-          <span class="mini-badge">${escapeAiHtml(cat)}</span>
-          <span class="mini-badge ${pBadgeClass}">${escapeAiHtml(priority)} Öncelik</span>
-        </div>
-        <div class="task-title">${escapeAiHtml(title)}</div>
-        <div class="task-desc">${escapeAiHtml(desc)}</div>
-      </div>
-      <button class="btn-task-delete" onclick="deleteTaskRow(this)" title="Görevi Sil">🗑️</button>
-    `;
+    var newRow = buildTaskRow({ title: title, desc: desc, week: week, priority: priority, category: cat, status: "in-progress" });
 
     container.prepend(newRow);
     closeCreateTaskModal();
@@ -1003,6 +1062,7 @@ function showPortalToast(msg) {
 // BAŞLANGIÇ ÇALIŞTIRICISI
 window.addEventListener("DOMContentLoaded", function() {
   initTheme();
+  restoreTasksFromStorage();
 
   var session = localStorage.getItem("portal_session_user");
   if (session) {
