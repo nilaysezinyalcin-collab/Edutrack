@@ -21,7 +21,7 @@ cd Edutrack
 
 ### 2. Adım: Sunucuyu Başlatın (İşletim Sisteminize Göre)
 
-#### 🪟 Windows Kullanıcıları İçin (En Kolayı):
+####  Windows Kullanıcıları İçin (En Kolayı):
 * **Yöntem A (Tek Tıkla):** Proje klasöründeki **`baslat_windows.bat`** dosyasına çift tıklayın! Python veya Node algılanır, sunucu başlatılır ve tarayıcınızda otomatik olarak açılır.
 * **Yöntem B (Terminal / CMD / PowerShell):**
   ```cmd
@@ -61,7 +61,7 @@ AkademiX'in sağ alt köşesinde yer alan robot maskot, öğrencilere 7/24 rehbe
 *  **Hazır ve Entegre API:** Projeye Google Gemini API anahtarı önceden tanımlanmıştır. Projeyi açan hiçbir öğrencinin veya hocanın ekstra API anahtarı almasına gerek yoktur; doğrudan konuşmaya başlayabilirsiniz!
 *  **Kendi Anahtarını Kullanmak İsteyenler İçin:**
   1. Sağ alttaki sevimli robota tıklayarak sohbet çekmecesini açın.
-  2. Başlıktaki **⚙️ (API Ayarları)** butonuna tıklayın.
+  2. Başlıktaki ** (API Ayarları)** butonuna tıklayın.
   3. Google Gemini veya OpenAI seçip kendi API anahtarınızı girin.
   4. **" Bağlantıyı Test Et"** ve **" Ayarları Kaydet"** butonlarına basın.
 *  **Akıllı Hibrit Güvencesi:** API kotası dolsa veya internet bağlantısı olmasa bile sistem asla çökmez; KTÜ mevzuatını ve ders programını bilen yerel kural motoru otomatik devreye girer.
