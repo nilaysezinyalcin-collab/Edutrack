@@ -54,7 +54,7 @@ Tarayıcınızın adres çubuğuna şunu yazın:
 
 ---
 
-##  Sevimli Yapay Zeka Danışmanı & Hazır API Entegrasyonu
+## Yapay Zeka Danışmanı & Hazır API Entegrasyonu
 
 AkademiX'in sağ alt köşesinde yer alan robot maskot, öğrencilere 7/24 rehberlik eden üretken bir yapay zeka beynine sahiptir:
 
