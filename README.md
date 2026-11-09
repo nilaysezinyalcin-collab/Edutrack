@@ -88,6 +88,14 @@ KTÜ Yazılım Mühendisliği mevzuatına uygun geliştirilen not motoru:
 
 ---
 
+## 📑 Teslim Edilen Bireysel Raporlar (İsmail Korkmaz)
+* 📄 **[Bireysel Yansıtma Raporu](docs/ISMAIL_KORKMAZ_YANSITMA_RAPORU.md)** (Word: [docs/ISMAIL_KORKMAZ_YANSITMA_RAPORU.docx](docs/ISMAIL_KORKMAZ_YANSITMA_RAPORU.docx))
+* 📊 **[Akran Değerlendirme Formu (100 Tam Puan)](docs/ISMAIL_KORKMAZ_AKRAN_DEGERLENDIRME.md)** (Word: [docs/ISMAIL_KORKMAZ_AKRAN_DEGERLENDIRME.docx](docs/ISMAIL_KORKMAZ_AKRAN_DEGERLENDIRME.docx))
+* 🧪 **[Test Senaryoları ve Son Test Raporu](docs/test-senaryolari.md)**
+* 🔗 **[Gereksinim - Test İzlenebilirlik Matrisi](docs/gereksinim-test-eslestirme.md)**
+
+---
+
 ##  Repository Klasör Yapısı
 
 ```
