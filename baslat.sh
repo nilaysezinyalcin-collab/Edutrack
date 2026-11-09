@@ -1,5 +1,5 @@
 #!/bin/bash
-DIR="$(cd "$(dirname "$0")" && pwd)"
+DIR="$(cd "$(dirname "$0")" && pwd)/src"
 
 echo "======================================================"
 echo "🏔️ AkademiX (Gelişmiş AI & Not Panosu) Başlatılıyor..."
@@ -24,10 +24,10 @@ elif which python > /dev/null 2>&1; then
 elif which npx > /dev/null 2>&1; then
     npx serve "$DIR" -l 5173
 else
-    echo "Python veya Node bulunamadı. Tek tıkla çalıştır dosyası açılıyor..."
+    echo "Python veya Node bulunamadı. index.html doğrudan tarayıcıda açılıyor..."
     if which xdg-open > /dev/null 2>&1; then
-        xdg-open "$DIR/AkademiX_Tek_Tikla_Calistir.html"
+        xdg-open "$DIR/index.html"
     elif which open > /dev/null 2>&1; then
-        open "$DIR/AkademiX_Tek_Tikla_Calistir.html"
+        open "$DIR/index.html"
     fi
 fi

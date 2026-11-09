@@ -6,12 +6,14 @@ import sys
 
 PORT = 5173
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-AKADEMIX_DIR = os.path.join(BASE_DIR, 'akademix')
+# Uygulama dosyaları repo kökündeki src/ klasöründe (Issue #8)
+APP_DIR = os.path.join(BASE_DIR, 'src')
 
-if os.path.exists(AKADEMIX_DIR):
-    os.chdir(AKADEMIX_DIR)
+if os.path.isfile(os.path.join(APP_DIR, 'index.html')):
+    os.chdir(APP_DIR)
 else:
-    print(f"Hata: {AKADEMIX_DIR} klasörü bulunamadı!")
+    print(f"Hata: {APP_DIR} içinde index.html bulunamadı!")
+    print("server.py dosyasını repo kök klasöründen çalıştırdığınızdan emin olun.")
     sys.exit(1)
 
 Handler = http.server.SimpleHTTPRequestHandler
@@ -35,7 +37,7 @@ try:
 except KeyboardInterrupt:
     print("\nSunucu kapatıldı.")
 except OSError as e:
-    if "Address already in use" in str(e):
+    if e.errno in (48, 98, 10048) or "Address already in use" in str(e):
         print(f"\n[UYARI] Port {PORT} zaten kullanımda! Tarayıcınızdan http://localhost:{PORT} adresini açabilirsiniz.")
     else:
         print(f"\nHata: {e}")
