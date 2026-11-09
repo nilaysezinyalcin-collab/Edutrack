@@ -3,7 +3,7 @@
 Bu repository, **Karadeniz Teknik Üniversitesi Yazılım Geliştirme Dersi** kapsamında **Grup 4** tarafından geliştirilen iki aşamalı etkileşimli öğrenci takip ve başarı platformunu içermektedir:
 
 1. **`edutrack/`**: İlk aşamada geliştirilen temel ders ve görev takip panosu (Temel iskelet).
-2. **`akademix/`**: Daha sonradan geliştirilen; öğrenci giriş/kayıt sistemi, KTÜ 30 kişi kuralı BDS/MDS not simülatörü, dinamik haftalık ders programı, görev matrisi ve **gerçek LLM API (Google Gemini) destekli Sevimli Yapay Zeka Danışmanı** içeren **gelişmiş sürüm**.
+2. **`akademix/`**: Daha sonradan geliştirilen; öğrenci giriş/kayıt sistemi, KTÜ 30 kişi kurallı not simülatörü, dinamik haftalık ders programı, görev matrisi ve **gerçek LLM API (Google Gemini) destekli Yapay Zeka Danışmanı** içeren **gelişmiş sürüm**.
 
 ---
 
@@ -40,7 +40,7 @@ cd Edutrack
   python3 server.py
   ```
 
-#### Sıfır Kurulum / Sunucusuz Çalıştırma (Acil Durum Modu):
+#### Sıfır Kurulum / Sunucusuz Çalıştırma :
 Bilgisayarınızda Python, Node veya VS Code kurulu değilse bile:
 * Proje kök dizinindeki **`akademix.html`** dosyasına çift tıklamanız yeterlidir. İnternet veya sunucuya ihtiyaç duymadan doğrudan tarayıcınızda açılır.
 
@@ -56,7 +56,7 @@ Tarayıcınızın adres çubuğuna şunu yazın:
 
 ## Yapay Zeka Danışmanı & Hazır API Entegrasyonu
 
-AkademiX'in sağ alt köşesinde yer alan robot maskot, öğrencilere 7/24 rehberlik eden üretken bir yapay zeka beynine sahiptir:
+AkademiX'in sağ alt köşesinde yer alan robot, öğrencilere 7/24 rehberlik eden üretken bir yapay zeka beynine sahiptir:
 
 *  **Hazır ve Entegre API:** Projeye Google Gemini API anahtarı önceden tanımlanmıştır. Projeyi açan hiçbir öğrencinin veya hocanın ekstra API anahtarı almasına gerek yoktur. Doğrudan konuşmaya başlayabilirsiniz.
 *  **Kendi Anahtarını Kullanmak İsteyenler İçin:**
@@ -68,7 +68,7 @@ AkademiX'in sağ alt köşesinde yer alan robot maskot, öğrencilere 7/24 rehbe
 
 ---
 
-##  KTÜ 30 Kişi Kuralı ve Not Sistemi (MDS / BDS)
+##  KTÜ 30 Kişi Kuralı ve Not Sistemi 
 
 KTÜ Yazılım Mühendisliği mevzuatına uygun geliştirilen not motoru:
 * **Sınıf Mevcudu < 30:** **Mutlak Değerlendirme Sistemi (MDS)** uygulanır (AA: 90-100, BA: 85-89, BB: 80-84, CB: 75-79, CC: 70-74, DC: 60-69, DD: 50-59, FD: 40-49, FF: 0-39).
@@ -91,14 +91,14 @@ KTÜ Yazılım Mühendisliği mevzuatına uygun geliştirilen not motoru:
 ##  Repository Klasör Yapısı
 
 ```
-├── edutrack/                 1. AŞAMA: Temel Öğrenme Panosu (Nilay'ın İlk Sürümü)
+├── edutrack/                 1. AŞAMA: Temel Öğrenme Panosu ( İlk Sürümü)
 │   ├── css/style.css        - Temel stiller ve grid tasarımı
 │   ├── js/                  - courses.js, tasks.js, data.js, storage.js, app.js
 │   ├── index.html           - Temel arayüz
 │   └── README.md            - EduTrack modül açıklaması
 │
 ├── akademix/                 2. AŞAMA: Gelişmiş AkademiX Portalı (Gelişmiş Sürüm)
-│   ├── css/style.css        - Modern tasarım, sevimli maskot ve cam efektleri
+│   ├── css/style.css        - Modern tasarım, yapay zeka asistanı ve cam efektleri
 │   ├── js/                  - ai-assistant.js, ui.js, storage.js, app.js, bundle.js
 │   ├── index.html           - Giriş ekranı, KTÜ AGNO motoru, ders programı & AI Robot
 │   ├── test-runner.html     - Canlı birim ve entegrasyon test koşucusu
