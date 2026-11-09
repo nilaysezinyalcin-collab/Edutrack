@@ -77,6 +77,7 @@ Otomatik test edilemeyen gereksinimler elle doğrulandı.
 | 7 | Eski test koşucusu gerçek uygulamayı test etmiyordu | İnceleme | Giderildi (#3) |
 | 8 | Tamamlanmış görev metninin kontrastı aydınlık temada yetersizdi | MT-03 | Giderildi (#3) |
 | 9 | `escapeAiHtml` fonksiyonu iki kez tanımlanmıştı; ikinci tanım boş değer kontrolünü kaldırıyordu | Kod incelemesi | Giderildi (#3) |
+| 10 | Kişisel çalışma notları sayfa yenilenince kayboluyordu | Manuel test / İnceleme | Giderildi (localStorage kalıcılığı eklendi) |
 
 **Açık kritik hata: yok.**
 

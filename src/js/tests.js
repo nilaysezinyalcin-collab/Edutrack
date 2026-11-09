@@ -334,6 +334,7 @@
     document.documentElement.setAttribute("data-theme", b.theme || "light");
     resetFilters();
     updateAllStats();
+    if (typeof restorePersonalNotes === "function") restorePersonalNotes();
     // updateAllStats kaydı tetikleyebilir; kullanıcının orijinal kaydını geri yaz
     if (b.ls[TASKS_KEY] !== undefined) localStorage.setItem(TASKS_KEY, b.ls[TASKS_KEY]);
     else localStorage.removeItem(TASKS_KEY);

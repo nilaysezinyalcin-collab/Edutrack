@@ -137,6 +137,7 @@ function launchPortalApp() {
   renderScheduleUI();
   renderAgnoUI();
   updateAllStats();
+  renderPersonalNotes();
   renderTaskCards(currentCardsFilterWeek || "all");
 }
 
@@ -1025,30 +1026,103 @@ function closeWeekModal() {
   document.getElementById("modal-week-view").style.display = "none";
 }
 
-// 7. KİŞİSEL NOTLAR
+// 7. KİŞİSEL NOTLAR (LOCALSTORAGE KALICILIK)
+var PERSONAL_NOTES_KEY = "akademix_personal_notes_v1";
+var DEFAULT_PERSONAL_NOTES = [
+  {
+    id: "pnote-default-1",
+    title: "Grup Toplantısı",
+    content: "Perşembe 14:00 ER diyagramı ve arayüz entegrasyonu kontrol edilecek.",
+    createdAt: "2026-11-09T14:00:00"
+  }
+];
+
+function getStoredPersonalNotes() {
+  try {
+    var raw = localStorage.getItem(PERSONAL_NOTES_KEY);
+    if (!raw) return DEFAULT_PERSONAL_NOTES.slice();
+    var parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : DEFAULT_PERSONAL_NOTES.slice();
+  } catch(e) {
+    return DEFAULT_PERSONAL_NOTES.slice();
+  }
+}
+
+function savePersonalNotesToStorage(notes) {
+  try {
+    localStorage.setItem(PERSONAL_NOTES_KEY, JSON.stringify(notes));
+  } catch(e) {
+    console.warn("Kişisel notlar kaydedilemedi:", e);
+  }
+}
+
+function renderPersonalNotes() {
+  var cont = document.getElementById("personal-notes-container");
+  if (!cont) return;
+
+  var notes = getStoredPersonalNotes();
+  if (notes.length === 0) {
+    cont.innerHTML = `
+      <div style="font-size:0.82rem; color:var(--text-muted); text-align:center; padding:0.75rem; font-style:italic;">
+        Henüz bir çalışma notu eklemediniz.
+      </div>
+    `;
+    return;
+  }
+
+  cont.innerHTML = notes.map(function(n) {
+    var safeId = escapeAiQuotes(n.id || "");
+    var safeTitle = escapeAiHtml(n.title || "");
+    var safeContent = escapeAiHtml(n.content || "");
+    return `
+      <div class="side-card" data-note-id="${safeId}" style="padding:0.75rem; background:var(--bg-hover);">
+        <div style="display:flex; justify-content:space-between; font-weight:800; font-size:0.88rem; align-items:flex-start; gap:0.5rem;">
+          <span>${safeTitle}</span>
+          <button type="button" aria-label="Notu sil: ${safeTitle}" onclick="deletePersonalNote('${safeId}')" style="background:none; border:none; cursor:pointer; color:var(--danger); font-size:1.1rem; line-height:1; padding:0 2px;">×</button>
+        </div>
+        <div style="font-size:0.82rem; color:var(--text-muted); margin-top:0.25rem; white-space:pre-wrap; word-break:break-word;">${safeContent}</div>
+      </div>
+    `;
+  }).join("");
+}
+
+function restorePersonalNotes() {
+  renderPersonalNotes();
+}
+
 function submitPersonalNote(e) {
-  e.preventDefault();
-  var t = document.getElementById("p-note-title").value.trim();
-  var c = document.getElementById("p-note-content").value.trim();
+  if (e && e.preventDefault) e.preventDefault();
+  var titleEl = document.getElementById("p-note-title");
+  var contentEl = document.getElementById("p-note-content");
+  if (!titleEl || !contentEl) return;
+
+  var t = titleEl.value.trim();
+  var c = contentEl.value.trim();
 
   if (t && c) {
-    var cont = document.getElementById("personal-notes-container");
-    var d = document.createElement("div");
-    d.className = "side-card";
-    d.style.padding = "0.75rem";
-    d.style.background = "var(--bg-hover)";
-    d.innerHTML = `
-      <div style="display:flex; justify-content:space-between; font-weight:800; font-size:0.88rem;">
-        <span>${t}</span>
-        <button onclick="this.parentElement.parentElement.remove()" style="background:none; border:none; cursor:pointer; color:var(--danger); font-size:1.1rem; line-height:1;">×</button>
-      </div>
-      <div style="font-size:0.82rem; color:var(--text-muted); margin-top:0.25rem;">${c}</div>
-    `;
-    cont.prepend(d);
-    document.getElementById("p-note-title").value = "";
-    document.getElementById("p-note-content").value = "";
+    var notes = getStoredPersonalNotes();
+    var newNote = {
+      id: "pnote-" + Date.now() + "-" + Math.random().toString(36).substr(2, 4),
+      title: t,
+      content: c,
+      createdAt: new Date().toISOString()
+    };
+    notes.unshift(newNote);
+    savePersonalNotesToStorage(notes);
+    renderPersonalNotes();
+
+    titleEl.value = "";
+    contentEl.value = "";
     showPortalToast("Not kaydedildi! 📝");
   }
+}
+
+function deletePersonalNote(noteId) {
+  var notes = getStoredPersonalNotes();
+  var updated = notes.filter(function(n) { return n.id !== noteId; });
+  savePersonalNotesToStorage(updated);
+  renderPersonalNotes();
+  showPortalToast("Not silindi 🗑️");
 }
 
 // 8. TOAST BİLDİRİMİ
@@ -1063,6 +1137,7 @@ function showPortalToast(msg) {
 window.addEventListener("DOMContentLoaded", function() {
   initTheme();
   restoreTasksFromStorage();
+  restorePersonalNotes();
 
   var session = localStorage.getItem("portal_session_user");
   if (session) {
@@ -1170,22 +1245,24 @@ function addAgnoCourseDirectly(name, credit, avg, letter, point) {
 }
 
 function addPersonalNoteDirectly(title, content) {
+  var t = String(title || "").trim();
+  var c = String(content || "").trim();
+  if (!t) return false;
+
+  var notes = getStoredPersonalNotes();
+  var newNote = {
+    id: "pnote-" + Date.now() + "-" + Math.random().toString(36).substr(2, 4),
+    title: t,
+    content: c,
+    createdAt: new Date().toISOString()
+  };
+  notes.unshift(newNote);
+  savePersonalNotesToStorage(notes);
+  renderPersonalNotes();
+
   var cont = document.getElementById("personal-notes-container");
-  if (!cont) return false;
-  var d = document.createElement("div");
-  d.className = "side-card";
-  d.style.padding = "0.75rem";
-  d.style.background = "var(--bg-hover)";
-  d.innerHTML = `
-    <div style="display:flex; justify-content:space-between; font-weight:800; font-size:0.88rem;">
-      <span>${escapeAiHtml(title)}</span>
-      <button onclick="this.parentElement.parentElement.remove()" style="background:none; border:none; cursor:pointer; color:var(--danger); font-size:1.1rem; line-height:1;">×</button>
-    </div>
-    <div style="font-size:0.82rem; color:var(--text-muted); margin-top:0.25rem;">${escapeAiHtml(content)}</div>
-  `;
-  cont.prepend(d);
-  d.scrollIntoView({ behavior: "smooth", block: "center" });
-  showPortalToast("'" + title + "' kişisel notlara kaydedildi! 📝");
+  if (cont) cont.scrollIntoView({ behavior: "smooth", block: "center" });
+  showPortalToast("'" + t + "' kişisel notlara kaydedildi! 📝");
   return true;
 }
 
