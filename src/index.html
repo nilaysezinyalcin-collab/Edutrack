@@ -892,6 +892,14 @@
        ========================================================================= -->
   <script src="js/portal.js"></script>
   <script src="js/a11y.js"></script>
+  <script>
+    // Otomatik testler yalnızca adres "?test=1" içerdiğinde yüklenir (Issue #3)
+    if (/[?&]test=1/.test(location.search)) {
+      var qaScript = document.createElement("script");
+      qaScript.src = "js/tests.js";
+      document.body.appendChild(qaScript);
+    }
+  </script>
 
   <!-- =========================================================================
        ZENITH AI - AKILLI DERS & BAŞARI DANIŞMANI (FLOATING WIDGET)

@@ -1801,15 +1801,6 @@ function formatAiMarkdown(text) {
   return s;
 }
 
-function escapeAiHtml(text) {
-  var map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
-  return String(text).replace(/[&<>"']/g, function(m) { return map[m]; });
-}
-
-function escapeAiQuotes(text) {
-  return String(text).replace(/'/g, "\\'");
-}
-
 // AI AKSİYON YÖNLENDİRİCİSİ (ACTION DISPATCHER)
 var aiConversationState = null; // 'building_schedule' | 'calculating_grade'
 var aiPendingCourseName = null; // if user said course name first without day/time

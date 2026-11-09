@@ -628,13 +628,19 @@ body {
 }
 
 .task-row.completed {
-  opacity: 0.6;
+  /* opacity metni soluklaştırıp kontrastı AA sınırının altına düşürüyordu (Issue #3 testi) */
   background-color: var(--bg-hover);
 }
 
 .task-row.completed .task-title {
   text-decoration: line-through;
   color: var(--text-muted);
+}
+
+/* Aydınlık temada tamamlanmış görev metni en az 4.5:1 kontrast (WCAG AA) */
+[data-theme="light"] .task-row.completed .task-title,
+[data-theme="light"] .task-row.completed .task-desc {
+  color: #475569;
 }
 
 .task-checkbox-input {
