@@ -56,20 +56,20 @@ function handleLogin(e) {
   if (found) {
     currentUser = found;
   } else if (loginInput.toLowerCase().includes("ismail") || loginInput === "444082" || loginInput.toLowerCase() === "ismail@ktu.edu.tr") {
-    currentUser = { name: "İsmail Korkmaz", email: "ismail@ktu.edu.tr", studentNo: "444082", dept: "Yazılım Mühendisliği" };
+    currentUser = { name: "İsmail Korkmaz", email: "ismail@ktu.edu.tr", studentNo: "444082", dept: "Yazılım Geliştirme" };
   } else if (loginInput.toLowerCase().includes("nilay") || loginInput === "444090" || loginInput.toLowerCase() === "nilay@ktu.edu.tr") {
-    currentUser = { name: "Nilay Sezin Yalçın", email: "nilay@ktu.edu.tr", studentNo: "444090", dept: "Yazılım Mühendisliği" };
+    currentUser = { name: "Nilay Sezin Yalçın", email: "nilay@ktu.edu.tr", studentNo: "444090", dept: "Yazılım Geliştirme" };
   } else if (loginInput.toLowerCase().includes("oguzhan") || loginInput.toLowerCase().includes("oğuzhan") || loginInput === "444083" || loginInput.toLowerCase() === "oguzhan@ktu.edu.tr") {
-    currentUser = { name: "Oğuzhan İnce", email: "oguzhan@ktu.edu.tr", studentNo: "444083", dept: "Yazılım Mühendisliği" };
+    currentUser = { name: "Oğuzhan İnce", email: "oguzhan@ktu.edu.tr", studentNo: "444083", dept: "Yazılım Geliştirme" };
   } else if (loginInput.toLowerCase().includes("onur") || loginInput === "444101" || loginInput.toLowerCase() === "onur@ktu.edu.tr") {
-    currentUser = { name: "Onur Uzun", email: "onur@ktu.edu.tr", studentNo: "444101", dept: "Yazılım Mühendisliği" };
+    currentUser = { name: "Onur Uzun", email: "onur@ktu.edu.tr", studentNo: "444101", dept: "Yazılım Geliştirme" };
   } else if (loginInput.includes("@")) {
     var prefix = loginInput.split("@")[0].replace(/[._-]/g, " ");
     var capName = prefix.charAt(0).toUpperCase() + prefix.slice(1);
-    currentUser = { name: capName, email: loginInput, studentNo: "444000", dept: "Yazılım Mühendisliği" };
+    currentUser = { name: capName, email: loginInput, studentNo: "444000", dept: "Yazılım Geliştirme" };
   } else {
     var cleanName = loginInput.charAt(0).toUpperCase() + loginInput.slice(1);
-    currentUser = { name: cleanName, email: loginInput + "@ktu.edu.tr", studentNo: loginInput, dept: "Yazılım Mühendisliği" };
+    currentUser = { name: cleanName, email: loginInput + "@ktu.edu.tr", studentNo: loginInput, dept: "Yazılım Geliştirme" };
   }
 
   if (errEl) errEl.style.display = "none";
@@ -83,7 +83,7 @@ function handleRegister(e) {
   var no = document.getElementById("reg-no") ? document.getElementById("reg-no").value.trim() : "444082";
   var ad = document.getElementById("reg-ad") ? document.getElementById("reg-ad").value.trim() : "İsmail";
   var soyad = document.getElementById("reg-soyad") ? document.getElementById("reg-soyad").value.trim() : "Korkmaz";
-  var dept = document.getElementById("reg-dept") ? document.getElementById("reg-dept").value.trim() : "Yazılım Mühendisliği";
+  var dept = document.getElementById("reg-dept") ? document.getElementById("reg-dept").value.trim() : "Yazılım Geliştirme";
   var email = document.getElementById("reg-email") ? document.getElementById("reg-email").value.trim() : "ismail@ktu.edu.tr";
   var pass = document.getElementById("reg-password") ? document.getElementById("reg-password").value : "123456";
   var errEl = document.getElementById("reg-error-msg");
@@ -1257,7 +1257,7 @@ function clearScheduleDirectly() {
 }
 
 function quickDemoLogin() {
-  currentUser = { name: "İsmail Korkmaz", email: "ismail@ktu.edu.tr", studentNo: "444082", dept: "Yazılım Mühendisliği" };
+  currentUser = { name: "İsmail Korkmaz", email: "ismail@ktu.edu.tr", studentNo: "444082", dept: "Yazılım Geliştirme" };
   localStorage.setItem("portal_session_user", JSON.stringify(currentUser));
   launchPortalApp();
   toggleAiDrawer(false);
@@ -1280,7 +1280,7 @@ function addScheduleCourseDirectly(day, time, name, room) {
 
 function createDefaultScheduleDirectly() {
   var sample = [
-    { day: "Pazartesi", time: "09:00 - 12:00", name: "Yazılım Mühendisliği", room: "D201" },
+    { day: "Pazartesi", time: "09:00 - 12:00", name: "Yazılım Geliştirme", room: "D201" },
     { day: "Salı", time: "10:00 - 12:00", name: "Veritabanı Sistemleri", room: "LAB-2" },
     { day: "Çarşamba", time: "13:00 - 16:00", name: "Algoritma Analizi", room: "D104" },
     { day: "Perşembe", time: "09:00 - 11:00", name: "Web Programlama", room: "LAB-1" },
@@ -1683,7 +1683,7 @@ async function callGeminiApi(promptText, apiKey, model) {
 
 async function executeGeminiRequest(url, promptText) {
 
-  var systemContext = "Sen Karadeniz Teknik Üniversitesi (KTÜ) Yazılım Mühendisliği Öğrenci Başarı ve Ders Paneli 'AkademiX'in sevimli, zeki yapay zeka danışmanısın. Nilay Sezin Yalçın (444090), Oğuzhan İnce (444083), İsmail Korkmaz (444082) ve Onur Uzun (444101) (Grup 4) tarafından geliştirildin. Görevin öğrencilere ders içerikleri, haftalık görevler, KTÜ 30 kişi kuralı (30'dan azsa MDS mutlak harf notları, 30 ve üzeriyse BDS çan eğrisi; final barajı en az 50), ders programı ve sınav notu hesaplama konularında samimi, motive edici, nazik ve emojili Türkçe rehberlik etmektir. Yanıtlarını kısa, net, samimi ve markdown formatında ver.";
+  var systemContext = "Sen Karadeniz Teknik Üniversitesi (KTÜ) Fen Fakültesi Yazılım Geliştirme Bölümü Öğrenci Başarı ve Ders Paneli 'AkademiX'in sevimli, zeki yapay zeka danışmanısın. Nilay Sezin Yalçın (444090), Oğuzhan İnce (444083), İsmail Korkmaz (444082) ve Onur Uzun (444101) (Grup 4) tarafından geliştirildin. Görevin öğrencilere ders içerikleri, haftalık görevler, KTÜ 30 kişi kuralı (30'dan azsa MDS mutlak harf notları, 30 ve üzeriyse BDS çan eğrisi; final barajı en az 50), ders programı ve sınav notu hesaplama konularında samimi, motive edici, nazik ve emojili Türkçe rehberlik etmektir. Yanıtlarını kısa, net, samimi ve markdown formatında ver.";
 
   var payload = {
     contents: [
@@ -1720,7 +1720,7 @@ async function callOpenAiApi(promptText, apiKey, model) {
   model = model || "gpt-4o-mini";
   var url = "https://api.openai.com/v1/chat/completions";
 
-  var systemPrompt = "Sen KTÜ Yazılım Mühendisliği AkademiX panelinin yapay zeka danışmanısın. İsmail Korkmaz ve Grup 4 tarafından geliştirildin. Öğrencilere KTÜ dersleri, 30 kişi kuralı, BDS çan eğrisi, ders programı ve not hesaplama konularında samimi, emojili ve yardımcı Türkçe cevaplar verirsin.";
+  var systemPrompt = "Sen KTÜ Fen Fakültesi Yazılım Geliştirme Bölümü AkademiX panelinin yapay zeka danışmanısın. İsmail Korkmaz ve Grup 4 tarafından geliştirildin. Öğrencilere KTÜ dersleri, 30 kişi kuralı, BDS çan eğrisi, ders programı ve not hesaplama konularında samimi, emojili ve yardımcı Türkçe cevaplar verirsin.";
 
   var payload = {
     model: model,
@@ -1772,7 +1772,7 @@ function detectExtraActionsForPrompt(query) {
       else if (avg >= 50) { letter = "DC"; point = 1.5; }
       else if (avg >= 40) { letter = "DD"; point = 1.0; }
     }
-    var paramStr = "Yazılım Mühendisliği|4|" + avg + "|" + letter + "|" + point;
+    var paramStr = "Yazılım Geliştirme|4|" + avg + "|" + letter + "|" + point;
     actions.push({ label: "➕ Bu Notu AGNO Tabloma Ekle (" + letter + ")", action: "add_agno_course", param: paramStr });
     actions.push({ label: "📊 Not Panosuna Git", action: "goto_grades" });
   }
@@ -1982,7 +1982,7 @@ function generateAiAssistantResponse(query) {
 
     if (raw.includes("akademix") || raw.includes("nedir") || raw.includes("ne işe yarar") || raw.includes("özellik") || raw.includes("bu ne")) {
       return {
-        text: `**🏔️ AkademiX • KTÜ Öğrenci Başarı ve Ders Deneyimi Portalı**\n\nAkademiX; KTÜ Yazılım Mühendisliği öğrencileri için tasarlanmış bütünleşik bir akademik platformdur:\n- 4 haftalık modüler teknik müfredat ve görev kartları\n- KTÜ 30 kişi kuralı & BDS/MDS çan eğrisi not simülatörü\n- İnteraktif haftalık ders programı\n- Kişisel çalışma notları\n\nTüm özellikleri canlı deneyimlemek için hemen giriş yapabilirsin:`,
+        text: `**🏔️ AkademiX • KTÜ Öğrenci Başarı ve Ders Deneyimi Portalı**\n\nAkademiX; KTÜ Fen Fakültesi Yazılım Geliştirme Bölümü öğrencileri için tasarlanmış bütünleşik bir akademik platformdur:\n- 4 haftalık modüler teknik müfredat ve görev kartları\n- KTÜ 30 kişi kuralı & BDS/MDS çan eğrisi not simülatörü\n- İnteraktif haftalık ders programı\n- Kişisel çalışma notları\n\nTüm özellikleri canlı deneyimlemek için hemen giriş yapabilirsin:`,
         actions: [
           { label: "🚀 Hızlı Giriş Yap ve İncele", action: "quick_demo_login" },
           { label: "🔐 Nasıl Giriş Yapılır?", action: "quick_prompt", param: "nasıl giriş yapılır" }
@@ -2028,7 +2028,7 @@ function generateAiAssistantResponse(query) {
       raw.includes("adın ne") || raw.includes("ismin ne") || raw.includes("ne yapabilirsin") ||
       raw.includes("neler yapabilirsin") || raw.includes("ne yaparsın") || raw.includes("yeteneklerin")) {
     return {
-      text: `🤖 Ben **AkademiX Akıllı Asistanı**! Göğsümdeki AkademiX logosuyla KTÜ Yazılım Mühendisliği platformunda sana rehberlik etmek için buradayım.\n\n**Ekranda gördüğün her şeyi benimle yapabilirsin:**\n- 📅 **Ders Programı:** Birlikte adım adım oluşturabilir veya ders ekleyip silebiliriz.\n- 🧮 **Sınav & AGNO:** Vize-final notunu girip harf notunu (KTÜ MDS/BDS ve 50 final barajı) anında hesaplatıp dönem notlarına ekleyebilirsin.\n- 🎯 **Görevler:** Görev ekleyebilir, silebilir veya tamamlandı olarak işaretleyebilirsin.\n- 📝 **Not Defteri:** Kişisel çalışma notlarına anında kayıt alabilirsin.`,
+      text: `🤖 Ben **AkademiX Akıllı Asistanı**! Göğsümdeki AkademiX logosuyla KTÜ Fen Fakültesi Yazılım Geliştirme Bölümü platformunda sana rehberlik etmek için buradayım.\n\n**Ekranda gördüğün her şeyi benimle yapabilirsin:**\n- 📅 **Ders Programı:** Birlikte adım adım oluşturabilir veya ders ekleyip silebiliriz.\n- 🧮 **Sınav & AGNO:** Vize-final notunu girip harf notunu (KTÜ MDS/BDS ve 50 final barajı) anında hesaplatıp dönem notlarına ekleyebilirsin.\n- 🎯 **Görevler:** Görev ekleyebilir, silebilir veya tamamlandı olarak işaretleyebilirsin.\n- 📝 **Not Defteri:** Kişisel çalışma notlarına anında kayıt alabilirsin.`,
       actions: [
         { label: "📅 Ders Programı Oluştur", action: "quick_prompt", param: "ders programı oluşturcaz" },
         { label: "🧮 Vize 70 Final 80 Hesapla", action: "quick_prompt", param: "vize 70 final 80 harf notumu hesapla" },
@@ -2047,7 +2047,7 @@ function generateAiAssistantResponse(query) {
     aiConversationState = "building_schedule";
     aiPendingCourseName = null;
     return {
-      text: `Haklısın, kusura bakma! 🙏 Kesinlikle kafama göre değil, **tamamen senin söyleyeceğin derslere göre** adım adım oluşturalım.\n\nİstersen mevcut tabloyu sıfırlayalım ve ilk dersinle başlayalım.\n\nİlk dersin nedir? (Örn: **'Pazartesi 09:00 Yazılım Mühendisliği D201'**):`,
+      text: `Haklısın, kusura bakma! 🙏 Kesinlikle kafama göre değil, **tamamen senin söyleyeceğin derslere göre** adım adım oluşturalım.\n\nİstersen mevcut tabloyu sıfırlayalım ve ilk dersinle başlayalım.\n\nİlk dersin nedir? (Örn: **'Pazartesi 09:00 Yazılım Geliştirme D201'**):`,
       actions: [
         { label: "🧹 Tabloyu Temizle & Baştan Başla", action: "clear_schedule" },
         { label: "📅 Ders Programına Git", action: "goto_schedule" }
@@ -2065,7 +2065,7 @@ function generateAiAssistantResponse(query) {
     aiConversationState = "building_schedule";
     aiPendingCourseName = null;
     return {
-      text: `Harika, birlikte oluşturalım! 📅 Hangi dersleri eklemek istersin?\n\nDerslerini gün, saat, ders adı ve varsa derslik belirterek bana yazabilirsin. Örneğin:\n👉 **'Pazartesi 09:00 Yazılım Mühendisliği D201'** veya\n👉 **'Salı 10:00 Veritabanı Sistemleri'**\n\nSeni dinliyorum, ilk dersin hangisi?`,
+      text: `Harika, birlikte oluşturalım! 📅 Hangi dersleri eklemek istersin?\n\nDerslerini gün, saat, ders adı ve varsa derslik belirterek bana yazabilirsin. Örneğin:\n👉 **'Pazartesi 09:00 Yazılım Geliştirme D201'** veya\n👉 **'Salı 10:00 Veritabanı Sistemleri'**\n\nSeni dinliyorum, ilk dersin hangisi?`,
       actions: [
         { label: "🧹 Mevcut Programı Temizle", action: "clear_schedule" },
         { label: "✨ Otomatik Örnek Doldur", action: "create_sample_schedule" }
@@ -2082,7 +2082,7 @@ function generateAiAssistantResponse(query) {
     aiConversationState = "building_schedule";
     aiPendingCourseName = null;
     return {
-      text: `🧹 Haftalık ders programın sıfırlandı! Şimdi derslerini tek tek bana söyleyebilirsin (Örn: **'Pazartesi 09:00 Yazılım Mühendisliği D201'**):`,
+      text: `🧹 Haftalık ders programın sıfırlandı! Şimdi derslerini tek tek bana söyleyebilirsin (Örn: **'Pazartesi 09:00 Yazılım Geliştirme D201'**):`,
       actions: [
         { label: "📅 Ders Programını Gör", action: "goto_schedule" }
       ]
@@ -2090,7 +2090,7 @@ function generateAiAssistantResponse(query) {
   }
 
   // -----------------------------------------------------------------------
-  // 6. TEK BİR DERSİ SİLME (Örn: "Yazılım Mühendisliği dersini sil")
+  // 6. TEK BİR DERSİ SİLME (Örn: "Yazılım Geliştirme dersini sil")
   // -----------------------------------------------------------------------
   if (raw.includes("sil") && (raw.includes("ders") || raw.includes("programdan"))) {
     var cleanTarget = query.replace(/(?:lütfen\s+)?(?:şu\s+)?dersini\s+sil/gi, "")
@@ -2127,7 +2127,7 @@ function generateAiAssistantResponse(query) {
 
   // -----------------------------------------------------------------------
   // 8. KULLANICININ DİKTE ETTİĞİ DERSİ EKLEME (GÜN / SAAT VE DERS ADI)
-  // (Örn: "Pazartesi 09:00 Yazılım Mühendisliği D201" veya "Salı 10:00 Veritabanı")
+  // (Örn: "Pazartesi 09:00 Yazılım Geliştirme D201" veya "Salı 10:00 Veritabanı")
   // -----------------------------------------------------------------------
   var hasDay = /pazartesi|salı|sali|çarşamba|carsamba|perşembe|persembe|cuma/i.test(raw);
   var hasTime = /\d{1,2}[:.]\d{2}/.test(raw);
@@ -2234,7 +2234,7 @@ function generateAiAssistantResponse(query) {
 
     var avg = Math.round(((vize * 0.4) + (fin * 0.6)) * 10) / 10;
 
-    var cName = "Yazılım Mühendisliği";
+    var cName = "Yazılım Geliştirme";
     if (raw.includes("mimar")) cName = "Yazılım Mimarisi";
     else if (raw.includes("veri")) cName = "Veritabanı Sistemleri";
     else if (raw.includes("algo")) cName = "Algoritma Analizi";
@@ -2287,7 +2287,7 @@ function generateAiAssistantResponse(query) {
       (raw.includes("hesapla") || raw.includes("hesaplıcaz") || raw.includes("hesaplayalım") || raw.includes("hesaplayalim"))) {
     aiConversationState = "calculating_grade";
     return {
-      text: `Memnuniyetle! 🧮 Hangi dersin notunu hesaplayacağız?\n\nBana vize ve final notlarını söyleyebilirsin. Örneğin:\n👉 **'vize 70 final 80'** veya\n👉 **'Yazılım Mühendisliği vize 65 final 75'**`,
+      text: `Memnuniyetle! 🧮 Hangi dersin notunu hesaplayacağız?\n\nBana vize ve final notlarını söyleyebilirsin. Örneğin:\n👉 **'vize 70 final 80'** veya\n👉 **'Yazılım Geliştirme vize 65 final 75'**`,
       actions: [
         { label: "🧮 Vize 70 Final 80 Örneği", action: "quick_prompt", param: "vize 70 final 80 harf notumu hesapla" },
         { label: "📊 AGNO Simülatörünü Aç", action: "open_grade_wizard" }
@@ -2454,7 +2454,7 @@ function generateAiAssistantResponse(query) {
   // -----------------------------------------------------------------------
   if (raw.includes("akademix") || raw.includes("nasıl kullanılır") || raw.includes("rehber") || raw.includes("ne işe yarar")) {
     return {
-      text: `**🏔️ AkademiX • KTÜ Öğrenci Başarı ve Ders Deneyimi Portalı**\n\nAkademiX akış şemasındaki tüm özellikleri benimle yönetebilirsin:\n- 📅 *"bana ders programı oluştur"* veya *"Pazartesi 09:00 Yazılım Mühendisliği D201 ekle"*\n- 🧮 *"vize 70 final 80 harf notumu hesapla"*\n- 🎯 *"2. haftaya testleri hazırla görevini ekle"*\n- 📝 *"kişisel notlarıma toplantı notu yaz"*`,
+      text: `**🏔️ AkademiX • KTÜ Öğrenci Başarı ve Ders Deneyimi Portalı**\n\nAkademiX akış şemasındaki tüm özellikleri benimle yönetebilirsin:\n- 📅 *"bana ders programı oluştur"* veya *"Pazartesi 09:00 Yazılım Geliştirme D201 ekle"*\n- 🧮 *"vize 70 final 80 harf notumu hesapla"*\n- 🎯 *"2. haftaya testleri hazırla görevini ekle"*\n- 📝 *"kişisel notlarıma toplantı notu yaz"*`,
       actions: [
         { label: "📅 Ders Programı Oluştur", action: "quick_prompt", param: "ders programı oluşturcaz" },
         { label: "🧮 Sınav Notu Hesapla", action: "quick_prompt", param: "sınav puanı hesaplıcaz" },
@@ -2501,7 +2501,7 @@ function executeAiAction(actionType, param) {
     openCourseGradeWizard();
   } else if (actionType === "add_agno_course") {
     var parts = String(param).split("|");
-    var cName = parts[0] || "Yazılım Mühendisliği";
+    var cName = parts[0] || "Yazılım Geliştirme";
     var cCredit = parseFloat(parts[1]) || 4;
     var cAvg = parseFloat(parts[2]) || 70;
     var cLetter = parts[3] || "BB";
@@ -2514,7 +2514,7 @@ function executeAiAction(actionType, param) {
     aiConversationState = "building_schedule";
     aiPendingCourseName = null;
     appendAiBotMessage({
-      text: "🧹 Ders tablon sıfırlandı! Şimdi bana eklemek istediğin ilk dersini söyleyebilirsin (Örn: **'Pazartesi 09:00 Yazılım Mühendisliği D201'**):",
+      text: "🧹 Ders tablon sıfırlandı! Şimdi bana eklemek istediğin ilk dersini söyleyebilirsin (Örn: **'Pazartesi 09:00 Yazılım Geliştirme D201'**):",
       actions: [
         { label: "📅 Panodaki Tabloyu Gör", action: "goto_schedule" }
       ]

@@ -1,5 +1,7 @@
 # 📑 Proje Dokümanları ve Raporlar (Grup 4)
 
+**T.C. Karadeniz Teknik Üniversitesi (KTÜ) • Fen Fakültesi • Yazılım Geliştirme Bölümü**
+
 Bu klasörde **Edutrack (AkademiX – Etkileşimli Ders Deneyimi Panosu)** projesine ait resmi teknik rapor, kullanıcı kılavuzu, test senaryoları, gereksinim izlenebilirlik matrisi, mimari diyagramlar ve bireysel değerlendirme belgeleri yer almaktadır:
 
 ## 📘 Resmi Proje Teslim Dokümanları (Issue #7)

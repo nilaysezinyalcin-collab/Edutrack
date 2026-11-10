@@ -1,6 +1,6 @@
 # Edutrack (AkademiX) – Etkileşimli Ders Deneyimi Panosu
 
-**Karadeniz Teknik Üniversitesi (KTÜ) • Yazılım Mühendisliği Bölümü**  
+**Karadeniz Teknik Üniversitesi (KTÜ) • Fen Fakültesi • Yazılım Geliştirme Bölümü**  
 **Yazılım Geliştirme Dersi – Proje 1 (Grup 4)**
 
 **Edutrack (AkademiX)**, öğrencilerin haftalık ders içeriklerini, öğrenme hedeflerini, görev ve mini etkinliklerini, haftalık ders programlarını, KTÜ mevzuatına uygun sınav/AGNO hesaplamalarını ve kişisel çalışma notlarını modern, erişilebilir ve duyarlı (responsive) bir web arayüzünden takip edebilmelerini sağlayan etkileşimli bir öğrenci başarı platformudur.

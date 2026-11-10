@@ -1,6 +1,6 @@
 # Edutrack (AkademiX) – Kullanıcı Dokümanı ve Uygulama Kılavuzu
 
-**Karadeniz Teknik Üniversitesi (KTÜ) • Yazılım Mühendisliği Bölümü**  
+**Karadeniz Teknik Üniversitesi (KTÜ) • Fen Fakültesi • Yazılım Geliştirme Bölümü**  
 **Yazılım Geliştirme Dersi – Proje 1 (Grup 4)**  
 **Sürüm:** 1.0 • **Tarih:** Kasım 2026
 

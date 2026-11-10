@@ -1,5 +1,6 @@
 # BİREYSEL YANSITMA RAPORU – ONUR UZUN
 
+**T.C. Karadeniz Teknik Üniversitesi • Fen Fakültesi • Yazılım Geliştirme Bölümü**  
 **Ders:** Yazılım Geliştirme · **Proje:** Proje 1 – Etkileşimli Ders Deneyimi Panosu (Edutrack / AkademiX) · **Grup:** 4  
 **Öğrenci:** Onur Uzun · **444101** · **Rol:** Teknik Dokümantasyon / Sunum Sorumlusu & Geliştirici  
 **Repo:** https://github.com/nilaysezinyalcin-collab/Edutrack · **Tarih:** 10 Kasım 2026  

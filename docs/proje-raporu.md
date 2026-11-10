@@ -422,7 +422,7 @@ Bölüm 2.2'de sunulan 11 tablolu ilişkisel ER veri modelinin (Şekil 2) tüm t
 | OGRENCI | email | varchar (UK) | Öğrencinin benzersiz kurumsal e-posta adresi |
 | OGRENCI | sifre_hash | varchar | Güvenli özetlenmiş (hashed) parola bilgisi |
 | DERSLER | ders_id | int (PK) | Dersin benzersiz birincil anahtar kimliği |
-| DERSLER | ders_adi, ders_kodu | varchar | Dersin tam adı ve müfredat kodu (ör. YMG101) |
+| DERSLER | ders_adi, ders_kodu | varchar | Dersin tam adı ve müfredat kodu (ör. YGD101) |
 | HAFTALIK_KARTLAR | kart_id | int (PK) | Haftalık öğrenme kartının birincil anahtarı |
 | HAFTALIK_KARTLAR | ders_id | int (FK -> DERSLER) | Kartın bağlı olduğu ders referansı |
 | HAFTALIK_KARTLAR | hafta_no, baslik, icerik | int, varchar, text | Hafta numarası (1–4), konu başlığı ve hedefler |

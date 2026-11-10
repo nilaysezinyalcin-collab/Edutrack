@@ -1,5 +1,6 @@
 # BİREYSEL YANSITMA RAPORU – İSMAİL KORKMAZ
 
+**T.C. Karadeniz Teknik Üniversitesi • Fen Fakültesi • Yazılım Geliştirme Bölümü**  
 **Ders:** Yazılım Geliştirme · **Proje:** Proje 1 – Etkileşimli Ders Deneyimi Panosu (Edutrack / AkademiX) · **Grup:** 4  
 **Öğrenci:** İsmail Korkmaz · **444082** · **Rol:** Test / Kalite Güvencesi Sorumlusu (QA Lead) & Geliştirici  
 **Repo:** https://github.com/nilaysezinyalcin-collab/Edutrack · **Tarih:** 10 Kasım 2026  

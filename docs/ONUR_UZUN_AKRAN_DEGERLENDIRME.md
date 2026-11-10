@@ -1,5 +1,6 @@
 # AKRAN DEĞERLENDİRME FORMU VE RAPORU – ONUR UZUN
 
+**T.C. Karadeniz Teknik Üniversitesi • Fen Fakültesi • Yazılım Geliştirme Bölümü**  
 **Ders:** Yazılım Geliştirme · **Proje:** Proje 1 (Edutrack / AkademiX) · **Grup:** 4  
 **Değerlendiren:** Onur Uzun (`444101`) · **Rol:** Teknik Dokümantasyon / Sunum Sorumlusu & Geliştirici · **Tarih:** 10 Kasım 2026  
 

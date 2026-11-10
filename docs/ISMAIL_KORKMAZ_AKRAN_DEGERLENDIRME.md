@@ -1,5 +1,6 @@
 # AKRAN DEĞERLENDİRME FORMU VE RAPORU – İSMAİL KORKMAZ
 
+**T.C. Karadeniz Teknik Üniversitesi • Fen Fakültesi • Yazılım Geliştirme Bölümü**  
 **Ders:** Yazılım Geliştirme · **Proje:** Proje 1 (Edutrack / AkademiX) · **Grup:** 4  
 **Değerlendiren:** İsmail Korkmaz (`444082`) · **Rol:** Test / Kalite Güvencesi Sorumlusu (QA Lead) & Geliştirici · **Tarih:** 10 Kasım 2026  
 

@@ -1,5 +1,6 @@
 # Akran Değerlendirme Formu – Nilay Sezin Yalçın
 
+**T.C. Karadeniz Teknik Üniversitesi • Fen Fakültesi • Yazılım Geliştirme Bölümü**  
 **Ders:** Yazılım Geliştirme · **Proje:** Proje 1 (AkademiX) · **Grup:** 4 · **Değerlendiren:** Nilay Sezin Yalçın (`444090`) · **Tarih:** 10 Kasım 2026
 
 ---

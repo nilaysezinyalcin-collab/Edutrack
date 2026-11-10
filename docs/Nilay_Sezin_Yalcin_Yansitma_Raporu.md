@@ -1,5 +1,6 @@
 # Bireysel Yansıtma Raporu – Nilay Sezin Yalçın
 
+**T.C. Karadeniz Teknik Üniversitesi • Fen Fakültesi • Yazılım Geliştirme Bölümü**  
 **Ders:** Yazılım Geliştirme · **Proje:** Proje 1 – Etkileşimli Ders Deneyimi Panosu (AkademiX) · **Grup:** 4  
 **Öğrenci:** Nilay Sezin Yalçın · **444090** · **Rol:** Proje Lideri / Geliştirici  
 **Repo:** https://github.com/nilaysezinyalcin-collab/Edutrack  

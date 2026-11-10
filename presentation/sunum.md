@@ -1,6 +1,6 @@
 # Edutrack (AkademiX) – Proje Sunumu
 
-**Karadeniz Teknik Üniversitesi (KTÜ) • Yazılım Mühendisliği Bölümü**  
+**Karadeniz Teknik Üniversitesi (KTÜ) • Fen Fakültesi • Yazılım Geliştirme Bölümü**  
 **Yazılım Geliştirme Dersi – Proje 1: Etkileşimli Ders Deneyimi Panosu (Grup 4)**
 
 ---
