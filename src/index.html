@@ -194,7 +194,7 @@
             <span class="badge-status badge-done">1. Hafta • Tamamlandı</span>
             <h4>Yazılım Yaşam Döngüsü & İhtiyaç Analizi</h4>
             <p>17 FR ve 10 NFR gereksinimlerinin çıkarılması, ER diyagramı ve GitHub yönetimi.</p>
-            <div role="button" tabindex="0" class="week-card-footer">4 Hedef • 4 Görev (Tamamlandı) →</div>
+            <div class="week-card-footer">4 Hedef • 4 Görev (Tamamlandı) →</div>
           </div>
 
           <!-- 2. Hafta -->
@@ -202,7 +202,7 @@
             <span class="badge-status badge-done">2. Hafta • Tamamlandı</span>
             <h4>Arayüz Tasarımı & Temel İskelet</h4>
             <p>Akış şeması ve ER diyagramı doğrultusunda öğrenci paneli iskeletinin kodlanması.</p>
-            <div role="button" tabindex="0" class="week-card-footer">4 Hedef • 5 Görev (Tamamlandı) →</div>
+            <div class="week-card-footer">4 Hedef • 5 Görev (Tamamlandı) →</div>
           </div>
 
           <!-- 3. Hafta -->
@@ -210,7 +210,7 @@
             <span class="badge-status badge-done">3. Hafta • Tamamlandı</span>
             <h4>İleri Etkileşim & KTÜ Not Entegrasyonu</h4>
             <p>Çok kriterli filtreleme, arama, KTÜ sınav ortalaması ve otomatik testler.</p>
-            <div role="button" tabindex="0" class="week-card-footer">4 Hedef • 5 Görev (Tamamlandı) →</div>
+            <div class="week-card-footer">4 Hedef • 5 Görev (Tamamlandı) →</div>
           </div>
 
           <!-- 4. Hafta -->
@@ -218,7 +218,7 @@
             <span class="badge-status badge-done">4. Hafta • Tamamlandı</span>
             <h4>Kalite Kontrol & Proje 1 Canlı Demo</h4>
             <p>Test matrisinin doğrulanması, proje teknik raporu ve sunum paketi.</p>
-            <div role="button" tabindex="0" class="week-card-footer">4 Hedef • 4 Görev (Tamamlandı) →</div>
+            <div class="week-card-footer">4 Hedef • 4 Görev (Tamamlandı) →</div>
           </div>
         </div>
 
@@ -549,13 +549,15 @@
             </div>
 
           </div>
+          <!-- Boş Arama / Filtre Sonucu Mesajı (Issue #6) -->
+          <div id="tasks-empty-message" class="tasks-empty-message" role="status" aria-live="polite" hidden>Aramanızla eşleşen görev bulunamadı</div>
         </section>
 
         <!-- Sağ Sütun: DERS PROGRAMI, KTÜ SINAV HESAPLAMA, KİŞİSEL NOTLAR -->
         <aside class="side-stack">
           
           <!-- 4. HAFTALIK DERS PROGRAMI (DERS_PROGRAMI Tablosu - Öğrenci Doldurur) -->
-          <div class="side-card">
+          <div id="schedule-card" class="side-card">
             <div class="side-card-title">
               <span>📅 Ders Programım</span>
               <button class="btn-action" style="font-size:0.75rem; padding:0.3rem 0.6rem;" onclick="toggleAddCourseForm()">+ Ders Ekle</button>
@@ -615,7 +617,7 @@
           </div>
 
           <!-- 5. KTÜ ÇOKLU DERS VE AGNO (DÖNEM ORTALAMASI) HESAPLAYICI (FR-13, FR-14) -->
-          <div class="side-card">
+          <div id="grades-card" class="side-card">
             <div class="side-card-title">
               <span>🎓 KTÜ AGNO & Not Simülatörü</span>
               <button class="btn-action btn-action-primary" style="font-size:0.75rem; padding:0.3rem 0.65rem;" onclick="openCourseGradeWizard()">+ Yeni Ders Ekle</button>
@@ -832,23 +834,24 @@
     </div>
   </div>
 
-  <!-- YENİ GÖREV EKLEME MODALI (FR-08) -->
+  <!-- YENİ GÖREV EKLEME MODALI (FR-08 & Issue #6) -->
   <div id="modal-create-task" class="modal-overlay">
     <div class="modal-content">
       <div class="modal-header">
         <h3 style="font-size:1.2rem; font-weight:800;">+ Yeni Görev / Mini Etkinlik Ekle</h3>
         <button aria-label="Kapat" class="modal-close-btn" onclick="closeCreateTaskModal()">×</button>
       </div>
-      <form onsubmit="saveNewTask(event)">
+      <form onsubmit="saveNewTask(event)" novalidate>
         <div class="form-group">
           <label for="modal-t-title" class="form-label">Görev Başlığı</label>
-          <input type="text" id="modal-t-title" class="form-input" placeholder="Örn: CSS düzenini tamamla" required />
+          <input type="text" id="modal-t-title" class="form-input" placeholder="Örn: CSS düzenini tamamla" required aria-describedby="modal-t-title-error" oninput="showTaskTitleError(false)" />
+          <div id="modal-t-title-error" class="field-error-msg" role="alert" hidden>Lütfen geçerli bir görev başlığı giriniz (boş bırakılamaz).</div>
         </div>
         <div class="form-group">
           <label for="modal-t-desc" class="form-label">Açıklama</label>
           <textarea id="modal-t-desc" class="form-input" placeholder="Görev detayları..."></textarea>
         </div>
-        <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:0.5rem;" class="form-group">
+        <div class="modal-task-meta-grid form-group">
           <div>
             <label for="modal-t-week" class="form-label">Hafta</label>
             <select id="modal-t-week" class="form-input">

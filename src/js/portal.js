@@ -644,6 +644,7 @@ function deleteTaskRow(btn) {
     var title = row.querySelector(".task-title") ? row.querySelector(".task-title").textContent.trim() : "Görev";
     row.remove();
     updateAllStats();
+    filterTasks();
     renderTaskCards(currentCardsFilterWeek || "all");
     showPortalToast("'" + title + "' görevi silindi! 🗑️");
   }
@@ -652,11 +653,11 @@ function deleteTaskRow(btn) {
 function deleteTaskByTitle(taskTitle) {
   var rows = document.querySelectorAll(".task-row");
   var deleted = false;
-  var cleanTarget = taskTitle.toLowerCase().trim();
+  var cleanTarget = normalizeTrSearch(taskTitle).trim();
   rows.forEach(function(r) {
     var t = r.querySelector(".task-title");
     if (t) {
-      var rTitle = t.textContent.trim().toLowerCase();
+      var rTitle = normalizeTrSearch(t.textContent).trim();
       if (rTitle === cleanTarget || rTitle.includes(cleanTarget) || cleanTarget.includes(rTitle)) {
         r.remove();
         deleted = true;
@@ -666,6 +667,7 @@ function deleteTaskByTitle(taskTitle) {
 
   if (deleted) {
     updateAllStats();
+    filterTasks();
     renderTaskCards(currentCardsFilterWeek || "all");
     showPortalToast("'" + taskTitle + "' görevi silindi! 🗑️");
     return true;
@@ -771,10 +773,11 @@ function restoreTasksFromStorage() {
 
 // YENİ GÖREV DOĞRUDAN EKLEME (UI & AI ÇAĞRISI)
 function addNewTaskDirectly(title, desc, week, priority, category) {
-  if (!title) return false;
+  var cleanTitle = String(title || "").trim();
+  if (!cleanTitle) return false;
   var container = document.getElementById("tasks-list-container");
   var newRow = buildTaskRow({
-    title: title,
+    title: cleanTitle,
     desc: desc || "Öğrenci tarafından tanımlanan mini etkinlik.",
     week: week || "2",
     priority: priority || "Yüksek",
@@ -784,6 +787,7 @@ function addNewTaskDirectly(title, desc, week, priority, category) {
 
   container.prepend(newRow);
   updateAllStats();
+  filterTasks();
   renderTaskCards(currentCardsFilterWeek || "all");
 
   // Göreve kaydır ve parlat
@@ -791,7 +795,7 @@ function addNewTaskDirectly(title, desc, week, priority, category) {
   newRow.classList.add("task-focus-glow");
   setTimeout(function() { newRow.classList.remove("task-focus-glow"); }, 2400);
 
-  showPortalToast("'" + title + "' görevi başarıyla eklendi! ✨");
+  showPortalToast("'" + cleanTitle + "' görevi başarıyla eklendi! ✨");
   return true;
 }
 
@@ -859,18 +863,56 @@ function filterByStatCard(type) {
   }
 }
 
+// Türkçe karakter duyarlı (İ/i, I/ı) arama metni normalleştirici (Issue #6)
+function normalizeTrSearch(str) {
+  return String(str || "")
+    .replace(/İ/g, "i")
+    .replace(/I/g, "ı")
+    .replace(/Ç/g, "ç")
+    .replace(/Ğ/g, "ğ")
+    .replace(/Ö/g, "ö")
+    .replace(/Ş/g, "ş")
+    .replace(/Ü/g, "ü")
+    .toLowerCase();
+}
+
+// Boş arama / filtre sonucunda kullanıcıya mesaj gösterir veya gizler (Issue #6)
+function updateTasksEmptyMessage(visibleCount) {
+  var msgEl = document.getElementById("tasks-empty-message");
+  if (!msgEl) {
+    var tasksSec = document.getElementById("tasks-section");
+    if (!tasksSec) return;
+    msgEl = document.createElement("div");
+    msgEl.id = "tasks-empty-message";
+    msgEl.className = "tasks-empty-message";
+    msgEl.setAttribute("role", "status");
+    msgEl.setAttribute("aria-live", "polite");
+    tasksSec.appendChild(msgEl);
+  }
+  msgEl.textContent = "Aramanızla eşleşen görev bulunamadı";
+  if (typeof visibleCount !== "number") {
+    var rows = document.querySelectorAll("#tasks-list-container .task-row");
+    visibleCount = 0;
+    rows.forEach(function(r) {
+      if (r.style.display !== "none") visibleCount++;
+    });
+  }
+  msgEl.hidden = visibleCount > 0;
+}
+
 function filterTasks() {
   var qInput = document.getElementById("task-search-input");
-  var q = (qInput ? qInput.value : "").toLowerCase();
+  var q = normalizeTrSearch(qInput ? qInput.value.trim() : "");
   var wSelect = document.getElementById("filter-week-select");
   var w = wSelect ? wSelect.value : "all";
 
-  var rows = document.querySelectorAll(".task-row");
+  var rows = document.querySelectorAll("#tasks-list-container .task-row");
+  var visibleCount = 0;
   rows.forEach(function(r) {
     var rowWeek = r.getAttribute("data-week");
     var rowStatus = r.getAttribute("data-status");
     var rowPriority = r.getAttribute("data-priority");
-    var text = r.textContent.toLowerCase();
+    var text = normalizeTrSearch(r.textContent);
 
     var matchW = (w === "all" || w === rowWeek);
     var matchS = true;
@@ -882,23 +924,47 @@ function filterTasks() {
       matchS = (taskStatusFilter === rowStatus);
     }
     var matchQ = (q === "" || text.includes(q));
+    var isVisible = (matchW && matchS && matchQ);
 
-    r.style.display = (matchW && matchS && matchQ) ? "flex" : "none";
+    r.style.display = isVisible ? "flex" : "none";
+    if (isVisible) visibleCount++;
   });
+
+  updateTasksEmptyMessage(visibleCount);
+}
+
+// Görev ekleme formunda boş başlık uyarısını gösterir veya gizler (Issue #6)
+function showTaskTitleError(show, message) {
+  var errEl = document.getElementById("modal-t-title-error");
+  var titleInput = document.getElementById("modal-t-title");
+  var shouldShow = (show !== false);
+  if (errEl) {
+    if (message) errEl.textContent = message;
+    else if (!errEl.textContent.trim()) errEl.textContent = "Lütfen geçerli bir görev başlığı giriniz (boş bırakılamaz).";
+    errEl.hidden = !shouldShow;
+  }
+  if (titleInput) {
+    titleInput.classList.toggle("input-invalid", shouldShow);
+    titleInput.setAttribute("aria-invalid", shouldShow ? "true" : "false");
+  }
 }
 
 function openCreateTaskModal() {
+  showTaskTitleError(false);
   var m = document.getElementById("modal-create-task");
   if (m) m.style.display = "flex";
+  var titleInput = document.getElementById("modal-t-title");
+  if (titleInput) titleInput.focus();
 }
 
 function closeCreateTaskModal() {
+  showTaskTitleError(false);
   var m = document.getElementById("modal-create-task");
   if (m) m.style.display = "none";
 }
 
 function saveNewTask(e) {
-  if (e) e.preventDefault();
+  if (e && e.preventDefault) e.preventDefault();
   var titleInput = document.getElementById("modal-t-title");
   var title = titleInput ? titleInput.value.trim() : "";
   var descInput = document.getElementById("modal-t-desc");
@@ -910,21 +976,27 @@ function saveNewTask(e) {
   var catInput = document.getElementById("modal-t-cat");
   var cat = (catInput ? catInput.value.trim() : "") || "Genel";
 
-  if (title) {
-    var container = document.getElementById("tasks-list-container");
-    var newRow = buildTaskRow({ title: title, desc: desc, week: week, priority: priority, category: cat, status: "in-progress" });
-
-    container.prepend(newRow);
-    closeCreateTaskModal();
-    updateAllStats();
-    filterTasks();
-    renderTaskCards(currentCardsFilterWeek || "all");
-    showPortalToast("Yeni görev başarıyla eklendi! ✨");
-
-    // Clear modal form
-    if (titleInput) titleInput.value = "";
-    if (descInput) descInput.value = "";
+  if (!title) {
+    showTaskTitleError(true, "Lütfen geçerli bir görev başlığı giriniz (boş bırakılamaz).");
+    if (titleInput) titleInput.focus();
+    return false;
   }
+
+  showTaskTitleError(false);
+  var container = document.getElementById("tasks-list-container");
+  var newRow = buildTaskRow({ title: title, desc: desc, week: week, priority: priority, category: cat, status: "in-progress" });
+
+  container.prepend(newRow);
+  closeCreateTaskModal();
+  updateAllStats();
+  filterTasks();
+  renderTaskCards(currentCardsFilterWeek || "all");
+  showPortalToast("Yeni görev başarıyla eklendi! ✨");
+
+  // Clear modal form
+  if (titleInput) titleInput.value = "";
+  if (descInput) descInput.value = "";
+  return true;
 }
 
 // 6. HAFTA DETAY MODALI
@@ -2446,7 +2518,7 @@ function executeAiAction(actionType, param) {
     aiPendingCourseName = null;
     showPortalToast("Ders programı başarıyla kaydedildi! 🎓");
   } else if (actionType === "goto_grades") {
-    var el = document.querySelector(".side-stack");
+    var el = document.getElementById("grades-card") || document.querySelector(".side-stack");
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   } else if (actionType === "goto_schedule") {
     var el = document.getElementById("schedule-card");
@@ -2467,7 +2539,7 @@ function executeAiAction(actionType, param) {
   } else if (actionType === "open_cards") {
     toggleTaskCardsPanel(true);
   } else if (actionType === "toggle_theme") {
-    toggleTheme();
+    togglePortalTheme();
   } else if (actionType === "logout_action") {
     logoutStudent();
   } else if (actionType === "quick_prompt") {
