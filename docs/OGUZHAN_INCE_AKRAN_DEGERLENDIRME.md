@@ -8,6 +8,7 @@
 * **Grup Bilgisi:** Grup 4  
 * **Projedeki Rolü:** Sistem Analisti & Geliştirici  
 * **Tarih:** 10 Kasım 2026  
+* **Depo:** [github.com/nilaysezinyalcin-collab/Edutrack](https://github.com/nilaysezinyalcin-collab/Edutrack)  
 
 ---
 
@@ -27,7 +28,7 @@ Grup üyelerinin proje süresince ortaya koyduğu performans, KTÜ Yazılım Gel
 | Öğrenci No | Adı Soyadı | Projedeki Rolü | Puan (100) | Puan (5.0) | Katkı Oranı | Genel Değerlendirme Notu |
 | :--- | :--- | :--- | :---: | :---: | :---: | :--- |
 | **444090** | **Nilay Sezin Yalçın** | Proje Lideri & Frontend | **100 / 100** | **5.0 / 5.0** | %25 | Güçlü Koordinasyon ve Responsive Tasarım |
-| **444083** | **Oğuzhan İnce** | Sistem Analisti & Geliştirici (Öz) | **100 / 100** | **5.0 / 5.0** | %25 | Gereksinim Analizi ve 11 Tablolu ER Modeli |
+| **444083** | **Oğuzhan İnce** | Sistem Analisti & Geliştirici (Öz) | **100 / 100** | **5.0 / 5.0** | %25 | Gereksinim Analizi, 11 Tablolu ER Modeli, Mobil CSS & a11y |
 | **444082** | **İsmail Korkmaz** | Test / Kalite Sorumlusu | **100 / 100** | **5.0 / 5.0** | %25 | Otomatik Kabul Testleri ve Kalite Raporu |
 | **444101** | **Onur Uzun** | Dokümantasyon & Geliştirici | **100 / 100** | **5.0 / 5.0** | %25 | Arama/Validasyon Kodlaması ve Raporlama |
 
@@ -36,22 +37,21 @@ Grup üyelerinin proje süresince ortaya koyduğu performans, KTÜ Yazılım Gel
 ## 3. Üye Bazlı Detaylı Değerlendirme Gerekçeleri
 
 ### 👤 1. Nilay Sezin Yalçın (Proje Lideri & Geliştirici - 100 / 100)
-* **Katkıları:** Proje planlamasını, görev takibini ve ön yüz tasarım mimarisini (`src/index.html`, `src/css/style.css`) başarıyla yürütmüştür. Duyarlı (responsive) yerleşim ve başlatıcı betiklerin (`baslat_windows.bat`, `baslat.sh`) kararlı çalışmasında önemli katkılar sunmuştur.
-* **Gözlem:** Ekip içi iletişimi her zaman açık tutmuş ve proje hedeflerine odaklanmamızı sağlamıştır.
+* **Katkıları:** Proje planlamasını, görev takibini ve ön yüz tasarım mimarisini (`src/index.html`, `src/css/style.css`) başarıyla yürütmüştür. İş bölümünü 8 ayrı GitHub issue'suna bölerek organize etmiş, duyarlı (responsive) yerleşim ve başlatıcı betiklerin (`baslat_windows.bat`, `baslat.sh`) kararlı çalışmasında önemli katkılar sunmuştur.
+* **Gözlem:** Ekip içi iletişimi her zaman açık tutmuş, yapıcı liderlik tarzıyla proje hedeflerine odaklanmamızı sağlamıştır.
 
 ### 👤 2. Oğuzhan İnce (Öz Değerlendirme - 100 / 100)
-* **Katkıları:** 17 Fonksiyonel (`FR-01..17`) ve 10 Fonksiyonel Olmayan (`NFR-01..10`) gereksinimi tanımladım, gereksinim-test izlenebilirlik matrisini (`docs/gereksinim-test-eslestirme.md`), 11 tablolu ilişkisel ER veritabanı şemasını (`docs/er_diyagram_v2.png`) ve uygulama iş akışı diyagramını (`docs/ogrenci_paneli_diyagram_mavi.png`) hazırladım.
+* **Katkıları:** 17 Fonksiyonel (`FR-01..17`) ve 10 Fonksiyonel Olmayan (`NFR-01..10`) gereksinimi tanımladım, Gereksinim – Test İzlenebilirlik Matrisini (`docs/gereksinim-test-eslestirme.md`), 11 tablolu ilişkisel ER veritabanı şemasını (`docs/er_diyagram_v2.png`) ve uygulama iş akışı diyagramını (`docs/ogrenci_paneli_diyagram_mavi.png`) hazırladım. Kodlama tarafında mobil ekranlardaki yatay taşma hatasını (Issue #4, commit `bbfc755`) ve form kontrollerinin WCAG AA erişilebilirlik, ARIA ve klavye navigasyon standartlarını (Issue #5, commit `1328f3d`) geliştirdim.
 
 ### 👤 3. İsmail Korkmaz (Test / Kalite Güvencesi Sorumlusu & Geliştirici - 100 / 100)
-* **Katkıları:** Tanımladığımız 17 fonksiyonel ve 10 fonksiyonel olmayan gereksinimi gerçek uygulama üzerinde doğrulayan 17 otomatik kabul testini (`src/js/tests.js`) ve 6 manuel testi (`docs/test-senaryolari.md`) eksiksiz hayata geçirmiştir. Ayrıca kişisel notların kalıcılığını ve KTÜ not hesaplama motorunu geliştirmiştir.
+* **Katkıları:** Tanımladığımız 17 fonksiyonel ve 10 fonksiyonel olmayan gereksinimi gerçek uygulama üzerinde doğrulayan 17 otomatik kabul testini (`src/js/tests.js`) ve 6 manuel testi (`docs/test-senaryolari.md`) eksiksiz hayata geçirmiştir. Ayrıca kişisel notların kalıcılığını, test koşucu arayüzünü (`test-runner.html`) ve KTÜ not hesaplama motorunu geliştirmiştir.
 * **Gözlem:** Analiz aşamasında belirlediğimiz tüm kriterleri titizlikle test ederek projenin %100 doğrulama oranına ulaşmasını sağlamıştır.
 
 ### 👤 4. Onur Uzun (Teknik Dokümantasyon & Geliştirici - 100 / 100)
-* **Katkıları:** Görev arama/filtreleme mantığını, boş arama sonucu mesajını ve görev ekleme formu başlık doğrulamasını (Issue #6) başarıyla kodlamıştır. Ayrıca `README.md`, Kullanıcı Dokümanı, KTÜ şablonlu Proje Raporu ve Sunum dosyalarını (Issue #7) yüksek kalitede hazırlamıştır.
+* **Katkıları:** Görev arama/filtreleme mantığını, boş arama sonucu mesajını ve görev ekleme formu başlık doğrulamasını (Issue #6, commit `368074a`) başarıyla kodlamıştır. Ayrıca `README.md`, Kullanıcı Dokümanı, KTÜ şablonlu Proje Raporu ve Sunum dosyalarını (Issue #7, commit `c511346` ve devamı) yüksek kalitede hazırlamıştır.
 * **Gözlem:** Analiz diyagramlarımızı ve veritabanı şemamızı teknik rapor ve sunuma eksiksiz entegre etmiştir.
 
 ---
 
 ## 4. Genel Grup Değerlendirmesi ve Sonuç
-Grup 4 üyeleri olarak analizden tasarıma, geliştirmeden teste ve dokümantasyona kadar tüm aşamalarda tam bir uyum ve yardımlaşma içerisinde çalıştık. Tüm grup arkadaşlarıma özverili katkıları için 100 / 100 tam puan takdir ediyorum.
-
+Grup 4 üyeleri olarak analizden tasarıma, geliştirmeden teste ve dokümantasyona kadar tüm aşamalarda tam bir uyum ve yardımlaşma içerisinde çalıştık. İş bölümü adil paylaşılmış ve tüm aşamalar ortak mutabakatla başarıyla tamamlanmıştır. Tüm grup arkadaşlarıma özverili katkıları için 100 / 100 tam puan takdir ediyorum.
