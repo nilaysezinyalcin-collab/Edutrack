@@ -27,8 +27,8 @@ Grup üyelerinin proje süresince ortaya koyduğu performans, KTÜ Yazılım Gel
 | Öğrenci No | Adı Soyadı | Projedeki Rolü | Puan (100) | Puan (5.0) | Katkı Oranı | Genel Değerlendirme Notu |
 | :--- | :--- | :--- | :---: | :---: | :---: | :--- |
 | **444090** | **Nilay Sezin Yalçın** | Proje Lideri & Frontend | **100 / 100** | **5.0 / 5.0** | %25 | Üstün Liderlik ve Tasarım |
-| **444082** | **Oğuzhan İnce** | Sistem Analisti & Geliştirici | **100 / 100** | **5.0 / 5.0** | %25 | Kapsamlı Analiz ve Veri Modeli |
-| **444104** | **Onur Uzun** | Dokümantasyon & Geliştirici | **100 / 100** | **5.0 / 5.0** | %25 | Titiz Doküman ve Sunum Hazırlığı |
+| **444083** | **Oğuzhan İnce** | Sistem Analisti & Geliştirici | **100 / 100** | **5.0 / 5.0** | %25 | Kapsamlı Analiz ve Veri Modeli |
+| **444101** | **Onur Uzun** | Dokümantasyon & Geliştirici | **100 / 100** | **5.0 / 5.0** | %25 | Titiz Doküman ve Sunum Hazırlığı |
 | **444082** | **İsmail Korkmaz** | Test / Kalite Sorumlusu | **100 / 100** | **5.0 / 5.0** | %25 | Kabul Testleri ve Kalite Güvencesi |
 
 ---

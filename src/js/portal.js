@@ -57,6 +57,12 @@ function handleLogin(e) {
     currentUser = found;
   } else if (loginInput.toLowerCase().includes("ismail") || loginInput === "444082" || loginInput.toLowerCase() === "ismail@ktu.edu.tr") {
     currentUser = { name: "İsmail Korkmaz", email: "ismail@ktu.edu.tr", studentNo: "444082", dept: "Yazılım Mühendisliği" };
+  } else if (loginInput.toLowerCase().includes("nilay") || loginInput === "444090" || loginInput.toLowerCase() === "nilay@ktu.edu.tr") {
+    currentUser = { name: "Nilay Sezin Yalçın", email: "nilay@ktu.edu.tr", studentNo: "444090", dept: "Yazılım Mühendisliği" };
+  } else if (loginInput.toLowerCase().includes("oguzhan") || loginInput.toLowerCase().includes("oğuzhan") || loginInput === "444083" || loginInput.toLowerCase() === "oguzhan@ktu.edu.tr") {
+    currentUser = { name: "Oğuzhan İnce", email: "oguzhan@ktu.edu.tr", studentNo: "444083", dept: "Yazılım Mühendisliği" };
+  } else if (loginInput.toLowerCase().includes("onur") || loginInput === "444101" || loginInput.toLowerCase() === "onur@ktu.edu.tr") {
+    currentUser = { name: "Onur Uzun", email: "onur@ktu.edu.tr", studentNo: "444101", dept: "Yazılım Mühendisliği" };
   } else if (loginInput.includes("@")) {
     var prefix = loginInput.split("@")[0].replace(/[._-]/g, " ");
     var capName = prefix.charAt(0).toUpperCase() + prefix.slice(1);
@@ -1677,7 +1683,7 @@ async function callGeminiApi(promptText, apiKey, model) {
 
 async function executeGeminiRequest(url, promptText) {
 
-  var systemContext = "Sen Karadeniz Teknik Üniversitesi (KTÜ) Yazılım Mühendisliği Öğrenci Başarı ve Ders Paneli 'AkademiX'in sevimli, zeki yapay zeka danışmanısın. İsmail Korkmaz (444082), Nilay Sezin Yalçın, Oğuzhan İnce ve Onur Uzun (Grup 4) tarafından geliştirildin. Görevin öğrencilere ders içerikleri, haftalık görevler, KTÜ 30 kişi kuralı (30'dan azsa MDS mutlak harf notları, 30 ve üzeriyse BDS çan eğrisi; final barajı en az 50), ders programı ve sınav notu hesaplama konularında samimi, motive edici, nazik ve emojili Türkçe rehberlik etmektir. Yanıtlarını kısa, net, samimi ve markdown formatında ver.";
+  var systemContext = "Sen Karadeniz Teknik Üniversitesi (KTÜ) Yazılım Mühendisliği Öğrenci Başarı ve Ders Paneli 'AkademiX'in sevimli, zeki yapay zeka danışmanısın. Nilay Sezin Yalçın (444090), Oğuzhan İnce (444083), İsmail Korkmaz (444082) ve Onur Uzun (444101) (Grup 4) tarafından geliştirildin. Görevin öğrencilere ders içerikleri, haftalık görevler, KTÜ 30 kişi kuralı (30'dan azsa MDS mutlak harf notları, 30 ve üzeriyse BDS çan eğrisi; final barajı en az 50), ders programı ve sınav notu hesaplama konularında samimi, motive edici, nazik ve emojili Türkçe rehberlik etmektir. Yanıtlarını kısa, net, samimi ve markdown formatında ver.";
 
   var payload = {
     contents: [

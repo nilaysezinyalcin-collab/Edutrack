@@ -40,4 +40,4 @@ Bu tablo, ders tarafından istenen her zorunlu gereksinimin uygulamada **hangi �
 | Haftalık içerik, görev takibi, filtreleme/arama ve ilerleme görünümü bulunmalı | FR-01, FR-02, FR-04, FR-05, FR-06 | Karşılanıyor |
 | Mobil görünüm işlevsel olmalı | NFR-01 | #4 ile karşılanıyor |
 | Ekip üyelerinin bireysel katkıları repoda görünmeli | – | Issue #1–#8, her üye kendi hesabından commit |
-| README kurulumu ve kullanımı açıklamalı | NFR-06 | #7 ile tamamlanacak |
+| README kurulumu ve kullanımı açıklamalı | NFR-06 | Karşılanıyor (#7) |
