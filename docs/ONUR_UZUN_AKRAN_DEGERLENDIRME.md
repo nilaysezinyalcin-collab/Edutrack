@@ -1,57 +1,60 @@
-# AKRAN DEĞERLENDİRME FORMU VE RAPORU (PEER REVIEW REPORT)
+# AKRAN DEĞERLENDİRME FORMU VE RAPORU – ONUR UZUN
 
-**T.C. KARADENİZ TEKNİK ÜNİVERSİTESİ**  
-**Fen Fakültesi • Yazılım Geliştirme Bölümü • Yazılım Geliştirme Dersi • Proje 1 (Edutrack / AkademiX)**  
-
-* **Değerlendirmeyi Yapan Öğrenci:** Onur Uzun  
-* **Öğrenci Numarası:** 444101  
-* **Grup Bilgisi:** Grup 4  
-* **Projedeki Rolü:** Teknik Dokümantasyon / Sunum Sorumlusu & Geliştirici  
-* **Tarih:** 10 Kasım 2026  
+**Ders:** Yazılım Geliştirme · **Proje:** Proje 1 (Edutrack / AkademiX) · **Grup:** 4  
+**Değerlendiren:** Onur Uzun (`444101`) · **Rol:** Teknik Dokümantasyon / Sunum Sorumlusu & Geliştirici · **Tarih:** 10 Kasım 2026  
 
 ---
 
-## 1. Değerlendirme Kriterleri ve Puanlama Baremi
-Grup üyelerinin proje süresince ortaya koyduğu performans, KTÜ Yazılım Geliştirme Dersi yönergeleri doğrultusunda aşağıdaki 5 temel başlık altında değerlendirilmiştir (Her kriter 20 puandır):
+## 1. Değerlendirme Ölçütleri ve Puanlama Baremi
+Her ekip üyesi KTÜ Yazılım Geliştirme Dersi yönergeleri doğrultusunda aşağıdaki 5 temel ölçüt üzerinden hem `1–5` ölçeğinde (`Toplam 25`) hem de `100` puan üzerinden değerlendirilmiştir (`1 = hiç katılmıyorum`, `5 = tamamen katılıyorum` / `20p`):
 
-1. **Görev Bilinci ve Sorumluluk:** Kendisine atanan görevleri zamanında ve eksiksiz sahiplenme (20p)
-2. **Teknik Katkı ve Kod Kalitesi:** Projenin geliştirilmesine sunulan somut kod, tasarım veya analiz katkısı (20p)
-3. **Ekip İçi İletişim ve İşbirliği:** Toplantılara katılım, şeffaf bilgi paylaşımı ve yapıcı tutum (20p)
-4. **Problem Çözme ve İnisiyatif Alma:** Karşılaşılan teknik tıkanıklıklarda çözüm üretme ve ekibe destek olma (20p)
-5. **Zaman Yönetimi ve Teslimat:** Sprint/haftalık teslim tarihlerine riayet etme (20p)
-
----
-
-## 2. Grup Üyeleri Puanlama ve Değerlendirme Tablosu
-
-| Öğrenci No | Adı Soyadı | Projedeki Rolü | Puan (100) | Puan (5.0) | Katkı Oranı | Genel Değerlendirme Notu |
-| :--- | :--- | :--- | :---: | :---: | :---: | :--- |
-| **444090** | **Nilay Sezin Yalçın** | Proje Lideri & Frontend | **100 / 100** | **5.0 / 5.0** | %25 | Üstün Liderlik ve Arayüz Mimarisi |
-| **444083** | **Oğuzhan İnce** | Sistem Analisti & Geliştirici | **100 / 100** | **5.0 / 5.0** | %25 | Eksiksiz Gereksinim ve ER Modelleme |
-| **444082** | **İsmail Korkmaz** | Test / Kalite Sorumlusu | **100 / 100** | **5.0 / 5.0** | %25 | Kapsamlı Kabul Testleri ve Kalite Güvencesi |
-| **444101** | **Onur Uzun** | Dokümantasyon & Geliştirici (Öz) | **100 / 100** | **5.0 / 5.0** | %25 | Arama/Validasyon Geliştirmesi ve Dokümantasyon |
+1. **Görev sorumluluğu (5 / 20p):** Üzerine aldığı işleri zamanında ve beklenen kalitede tamamladı mı?
+2. **Teknik katkı (5 / 20p):** Kod, test, tasarım, analiz veya teknik çözüm üretti mi?
+3. **İletişim (5 / 20p):** Grup içi iletişimi düzenli ve yapıcı mıydı?
+4. **Zaman yönetimi (5 / 20p):** Proje takvimine ve teslim tarihlerine uydu mu?
+5. **İş birliği (5 / 20p):** Ekip çalışmasına ve problem çözmeye katkı sağladı mı?
 
 ---
 
-## 3. Üye Bazlı Detaylı Değerlendirme Gerekçeleri
+## 2. Grup Üyeleri Puanlama Tablosu
 
-### 👤 1. Nilay Sezin Yalçın (Proje Lideri & Geliştirici - 100 / 100)
-* **Katkıları:** Projenin başlangıcından teslimine kadar ekip içi görev dağılımını, toplantı planlamasını ve ana uygulama iskeletini (`src/`) başarıyla yönetmiştir. Duyarlı (responsive) CSS mimarisinin kurulmasında ve çoklu platform başlatıcılarının iyileştirilmesinde (Issue #4, #8) kritik rol üstlenmiştir.
-* **Gözlem:** Yapıcı liderliği ve hızlı koordinasyonu sayesinde ekip içi süreçler hiçbir aksama olmadan ilerlemiştir.
+| Öğrenci | Rol | Görev Sorumluluğu | Teknik Katkı | İletişim | Zaman Yönetimi | İş Birliği | Toplam (25) | Puan (100) |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Nilay Sezin Yalçın (444090)** | Proje Lideri / Geliştirici | 5 | 5 | 5 | 5 | 5 | **25** | **100 / 100** |
+| **Oğuzhan İnce (444083)** | Sistem Analisti / Geliştirici | 5 | 5 | 5 | 5 | 5 | **25** | **100 / 100** |
+| **İsmail Korkmaz (444082)** | Test / Kalite / Geliştirici | 5 | 5 | 5 | 5 | 5 | **25** | **100 / 100** |
+| **Onur Uzun (444101)** | Dokümantasyon / Sunum / Geliştirici (Öz) | 5 | 5 | 5 | 5 | 5 | **25** | **100 / 100** |
 
-### 👤 2. Oğuzhan İnce (Sistem Analisti & Geliştirici - 100 / 100)
-* **Katkıları:** Paydaş ve ihtiyaç analizini yürüterek 17 Fonksiyonel (FR-01..17) ve 10 Fonksiyonel Olmayan (NFR-01..10) gereksinimi yapılandırmıştır. 11 ilişkisel tablodan oluşan ER veritabanı diyagramını (`docs/er_diyagram_v2.png`) ve uygulama akış şemasını (`docs/ogrenci_paneli_diyagram_mavi.png`) hazırlamıştır.
-* **Gözlem:** Sistemin mimari ve veri modeli temellerini analitik bir titizlikle kurgulayarak hem geliştirme hem de raporlama sürecimizi büyük ölçüde kolaylaştırmıştır.
+---
 
-### 👤 3. İsmail Korkmaz (Test / Kalite Güvencesi Sorumlusu & Geliştirici - 100 / 100)
-* **Katkıları:** Gerçek uygulama DOM'u üzerinde çalışan 17 otomatik kabul testini (`src/js/tests.js`) ve `test-runner.html` altyapısını geliştirmiştir (Issue #3). Kişisel çalışma notlarının `localStorage` kalıcılığını sağlamış, 4 haftalık müfredat kartlarını tamamlamış ve `docs/test-senaryolari.md` raporunu oluşturmuştur.
-* **Gözlem:** Yazdığı kapsamlı testler sayesinde Türkçe arama ve kontrast gibi ince hataları erken aşamada yakalamamızı sağlamıştır.
+## 3. Kanıtlar ve Üye Bazlı Değerlendirme Yorumları
+*GitHub durumu 10 Kasım 2026 itibarıyla (`v1.0` sürümü yayınlandı, `#1`–`#8` arası tüm issue’lar kapatıldı).*
 
-### 👤 4. Onur Uzun (Öz Değerlendirme - 100 / 100)
-* **Katkıları:** Görev arama/filtreleme modülündeki boş arama sonucu uyarısını ve görev ekleme formundaki boş başlık doğrulamasını (Issue #6) kodladım. Mobil taşma ve klavye erişilebilirliği kontrollerini tamamladım. `README.md`, Kullanıcı Dokümanı (`docs/kullanici-dokumani.pdf`), KTÜ şablonlu Proje Raporu (`docs/proje-raporu.pdf` / `.docx`) ve Sunum (`presentation/sunum.pptx` / `.pdf`) dosyalarını (Issue #7) eksiksiz hazırladım.
+### 👤 1. Nilay Sezin Yalçın (`444090`) – Proje Lideri / Geliştirici
+* **Issue:** `#1` repo yapısının düzenlenmesi (`/src`, `/docs`, `/presentation`), `#8` katkı kontrolü, `server.py` ve başlatıcılar, `v1.0` sürümü; ayrıca `#1–#8` tüm issue’ların açılması ve görev dağılımı.
+* **Commit:** `cd9a2a8` (`refactor: restructure repo into src/docs/presentation and remove duplicate HTML copies`); `2224a20` (`fix(run): serve app from src/ in server.py and launch scripts`); `61f7482` (`fix(run): detect a working Python in Windows launcher`); `e941994` (`repair sunum.pptx so PowerPoint can open it`).
+* **Rol çıktısı:** `src/index.html`, `server.py`, `baslat_windows.bat`, `baslat.sh`, `.gitattributes`, `v1.0` sürümü.
+* **Yorumum:** Projenin başlangıcından teslimine kadar ekip içi görev dağılımını, repo mimarisini ve sürüm kontrol düzenini üstün bir liderlikle yönetti. Windows başlatıcı hatasını ve sunum dosyasını hızla onararak teslim sürecini güvenceye aldı.
+
+### 👤 2. Oğuzhan İnce (`444083`) – Sistem Analisti / Geliştirici
+* **Issue:** `#4` mobil görünümde yatay taşmanın giderilmesi (`320px–375px`), `#5` erişilebilirlik (form etiketleri, klavye erişimi) ve gereksinim–test izlenebilirlik tablosu.
+* **Commit:** `bbfc755` (`fix(css): remove horizontal overflow on mobile (320-375px)`); `1328f3d` (`feat(a11y): add form labels, keyboard access and requirement-test traceability`).
+* **Rol çıktısı:** `docs/gereksinim-test-eslestirme.md`, `docs/er_diyagram_v2.png`, `docs/ogrenci_paneli_diyagram_mavi.png`, `src/css/style.css`, `src/js/a11y.js`.
+* **Yorumum:** 17 Fonksiyonel (`FR-01..17`) ve 10 Fonksiyonel Olmayan (`NFR-01..10`) gereksinimi, 11 tablolu ilişkisel ER modelini ve izlenebilirlik matrisini eksiksiz hazırladı. Mobil taşma ve erişilebilirlik görevlerini de zamanında tamamlayarak raporlama sürecimize sağlam bir temel sundu.
+
+### 👤 3. İsmail Korkmaz (`444082`) – Test / Kalite / Geliştirici
+* **Issue:** `#2` görev kalıcılığı (`localStorage`), `#3` otomatik kabul testleri ve test raporu.
+* **Commit:** `efc8a60` (`fix(tasks): persist task status, add and delete in localStorage`); `589307e` (`test: run acceptance tests against the real app and update test report`); `0b99765` (`fix(notes): persist personal study notes in localStorage across page reloads`); `7a0db7b` (`feat(curriculum): mark all 4 weekly modules as completed`).
+* **Rol çıktısı:** `src/js/tests.js` (17 kabul testi), `src/test-runner.html`, `docs/test-senaryolari.md`, `src/js/portal.js` (`localStorage` kalıcılığı ve KTÜ AGNO motoru).
+* **Yorumum:** Gerçek uygulama DOM'u üzerinde çalışan 17 otomatik kabul testini geliştirerek Türkçe arama ve kontrast gibi ince hataları erken aşamada yakalamamızı sağladı. Kişisel notların kalıcılığı gibi ek iyileştirmelerle projeye çok değerli katkılar sundu.
+
+### 👤 4. Onur Uzun (`444101`) – Dokümantasyon / Sunum / Geliştirici (Öz Değerlendirme)
+* **Issue:** `#6` boş arama sonucu mesajı ve görev formu başlık doğrulaması, `#7` README, kullanıcı dokümanı, proje raporu ve sunum.
+* **Commit:** `368074a` (`fix: bos arama sonucu mesaji ve gorev formu baslik kontrolu eklendi #6`); `c511346` (`docs: README duzeltildi, kullanici dokumani, proje raporu ve sunum eklendi #7`); `6193a51` (KTÜ resmi şablonlu rapor ve bireysel formlar).
+* **Rol çıktısı:** `src/js/portal.js` & `src/index.html` (`#6`), `README.md`, `docs/kullanici-dokumani.pdf` (`.md`), `docs/proje-raporu.pdf` (`.docx`, `.md`), `presentation/sunum.pptx` (`.pdf`, `.md`).
+* **Yorumum:** Görev arama/filtreleme modülündeki boş arama uyarısını, Türkçe karakter uyumunu ve boş başlık doğrulamasını (`#6`) kodladım; `README.md`, Kullanıcı Dokümanı, KTÜ şablonlu Proje Raporu ve Sunum dosyalarını (`#7`) eksiksiz tamamladım.
 
 ---
 
 ## 4. Genel Grup Değerlendirmesi ve Sonuç
-Grup 4 olarak Proje 1 süresince her üyenin kendi uzmanlık alanında tam sorumluluk aldığı, birbirinin çıktısını denetlediği ve desteklediği örnek bir takım çalışması yürüttük. Tüm ekip arkadaşlarımın projeye katkısı eşit ve üst düzeyde olduğundan her birine tam puan (100 / 100) veriyorum.
-
+Grup 4 olarak Proje 1 süresince her üyenin kendi uzmanlık alanında tam sorumluluk aldığı, birbirinin çıktısını denetlediği ve desteklediği örnek bir takım çalışması yürüttük. Tüm ekip arkadaşlarımın projeye katkısı üst düzeyde olduğundan her birine tam puan (`25 / 25` — `100 / 100`) takdir ediyorum.

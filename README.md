@@ -7,14 +7,14 @@
 
 ---
 
-## 👥 Grup Üyeleri ve Rolleri (Grup 4)
+## 👥 Grup Üyeleri, Rolleri ve Bireysel Raporları (Grup 4)
 
-| Öğrenci No | Adı Soyadı | Projedeki Rolü | Üstlendiği Modüller ve Sorumluluklar |
-| :--- | :--- | :--- | :--- |
-| **444090** | **Nilay Sezin Yalçın** | **Proje Lideri & Geliştirici** | Ekip koordinasyonu, proje mimari iskeleti, duyarlı (responsive) arayüz tasarımı, başlatıcı betikler ve sürüm kontrol düzeni |
-| **444083** | **Oğuzhan İnce** | **Sistem Analisti & Geliştirici** | İhtiyaç analizi, 17 FR ve 10 NFR gereksinim dökümleri, 11 tablolu ilişkisel ER veri modeli, gereksinim-test izlenebilirlik matrisi |
-| **444082** | **İsmail Korkmaz** | **Test / Kalite Sorumlusu & Geliştirici** | Otomatik kabul testleri (`tests.js`), kalite güvencesi raporu, `localStorage` veri kalıcılığı, KTÜ BDS/MDS not motoru ve AI asistan entegrasyonu |
-| **444101** | **Onur Uzun** | **Dokümantasyon / Sunum Sorumlusu & Geliştirici** | Görev arama ve filtreleme motoru, form doğrulama kontrolleri, kullanıcı dokümanı, teknik proje raporu, README ve proje sunumu |
+| Öğrenci No | Adı Soyadı | Projedeki Rolü | Atanan Issue'lar | Bireysel Yansıtma Raporu | Akran Değerlendirme Formu |
+| :--- | :--- | :--- | :---: | :--- | :--- |
+| **444090** | **Nilay Sezin Yalçın** | **Proje Lideri & Geliştirici** | `#1`, `#8` | [Markdown](docs/Nilay_Sezin_Yalcin_Yansitma_Raporu.md) · [Word](docs/Nilay_Sezin_Yalcin_Yansitma_Raporu.docx) | [Markdown](docs/Nilay_Sezin_Yalcin_Akran_Degerlendirme.md) · [Word](docs/Nilay_Sezin_Yalcin_Akran_Degerlendirme.docx) |
+| **444083** | **Oğuzhan İnce** | **Sistem Analisti & Geliştirici** | `#4`, `#5` | [Markdown](docs/OGUZHAN_INCE_YANSITMA_RAPORU.md) · [Word](docs/OGUZHAN_INCE_YANSITMA_RAPORU.docx) | [Markdown](docs/OGUZHAN_INCE_AKRAN_DEGERLENDIRME.md) · [Word](docs/OGUZHAN_INCE_AKRAN_DEGERLENDIRME.docx) |
+| **444082** | **İsmail Korkmaz** | **Test / Kalite Sorumlusu & Geliştirici** | `#2`, `#3` | [Markdown](docs/ISMAIL_KORKMAZ_YANSITMA_RAPORU.md) · [Word](docs/ISMAIL_KORKMAZ_YANSITMA_RAPORU.docx) | [Markdown](docs/ISMAIL_KORKMAZ_AKRAN_DEGERLENDIRME.md) · [Word](docs/ISMAIL_KORKMAZ_AKRAN_DEGERLENDIRME.docx) |
+| **444101** | **Onur Uzun** | **Dokümantasyon / Sunum Sorumlusu & Geliştirici** | `#6`, `#7` | [Markdown](docs/ONUR_UZUN_YANSITMA_RAPORU.md) · [Word](docs/ONUR_UZUN_YANSITMA_RAPORU.docx) | [Markdown](docs/ONUR_UZUN_AKRAN_DEGERLENDIRME.md) · [Word](docs/ONUR_UZUN_AKRAN_DEGERLENDIRME.docx) |
 
 *Not: Tüm grup üyeleri kendi uzmanlık rollerinin yanı sıra aktif olarak kod geliştirme, hata giderme (bug-fix) ve GitHub süreçlerine katkıda bulunmuştur.*
 
@@ -165,12 +165,14 @@ Edutrack/
 │   ├── gereksinim-test-eslestirme.md     # Gereksinim (FR/NFR) – Test izlenebilirlik matrisi
 │   ├── er_diyagram_v2.png                # 11 tablolu ilişkisel veritabanı ER diyagramı
 │   ├── ogrenci_paneli_diyagram_mavi.png  # Sistem ve uygulama akış diyagramı
+│   ├── Nilay_Sezin_Yalcin_Yansitma_Raporu.md # Nilay Sezin Yalçın bireysel yansıtma raporu (.md & .docx)
+│   ├── Nilay_Sezin_Yalcin_Akran_Degerlendirme.md # Nilay Sezin Yalçın akran değerlendirme formu (.md & .docx)
+│   ├── OGUZHAN_INCE_YANSITMA_RAPORU.md   # Oğuzhan İnce bireysel yansıtma raporu (.md & .docx)
+│   ├── OGUZHAN_INCE_AKRAN_DEGERLENDIRME.md # Oğuzhan İnce akran değerlendirme formu (.md & .docx)
 │   ├── ISMAIL_KORKMAZ_YANSITMA_RAPORU.md # İsmail Korkmaz bireysel yansıtma raporu (.md & .docx)
 │   ├── ISMAIL_KORKMAZ_AKRAN_DEGERLENDIRME.md # İsmail Korkmaz akran değerlendirme formu (.md & .docx)
 │   ├── ONUR_UZUN_YANSITMA_RAPORU.md      # Onur Uzun bireysel yansıtma raporu (.md & .docx)
-│   ├── ONUR_UZUN_AKRAN_DEGERLENDIRME.md  # Onur Uzun akran değerlendirme formu (.md & .docx)
-│   ├── OGUZHAN_INCE_YANSITMA_RAPORU.md   # Oğuzhan İnce bireysel yansıtma raporu (.md & .docx)
-│   └── OGUZHAN_INCE_AKRAN_DEGERLENDIRME.md # Oğuzhan İnce akran değerlendirme formu (.md & .docx)
+│   └── ONUR_UZUN_AKRAN_DEGERLENDIRME.md  # Onur Uzun akran değerlendirme formu (.md & .docx)
 │
 ├── presentation/                         # Proje sunum dosyaları
 │   ├── README.md                         # Sunum klasörü açıklaması

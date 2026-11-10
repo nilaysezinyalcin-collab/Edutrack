@@ -264,9 +264,9 @@ Proje geliştirme sürecinde sürüm kontrolü ve ekip işbirliği için Git ve 
 
 | Öğrenci No | Adı Soyadı | Projedeki Rolü | Üstlendiği Modüller ve Teknik Katkılar |
 | :--- | :--- | :--- | :--- |
-| 444090 | Nilay Sezin YALÇIN | Proje Lideri & Geliştirici | Ekip koordinasyonu, mimari dizin yapısı (src/), duyarlı (responsive) CSS yerleşimi (#4), başlatıcı betikler (server.py, .bat, .sh) (#8). |
-| 444083 | Oğuzhan İNCE | Sistem Analisti & Geliştirici | Paydaş ve ihtiyaç analizi, 17 FR ve 10 NFR gereksinim dökümü, 11 tablolu ilişkisel ER veritabanı şeması ve izlenebilirlik matrisi. |
-| 444082 | İsmail KORKMAZ | Test / Kalite Sorumlusu & Geliştirici | 17 otomatik kabul testi (src/js/tests.js) (#3), kalite raporu, localStorage veri kalıcılığı (#2), klavye/ARIA erişilebilirliği (#5) ve KTÜ BDS/MDS not motoru. |
+| 444090 | Nilay Sezin YALÇIN | Proje Lideri & Geliştirici | Ekip koordinasyonu, repo mimarisi (src/, docs/, presentation/) (#1), başlatıcı betikler (server.py, .bat, .sh), katkı kontrolü ve v1.0 sürümü (#8). |
+| 444083 | Oğuzhan İNCE | Sistem Analisti & Geliştirici | 17 FR / 10 NFR analizi, 11 tablolu ER şeması, mobil yatay taşma çözümü (#4), klavye/ARIA erişilebilirliği ve gereksinim–test izlenebilirlik matrisi (#5). |
+| 444082 | İsmail KORKMAZ | Test / Kalite Sorumlusu & Geliştirici | Görev ve kişisel notların localStorage kalıcılığı (#2), 17 otomatik kabul testi (src/js/tests.js) ve kalite raporu (#3), KTÜ BDS/MDS not motoru. |
 | 444101 | Onur UZUN | Dokümantasyon / Sunum & Geliştirici | Türkçe duyarlı görev arama/filtreleme, boş arama sonucu mesajı ve görev formu başlık doğrulaması (#6), README, kullanıcı dokümanı, proje raporu ve sunum (#7). |
 
 *Tablo 7. Grup 4 Ekip Üyeleri, Rolleri ve Sorumluluk Dağılımı*
