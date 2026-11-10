@@ -158,14 +158,19 @@ Edutrack/
 │   ├── README.md                         # Dokümanlar dizini rehberi
 │   ├── kullanici-dokumani.pdf            # Adım adım son kullanıcı kullanım kılavuzu (PDF)
 │   ├── kullanici-dokumani.md             # Kullanıcı kullanım kılavuzu kaynak metni (Markdown)
-│   ├── proje-raporu.pdf                  # Kapsamlı teknik proje raporu (PDF)
+│   ├── proje-raporu.pdf                  # KTÜ resmi şablonuna uygun teknik proje raporu (PDF)
+│   ├── proje-raporu.docx                 # KTÜ resmi şablonuna uygun teknik proje raporu (Word)
 │   ├── proje-raporu.md                   # Teknik proje raporu kaynak metni (Markdown)
 │   ├── test-senaryolari.md               # Otomatik (TC) ve manuel (MT) test senaryoları ve sonuç raporu
 │   ├── gereksinim-test-eslestirme.md     # Gereksinim (FR/NFR) – Test izlenebilirlik matrisi
 │   ├── er_diyagram_v2.png                # 11 tablolu ilişkisel veritabanı ER diyagramı
 │   ├── ogrenci_paneli_diyagram_mavi.png  # Sistem ve uygulama akış diyagramı
-│   ├── ISMAIL_KORKMAZ_YANSITMA_RAPORU.md # Bireysel yansıtma raporu (Markdown & .docx)
-│   └── ISMAIL_KORKMAZ_AKRAN_DEGERLENDIRME.md # Akran değerlendirme formu (Markdown & .docx)
+│   ├── ISMAIL_KORKMAZ_YANSITMA_RAPORU.md # İsmail Korkmaz bireysel yansıtma raporu (.md & .docx)
+│   ├── ISMAIL_KORKMAZ_AKRAN_DEGERLENDIRME.md # İsmail Korkmaz akran değerlendirme formu (.md & .docx)
+│   ├── ONUR_UZUN_YANSITMA_RAPORU.md      # Onur Uzun bireysel yansıtma raporu (.md & .docx)
+│   ├── ONUR_UZUN_AKRAN_DEGERLENDIRME.md  # Onur Uzun akran değerlendirme formu (.md & .docx)
+│   ├── OGUZHAN_INCE_YANSITMA_RAPORU.md   # Oğuzhan İnce bireysel yansıtma raporu (.md & .docx)
+│   └── OGUZHAN_INCE_AKRAN_DEGERLENDIRME.md # Oğuzhan İnce akran değerlendirme formu (.md & .docx)
 │
 ├── presentation/                         # Proje sunum dosyaları
 │   ├── README.md                         # Sunum klasörü açıklaması
